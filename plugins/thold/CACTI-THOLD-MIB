@@ -1,0 +1,551 @@
+-- *****************************************************************
+-- CACTI-THOLD-MIB: Thold Management Information Base for Cacti
+--
+-- September 2013, Andreas Braun (aka browniebraun)
+--
+-- Copyright (c) 2004-2014 by The Cacti Group
+-- All rights reserved.
+--
+-- *****************************************************************
+
+CACTI-THOLD-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    OBJECT-TYPE,
+    MODULE-IDENTITY,
+    OBJECT-IDENTITY,
+    NOTIFICATION-TYPE,
+    Integer32,
+    IpAddress
+        FROM SNMPv2-SMI
+
+    OBJECT-GROUP,
+    NOTIFICATION-GROUP
+        FROM SNMPv2-CONF
+
+    TEXTUAL-CONVENTION,
+    DisplayString
+        FROM SNMPv2-TC
+
+    cactiPlugins
+        FROM CACTI-MIB
+;
+
+thold MODULE-IDENTITY
+    LAST-UPDATED    "201309260000Z"
+    ORGANIZATION    "The Cacti Group"
+    CONTACT-INFO
+            "The Cacti Group
+
+            E-mail: developers@cacti.net"
+    DESCRIPTION
+        "This modules defines a MIB for THOLD, a threshold
+        monitoring plugin for Cacti."
+    REVISION        "201309260000Z"
+    DESCRIPTION
+        "Initial version of this MIB module."
+    ::= { cactiPlugins 1 }    -- assigned by the Cacti Group
+
+--
+-- TEXTUAL CONVENTIONS
+--
+
+--
+-- Event Class
+--
+
+TcEventClass ::= TEXTUAL-CONVENTION
+    STATUS          current
+    DESCRIPTION
+        "Represents the classification of an event:
+
+        info        - threshold item is in normal state
+        warning     - warning condition fulfilled
+        alert       - alerting condition fulfilled "
+    SYNTAX          INTEGER
+    {
+        info(1),
+        warning(2),
+        alert(3)
+    }
+
+--
+-- Event Severity
+--
+
+TcEventSeverity ::= TEXTUAL-CONVENTION
+    STATUS          current
+    DESCRIPTION
+        "The following are the severities an THOLD event
+        can have:
+
+        low         - informational event,
+                      event with low impact
+        medium      - warning event,
+                      event with medium impact
+        high        - warning event or alert event,
+                      event with high impact
+        critical    - alert event,
+                      event with critical impact "
+    SYNTAX          INTEGER
+    {
+        low(1),
+        medium(2),
+        high(3),
+        critical(4)
+    }
+
+--
+-- Event Threshold Type
+--
+
+TcEventThresholdType ::= TEXTUAL-CONVENTION
+    STATUS          current
+    DESCRIPTION
+        "The monitoring type used to verify a threshold
+        condition:
+
+        highLow     - Monitoring if the current value was below a
+                      specific upper and above a specific lower limit
+        baseline    - Monitoring based on deviation in percentage
+                      for the upper and lower bound threshold against a
+                      time reference in the past
+        timebased   - Monitoring if a breach condition was given for a
+                      specific number of times within a specific amount of time
+                      in the past "
+    SYNTAX          INTEGER
+    {
+        highLow(1),
+        baseline(2),
+        timebased(3)
+    }
+
+--
+-- Event Notification Type
+--
+
+TcEventNotificationType ::= TEXTUAL-CONVENTION
+    STATUS          current
+    DESCRIPTION
+        "Describes the several conditions detected by THOLD
+        which will end in a notification / alert:
+
+        restoral    - not available (restoral)
+        triggera    - not available (trigger alert)
+        notifyra    - Notify Alert Retrigger
+        notifywa    - Notify Warning
+        notifyal    - Notify Alert
+        notifyrs    - Notify Restoral
+        triggerw    - not available (trigger warning)
+        notifyaw    - Notify Restoral to Warning:
+                      This occurs if conditions for an alert state are no
+                      longer breached, but the thresholds for a warning state
+                      are still exceeded. "
+    SYNTAX          INTEGER
+    {
+        restoral(1),
+        triggera(2),
+        notifyra(3),
+        notifywa(4),
+        notifyal(5),
+        notifyrs(6),
+        triggerw(7),
+        notifyaw(8)
+    }
+
+--
+-- Event Status
+--
+
+TcEventStatus ::= TEXTUAL-CONVENTION
+    STATUS          current
+    DESCRIPTION
+        "Represents the state of a threshold:
+
+        normal      - Threshold has not been exceeded
+        low         - Lower threshold condition breached
+        high        - Upper threshold condition breached "
+    SYNTAX          INTEGER
+    {
+        normal(1),
+        low(2),
+        high(3)
+    }
+
+--
+-- Event Re-Alert Status
+--
+
+TcEventRealertStatus ::= TEXTUAL-CONVENTION
+    STATUS          current
+    DESCRIPTION
+        "Represents the long-term state of a threshold:
+
+        normal      - Threshold has not been exceeded
+        low         - Lower threshold condition still breached
+        high        - Upper threshold condition still breached "
+    SYNTAX          INTEGER
+    {
+        normal(1),
+        low(2),
+        high(3)
+    }
+
+--
+-- THOLD APPLICATION DATA
+--
+tholdAppl OBJECT-IDENTITY
+    STATUS          current
+    DESCRIPTION
+        "resevered for Thold application data"
+    ::= { thold 1 }
+
+--
+-- THOLD Statistics
+--
+tholdStats OBJECT-IDENTITY
+    STATUS          current
+    DESCRIPTION
+        "resevered for statistics"
+    ::= { thold 2 }
+
+--
+-- THOLD Events
+--
+tholdEvents OBJECT-IDENTITY
+    STATUS          current
+    DESCRIPTION
+        "resevered for events"
+    ::= { thold 3 }
+
+tholdEventObjects OBJECT-IDENTITY
+    STATUS          current
+    DESCRIPTION
+        "resevered for event attributes"
+    ::= { tholdEvents 1 }
+
+eventDateRFC822 OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..48))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The curent date/time of when the event was detected by Thold."
+    ::= { tholdEventObjects 1 }
+
+eventClass OBJECT-TYPE
+    SYNTAX          TcEventClass
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Represents the classification of an event:
+
+        info        - threshold item is in normal state
+        warning     - warning condition fulfilled
+        alert       - alerting condition fulfilled "
+    DEFVAL { alert }
+    ::= { tholdEventObjects 2 }
+
+eventSeverity OBJECT-TYPE
+    SYNTAX          TcEventSeverity
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The following are the severities an THOLD event
+        can have:
+
+        low         - informational event,
+                      event with low impact
+        medium      - warning event,
+                      event with medium impact
+        high        - warning event or alert event,
+                      event with high impact
+        critical    - alert event,
+                      event with critical impact "
+    DEFVAL { high }
+    ::= { tholdEventObjects 3 }
+
+eventCategory OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..255))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "To allow a NMS to categorize different SNMP traps THOLD SNMP traps
+         this object can be used to define a custom category
+         like 'disk_usage', 'link_utilization' or 'ping_test'."
+    DEFVAL { "" }
+    ::= { tholdEventObjects 4 }
+
+eventSource OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..255))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Contains the threshold name to identifiy the threshold (source)
+         generating this event."
+    DEFVAL { "" }
+    ::= { tholdEventObjects 5 }
+
+eventDescription OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..1000))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Contains a customized event description."
+    DEFVAL { "Threshold exceeded" }
+    ::= { tholdEventObjects 6 }
+
+eventDevice OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..255))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "This item describes the device name this event is related to."
+    DEFVAL { "" }
+    ::= { tholdEventObjects 7 }
+
+eventDeviceIp OBJECT-TYPE
+    SYNTAX          IpAddress
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "IPv4 address of the device the event is related to."
+    DEFVAL { "0.0.0.0" }
+    ::= { tholdEventObjects 8 }
+
+eventDataSource OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..255))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Identifies the rrd data source being used for this threshold
+        monitor."
+    DEFVAL { "" }
+    ::= { tholdEventObjects 9 }
+
+eventCurrentValue OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..255))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The current value of the data source that caused this event."
+    DEFVAL { "" }
+    ::= { tholdEventObjects 10 }
+
+eventHigh OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..255))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "In relation to eventClass this object describes the upper
+         limit for a warning or an alerting condition.
+         If eventCurrentValue is higher than this upper limit
+         an event will be triggered"
+    DEFVAL { "" }
+    ::= { tholdEventObjects 11 }
+
+eventLow OBJECT-TYPE
+    SYNTAX          DisplayString (SIZE(1..255))
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "In relation to eventClass this object describes the lower
+         limit for a warning or an alerting condition.
+         If eventCurrentValue is below this limit  an event will
+         be triggered"
+    DEFVAL { "" }
+    ::= { tholdEventObjects 12 }
+
+eventThresholdType OBJECT-TYPE
+    SYNTAX          TcEventThresholdType
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "The monitoring type used to verify a threshold
+        condition:
+
+        highLow     - Monitoring if the current value was below a
+                      specific upper and above a specific lower limit
+        baseline    - Monitoring based on deviation in percentage
+                      for the upper and lower bound threshold against a
+                      time reference in the past
+        timebased   - Monitoring if a breach condition was given for a
+                      specific number of times within a specific amount of time
+                      in the past "
+    DEFVAL { baseline }
+    ::= { tholdEventObjects 13 }
+
+eventNotificationType OBJECT-TYPE
+    SYNTAX          TcEventNotificationType
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Describes the several conditions detected by THOLD
+        which will end in a notification / alert:
+
+        restoral    - not available (restoral)
+        triggera    - not available (trigger alert)
+        notifyra    - Notify Alert Retrigger
+        notifywa    - Notify Warning
+        notifyal    - Notify Alert
+        notifyrs    - Notify Restoral
+        triggerw    - not available (trigger warning)
+        notifyaw    - Notify Restoral to Warning:
+                      This occurs if conditions for an alert state are no
+                      longer breached, but the thresholds for a warning state
+                      are still exceeded. "
+    DEFVAL { notifyal }
+    ::= { tholdEventObjects 14 }
+
+eventStatus OBJECT-TYPE
+    SYNTAX          TcEventStatus
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Represents the state of a threshold:
+
+        normal      - Threshold has not been exceeded
+        low         - Lower threshold condition breached
+        high        - Upper threshold condition breached "
+    DEFVAL { high }
+    ::= { tholdEventObjects 15 }
+
+eventRealertStatus OBJECT-TYPE
+    SYNTAX          TcEventRealertStatus
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Represents the long-term state of a threshold:
+
+        normal      - Threshold has not been exceeded
+        low         - Lower threshold condition still breached
+        high        - Upper threshold condition still breached "
+    DEFVAL { normal }
+    ::= { tholdEventObjects 16 }
+
+eventFailDuration OBJECT-TYPE
+    SYNTAX          Integer32
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Describes the amount of time in seconds the data source
+         is in a breach condition."
+    DEFVAL { 0 }
+    ::= { tholdEventObjects 17 }
+
+eventFailCount OBJECT-TYPE
+    SYNTAX          Integer32
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Describes the number of times the data source
+         is in a breach condition."
+    DEFVAL { 0 }
+    ::= { tholdEventObjects 18 }
+
+eventFailDurationTrigger OBJECT-TYPE
+    SYNTAX          Integer32
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Describes the amount of time in seconds the data source
+         must be in a breach condition for an alert or warning
+         to be raised. "
+    DEFVAL { 0 }
+    ::= { tholdEventObjects 19}
+
+eventFailCountTrigger OBJECT-TYPE
+    SYNTAX          Integer32
+    MAX-ACCESS      accessible-for-notify
+    STATUS          current
+    DESCRIPTION
+        "Describes the number of times the data source
+         must be in a breach condition for an alert or warning
+         to be raised. "
+    DEFVAL { 0 }
+    ::= { tholdEventObjects 20 }
+
+--
+-- THOLD Event Notifications
+--
+tholdEventNotifications OBJECT-IDENTITY
+    STATUS          current
+    DESCRIPTION
+        "resevered for event attributes"
+    ::= { tholdEvents 2 }
+
+tholdNotify NOTIFICATION-TYPE
+    OBJECTS {
+        eventDateRFC822,
+        eventClass,
+        eventSeverity,
+        eventCategory,
+        eventSource,
+        eventDescription,
+        eventDevice,
+        eventDeviceIp,
+        eventDataSource,
+        eventCurrentValue,
+        eventHigh,
+        eventLow,
+        eventThresholdType,
+        eventNotificationType,
+        eventStatus,
+        eventRealertStatus,
+        eventFailDuration,
+        eventFailCount,
+        eventFailDurationTrigger,
+        eventFailCountTrigger
+    }
+    STATUS  current
+    DESCRIPTION
+        "The SNMP trap that is generated as a result of an event with Thold."
+    ::= { tholdEventNotifications 1 }
+
+--
+-- THOLD MIB Groups
+--
+tholdMibGroups OBJECT-IDENTITY
+    STATUS          current
+    DESCRIPTION
+        "resevered for group definitions"
+    ::= { thold 4 }
+
+tholdEventGroup OBJECT-GROUP
+    OBJECTS {
+        eventDateRFC822,
+        eventClass,
+        eventSeverity,
+        eventCategory,
+        eventSource,
+        eventDescription,
+        eventDevice,
+        eventDeviceIp,
+        eventDataSource,
+        eventCurrentValue,
+        eventHigh,
+        eventLow,
+        eventThresholdType,
+        eventNotificationType,
+        eventStatus,
+        eventRealertStatus,
+        eventFailDuration,
+        eventFailCount,
+        eventFailDurationTrigger,
+        eventFailCountTrigger
+    }
+    STATUS          current
+    DESCRIPTION
+        "A collection of objects providing the THOLD event
+         defaults."
+    ::= { tholdMibGroups 1 }
+
+tholdNotifyGroup NOTIFICATION-GROUP
+    NOTIFICATIONS {
+        tholdNotify
+    }
+    STATUS          current
+    DESCRIPTION
+        "The notifications relating to the monitoring operation of Thold."
+    ::= { tholdMibGroups 2 }
+
+END
