@@ -16,14 +16,15 @@ Cacti is a complete network graphing solution designed to harness the power of R
   * account lockout support
 
 All of this is wrapped in an intuitive, easy to use interface that makes sense for both LAN-sized installations and complex networks with thousands of devices.
-
 Developed in the early 2000's by Ian Berry as a high school project, it has been used by thousands of companies and enthusiasts to monitor and manage their Networks and Data Centers.
-
 More information around this opensource product can be located at the following [website][cws].
 
 ## Using this image
 ### Running the container
-This container contains Cacti 1.0.X and is not compatible with older version of cacti. It does rely on an external MySQL database that can be already configured before initial startup or having the container itself perform the setup and initialization. If you want this container to perform these steps for you, you will need to pass the root password for mysql login or startup will fail. This container automatically incorperates Cacti Spine's multithreaded poller.
+This container contains Cacti v1+ and is not compatible with older version of cacti. It does rely on an external MySQL database that can be already configured before initial startup or having the container itself perform the setup and initialization. If you want this container to perform these steps for you, you will need to pass the root password for mysql login or startup will fail. This container automatically incorporates Cacti Spine's multithreaded poller.
+
+### Container Tags/Visioning 
+Containers are tagged by cacti version, for example `smcline06/cacti:1.1.0` contains cacti v1.1.0. Additions or bugfixes to the docker container or underlying OS will have letter tags, for instance you may see tags 1.1.0, 1.1.0a, 1.1.0b etc... I will keep a changelog at the end of this readme. I don't recommend using the `latest` tag due to automated version upgrades not working or implemented in this image. Use at your own risk, an update from latest will likely erase your graphs and settings today.
 
 ### Exposed Ports
 The following ports are important and used by Cacti
@@ -33,7 +34,7 @@ The following ports are important and used by Cacti
 |  80  | HTTP GUI Port |
 |  443 | HTTPS GUI Port|
 
-It is recomended to allow at least one of the above ports for access to the monitoring system. This is translated by the -p hook. For example
+It is recommended to allow at least one of the above ports for access to the monitoring system. This is translated by the -p hook. For example
 `docker run -p 80:80 -p 443:443`
 
 
@@ -92,7 +93,7 @@ services:
 ```
 
 ### Single DB, Multi Node - cacti_multi_shared.yml
-This instance would most likely be used if multiple servers are in close (same network/cluster) and uptime is not an issue. One or more remote pollers hang off a beefy master-cacti instance. All cacti databases need to be named differently for this to work, also note that due to how spine + boost work the database instance will utalize a bit of ram (~1-4GB per remote poller) and settings should be tweaked in this example to reflect this. This setup would be favorable if CPU becomes a bottleneck on one or many servers. Adding remote pollers can offset the load greatly. RDD files dont appear to be stored on remote systems.
+This instance would most likely be used if multiple servers are in close (same network/cluster) and uptime is not an issue. One or more remote pollers hang off a beefy master-cacti instance. All cacti databases need to be named differently for this to work, also note that due to how spine + boost work the database instance will utilize a bit of ram (~1-4GB per remote poller) and settings should be tweaked in this example to reflect this. This setup would be favorable if CPU becomes a bottleneck on one or many servers. Adding remote pollers can offset the load greatly. RDD files don't appear to be stored on remote systems.
 
 ![Alt text](https://github.com/scline/docker-cacti/blob/master/document_images/single_db.png?raw=true "Single DB, Multiple Hosts")
 
@@ -166,7 +167,7 @@ services:
 ```
 
 ### Multi DB, Multi Node - cacti_multi.yml
-Likely used for large deployments or where multiple locations/datacenters are at play. One master server for settings and a single window into all monitoring while pollers in remote locations gather information and feed it back home. The limiting factor will be latancy or disk IO on the master database since pollers will write data directly to it when gathering snmp/scripts. RDD files dont appear to be stored on remote systems.
+Likely used for large deployments or where multiple locations/datacenters are at play. One master server for settings and a single window into all monitoring while pollers in remote locations gather information and feed it back home. The limiting factor will be latency or disk IO on the master database since pollers will write data directly to it when gathering SNMP/scripts. RDD files don't appear to be stored on remote systems.
 
 ![Alt text](https://github.com/scline/docker-cacti/blob/master/document_images/multi_host.png?raw=true "Multiple Hosts and DB")
 
@@ -289,15 +290,15 @@ tba
 tba
 
 ### Data Backups
-Included is a backup script that will backup cacti (including settings/plugins), rrd files, and spine. This is accomplished by taking a complete copy of the root spine and cacti directory and performing a mysql dump of the cacti database which stores all the settings and device information. To manually perform a backup, run the following exec commands:
+Included is a backup script that will backup cacti (including settings/plugins), rrd files, and spine. This is accomplished by taking a complete copy of the root spine and cacti directory and performing a MySQL dump of the cacti database which stores all the settings and device information. To manually perform a backup, run the following exec commands: 
 
 ```
 docker exec -it <docker image ID or name> ./backup.sh
 ```
 
-This will store compressed backups in a tar.gz format within the cacti docker container under /backups directory. Its recomended to map this directory using volumes so data is persistant. By default it only stores 7 most recent backups and will automatically delete older ones, to change this value update `BACKUP_RETENTION` environmental variable with the number of backups you wish to store.
+This will store compressed backups in a tar.gz format within the cacti docker container under /backups directory. Its recommended to map this directory using volumes so data is persistent. By default it only stores 7 most recent backups and will automatically delete older ones, to change this value update `BACKUP_RETENTION` environmental variable with the number of backups you wish to store.
 
-##### Automatic backups
+##### Automatic backups - !!!Not Working!!!
 The environment variable `BACKUP_TIME` can be altered to have the container automatically backup cacti. The value is in days and will kick off at midnight by default. By default this is disabled with a value of 0, if you want to further customize backup times edit `configs/crontab.apache` in this repo and rebuild the docker image.
 
 ## Customization
@@ -323,7 +324,8 @@ Settings can be passed through to cacti at initial install by placing the SQL ch
 tba
 
 # Known Issues/Fixes
-* ICMP monitoring is not reliable under docker, responces are all <1ms when remote servers are 200ms away. 
+* ICMP monitoring is not reliable under docker, responses are all <1ms when remote servers are 200ms away.  
+* Automatic data backups using the variable `BACKUP_TIME` does not work. I am not able to get the cronjob to properly run backup.sh :(
 
 # ToDo
 * Restore from backup
