@@ -37,6 +37,73 @@ The following ports are important and used by Cacti
 It is recommended to allow at least one of the above ports for access to the monitoring system. This is translated by the -p hook. For example
 `docker run -p 80:80 -p 443:443`
 
+## Installation
+
+### Database Settings
+The folks at Cacti.net recommend the following settings for its MySQL based database. Please understand depending on your systems resources and amount of devices your installation is monitoring these settings may need to change for optimal performance. I would recommend shooting any questions around these settings to the [Cacti community forums][cacti_forums].
+
+|MySQL Variable| Recommended Value | Notes |
+|---|---|---|
+| Version | >= 5.6 | MySQL 5.6+ and MariaDB 10.0+ are great releases, and are very good versions to choose. Make sure you run the very latest release though which fixes a long standing low level networking issue that was casuing spine many issues with reliability. |
+| collation_server | utf8mb4_unicode_ci | When using Cacti with languages other than English, it is important to use the utf8mb4_unicode_ci collation type as some characters take more than a single byte. |
+| character_set_client | utf8mb4 | When using Cacti with languages other than English, it is important ot use the utf8mb4 character set as some characters take more than a single byte. |
+| max_connections | >= 100 | Depending on the number of logins and use of spine data collector, MySQL will need many connections. The calculation for spine is: total_connections = total_processes * (total_threads + script_servers + 1), then you must leave headroom for user connections, which will change depending on the number of concurrent login accounts. |
+| max_heap_table_size | >= 10% RAM |  If using the Cacti Performance Booster and choosing a memory storage engine, you have to be careful to flush your Performance Booster buffer before the system runs out of memory table space. This is done two ways, first reducing the size of your output column to just the right size. This column is in the tables poller_output, and poller_output_boost. The second thing you can do is allocate more memory to memory tables. We have arbitrarily chosen a recommended value of 10% of system memory, but if you are using SSD disk drives, or have a smaller system, you may ignore this recommendation or choose a different storage engine. You may see the expected consumption of the Performance Booster tables under Console -> System Utilities -> View Boost Status.|
+| max_allowed_packet | >= 16777216 | With Remote polling capabilities, large amounts of data will be synced from the main server to the remote pollers. Therefore, keep this value at or above 16M. |
+| tmp_table_size | >= 64M | When executing subqueries, having a larger temporary table size, keep those temporary tables in memory. |
+| join_buffer_size | >= 64M | When performing joins, if they are below this size, they will be kept in memory and never written to a temporary file. |
+| innodb_file_per_table | ON | When using InnoDB storage it is important to keep your table spaces separate. This makes managing the tables simpler for long time users of MySQL. If you are running with this currently off, you can migrate to the per file storage by enabling the feature, and then running an alter statement on all InnoDB tables. |
+| innodb_buffer_pool_size | >=25% RAM | InnoDB will hold as much tables and indexes in system memory as is possible. Therefore, you should make the innodb_buffer_pool large enough to hold as much of the tables and index in memory. Checking the size of the /var/lib/mysql/cacti directory will help in determining this value. We are recommending 25% of your systems total memory, but your requirements will vary depending on your systems size. |
+| innodb_doublewrite | OFF  | With modern SSD type storage, this operation actually degrades the disk more rapidly and adds a 50% overhead on all write operations. |
+| innodb_lock_wait_timeout | >= 50 | Rogue queries should not for the database to go offline to others. Kill these queries before they kill your system. |
+| innodb_flush_log_at_timeout | >= 3 |  As of MySQL 5.7.14-8, the you can control how often MySQL flushes transactions to disk. The default is 1 second, but in high I/O systems setting to a value greater than 1 can allow disk I/O to be more sequential |
+| innodb_read_io_threads | >= 32 | With modern SSD type storage, having multiple read io threads is advantageous for applications with high io characteristics. |
+| innodb_write_io_threads | >= 16 | With modern SSD type storage, having multiple write io threads is advantageous for applications with high io characteristics. |
+### Cacti Master
+| Environment Variable | Function |
+|-|-|
+| DB_NAME | The MySQL database name, this is used for both cacti settings and spine poller configurations. |
+| DB_USER | MySQL database user cacti should use. Both cacti and spine poller will share these settings. |
+| DB_PASS | MySQL database password assigned to `DB_USER` Both cacti and spine poller will share these settings. |
+| DB_HOST | The IP address, FQDN/hostname, or linked container name that cacti would use as a database. |
+| DB_PORT | What TCP port is the MySQL database listening on, by default its 3306. |
+| DB_ROOT_PASS | This is only needed  if the `INITIALIZE_DB` is set to 1. This is required if you want the cacti container to setup remote MySQL user accounts and Databases for use. |
+| INITIALIZE_DB | Can be `0` for false or `1` for true. If true the container will require `DB_ROOT_PASS` to the target database. The container will attempt to create usernames/passwords and Databases required on the remote system for Cacti to funtion. |
+| TZ | TimeZone, please select a format Centos understands, a list can be generated by running `ls /usr/share/zoneinfo`.|
+| BACKUP_RETENTION | Number of backup files to keep|
+| BACKUP_TIME | How often Cacti should back itself up in minutes - currently not working |
+
+### Remote Cacti Pollers
+| Environment Variable | Function |
+|-|-|
+| DB_NAME | The MySQL database name, this is used for both cacti settings and spine poller configurations. | 
+| DB_USER | MySQL database user cacti should use. Both cacti and spine poller will share these settings. | 
+| DB_PASS | MySQL database password assigned to `DB_USER` Both cacti and spine poller will share these settings. | 
+| DB_HOST | The IP address, FQDN/hostname, or linked container name that cacti would use as a database. | 
+| DB_PORT | What TCP port is the MySQL database listening on, by default its 3306. | 
+| INITIALIZE_DB | Can be `0` for false or `1` for true. If true the container will require `DB_ROOT_PASS` to the target database. The container will attempt to create usernames/passwords and Databases required on the remote system for Cacti to funtion. |
+| TZ | TimeZone, please select a format Centos understands, a list can be generated by running `ls /usr/share/zoneinfo`.|
+| BACKUP_RETENTION | Number of backup files to keep|
+| BACKUP_TIME | How often Cacti should back itself up in minutes - currently not working |
+| RDB_NAME | The master Cacti instance MySQL database name, this is used for both cacti settings and spine poller configurations. | 
+| RDB_USER | MySQL database user used by the master Cacti container should use. | 
+| RDB_PASS | MySQL database password assigned to `RDB_USER` that is used by the master Cacti container. | 
+| RDB_HOST | The IP address, FQDN/hostname, or linked container name that the master Cacti instance uses | 
+| RDB_PORT | What TCP port is the MySQL database listening on, by default its 3306. | 
+
+
+### Data Backups
+Included is a backup script that will backup cacti (including settings/plugins), rrd files, and spine. This is accomplished by taking a complete copy of the root spine and cacti directory and performing a MySQL dump of the cacti database which stores all the settings and device information. To manually perform a backup, run the following exec commands: 
+
+```
+docker exec -it <docker image ID or name> ./backup.sh
+```
+
+This will store compressed backups in a tar.gz format within the cacti docker container under /backups directory. Its recommended to map this directory using volumes so data is persistent. By default it only stores 7 most recent backups and will automatically delete older ones, to change this value update `BACKUP_RETENTION` environmental variable with the number of backups you wish to store.
+
+##### Automatic backups - !!!Not Working!!!
+The environment variable `BACKUP_TIME` can be altered to have the container automatically backup cacti. The value is in days and will kick off at midnight by default. By default this is disabled with a value of 0, if you want to further customize backup times edit `configs/crontab.apache` in this repo and rebuild the docker image.
+
 
 ## Docker Cacti Architecture
 -----------------------------------------------------------------------------
@@ -261,72 +328,6 @@ services:
       - TZ=UTC
 ```
 
-## Installation
-
-### Database Settings
-The folks at Cacti.net recommend the following settings for its MySQL based database. Please understand depending on your systems resources and amount of devices your installation is monitoring these settings may need to change for optimal performance. I would recommend shooting any questions around these settings to the [Cacti community forums][cacti_forums].
-
-|MySQL Variable| Recommended Value | Notes |
-|---|---|---|
-| Version | >= 5.6 | MySQL 5.6+ and MariaDB 10.0+ are great releases, and are very good versions to choose. Make sure you run the very latest release though which fixes a long standing low level networking issue that was casuing spine many issues with reliability. |
-| collation_server | utf8mb4_unicode_ci | When using Cacti with languages other than English, it is important to use the utf8mb4_unicode_ci collation type as some characters take more than a single byte. |
-| character_set_client | utf8mb4 | When using Cacti with languages other than English, it is important ot use the utf8mb4 character set as some characters take more than a single byte. |
-| max_connections | >= 100 | Depending on the number of logins and use of spine data collector, MySQL will need many connections. The calculation for spine is: total_connections = total_processes * (total_threads + script_servers + 1), then you must leave headroom for user connections, which will change depending on the number of concurrent login accounts. |
-| max_heap_table_size | >= 10% RAM |  If using the Cacti Performance Booster and choosing a memory storage engine, you have to be careful to flush your Performance Booster buffer before the system runs out of memory table space. This is done two ways, first reducing the size of your output column to just the right size. This column is in the tables poller_output, and poller_output_boost. The second thing you can do is allocate more memory to memory tables. We have arbitrarily chosen a recommended value of 10% of system memory, but if you are using SSD disk drives, or have a smaller system, you may ignore this recommendation or choose a different storage engine. You may see the expected consumption of the Performance Booster tables under Console -> System Utilities -> View Boost Status.|
-| max_allowed_packet | >= 16777216 | With Remote polling capabilities, large amounts of data will be synced from the main server to the remote pollers. Therefore, keep this value at or above 16M. |
-| tmp_table_size | >= 64M | When executing subqueries, having a larger temporary table size, keep those temporary tables in memory. |
-| join_buffer_size | >= 64M | When performing joins, if they are below this size, they will be kept in memory and never written to a temporary file. |
-| innodb_file_per_table | ON | When using InnoDB storage it is important to keep your table spaces separate. This makes managing the tables simpler for long time users of MySQL. If you are running with this currently off, you can migrate to the per file storage by enabling the feature, and then running an alter statement on all InnoDB tables. |
-| innodb_buffer_pool_size | >=25% RAM | InnoDB will hold as much tables and indexes in system memory as is possible. Therefore, you should make the innodb_buffer_pool large enough to hold as much of the tables and index in memory. Checking the size of the /var/lib/mysql/cacti directory will help in determining this value. We are recommending 25% of your systems total memory, but your requirements will vary depending on your systems size. |
-| innodb_doublewrite | OFF  | With modern SSD type storage, this operation actually degrades the disk more rapidly and adds a 50% overhead on all write operations. |
-| innodb_lock_wait_timeout | >= 50 | Rogue queries should not for the database to go offline to others. Kill these queries before they kill your system. |
-| innodb_flush_log_at_timeout | >= 3 |  As of MySQL 5.7.14-8, the you can control how often MySQL flushes transactions to disk. The default is 1 second, but in high I/O systems setting to a value greater than 1 can allow disk I/O to be more sequential |
-| innodb_read_io_threads | >= 32 | With modern SSD type storage, having multiple read io threads is advantageous for applications with high io characteristics. |
-| innodb_write_io_threads | >= 16 | With modern SSD type storage, having multiple write io threads is advantageous for applications with high io characteristics. |
-### Cacti Master
-| Environment Variable | Function |
-|-|-|
-| DB_NAME | The MySQL database name, this is used for both cacti settings and spine poller configurations. |
-| DB_USER | MySQL database user cacti should use. Both cacti and spine poller will share these settings. |
-| DB_PASS | MySQL database password assigned to `DB_USER` Both cacti and spine poller will share these settings. |
-| DB_HOST | The IP address, FQDN/hostname, or linked container name that cacti would use as a database. |
-| DB_PORT | What TCP port is the MySQL database listening on, by default its 3306. |
-| DB_ROOT_PASS | This is only needed  if the `INITIALIZE_DB` is set to 1. This is required if you want the cacti container to setup remote MySQL user accounts and Databases for use. |
-| INITIALIZE_DB | Can be `0` for false or `1` for true. If true the container will require `DB_ROOT_PASS` to the target database. The container will attempt to create usernames/passwords and Databases required on the remote system for Cacti to funtion. |
-| TZ | TimeZone, please select a format Centos understands, a list can be generated by running `ls /usr/share/zoneinfo`.|
-| BACKUP_RETENTION | Number of backup files to keep|
-| BACKUP_TIME | How often Cacti should back itself up in minutes - currently not working |
-
-### Cacti Pollers
-| Environment Variable | Function |
-|-|-|
-| DB_NAME | The MySQL database name, this is used for both cacti settings and spine poller configurations. | 
-| DB_USER | MySQL database user cacti should use. Both cacti and spine poller will share these settings. | 
-| DB_PASS | MySQL database password assigned to `DB_USER` Both cacti and spine poller will share these settings. | 
-| DB_HOST | The IP address, FQDN/hostname, or linked container name that cacti would use as a database. | 
-| DB_PORT | What TCP port is the MySQL database listening on, by default its 3306. | 
-| INITIALIZE_DB | Can be `0` for false or `1` for true. If true the container will require `DB_ROOT_PASS` to the target database. The container will attempt to create usernames/passwords and Databases required on the remote system for Cacti to funtion. |
-| TZ | TimeZone, please select a format Centos understands, a list can be generated by running `ls /usr/share/zoneinfo`.|
-| BACKUP_RETENTION | Number of backup files to keep|
-| BACKUP_TIME | How often Cacti should back itself up in minutes - currently not working |
-| RDB_NAME | The master Cacti instance MySQL database name, this is used for both cacti settings and spine poller configurations. | 
-| RDB_USER | MySQL database user used by the master Cacti container should use. | 
-| RDB_PASS | MySQL database password assigned to `RDB_USER` that is used by the master Cacti container. | 
-| RDB_HOST | The IP address, FQDN/hostname, or linked container name that the master Cacti instance uses | 
-| RDB_PORT | What TCP port is the MySQL database listening on, by default its 3306. | 
-
-
-### Data Backups
-Included is a backup script that will backup cacti (including settings/plugins), rrd files, and spine. This is accomplished by taking a complete copy of the root spine and cacti directory and performing a MySQL dump of the cacti database which stores all the settings and device information. To manually perform a backup, run the following exec commands: 
-
-```
-docker exec -it <docker image ID or name> ./backup.sh
-```
-
-This will store compressed backups in a tar.gz format within the cacti docker container under /backups directory. Its recommended to map this directory using volumes so data is persistent. By default it only stores 7 most recent backups and will automatically delete older ones, to change this value update `BACKUP_RETENTION` environmental variable with the number of backups you wish to store.
-
-##### Automatic backups - !!!Not Working!!!
-The environment variable `BACKUP_TIME` can be altered to have the container automatically backup cacti. The value is in days and will kick off at midnight by default. By default this is disabled with a value of 0, if you want to further customize backup times edit `configs/crontab.apache` in this repo and rebuild the docker image.
 
 ## Container Customization
 There are a few customizations you can do if you are building the container locally. During the build process Plugins and Device Templates can be added to folders where at startup, scripts will import and install.
