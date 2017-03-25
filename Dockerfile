@@ -13,8 +13,8 @@ RUN \
         ntp bison php-cli php-mysql php-common php-mbstring php-snmp \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo && \
 
-    tar -xf /tmp/cacti-release-*.tar.gz -C /tmp && \
-    mv /tmp/cacti-release-*/ /cacti/
+    tar -xf /tmp/cacti-1*.tar.gz -C /tmp && \
+    mv /tmp/cacti-1*/ /cacti/
 
 ## --- SPINE ---
 RUN \
