@@ -1,4 +1,4 @@
-# Cacti v1.0.4 Docker Container
+# Cacti v1+ Docker Container
 
 ## Cacti System
 -----------------------------------------------------------------------------
@@ -250,10 +250,7 @@ Settings can be passed through to cacti at initial install by placing the SQL ch
 #### Device/Graph Templates
 tba
 
-
 # Known Issues/Fixes
-
-* Remote poller not working when using spine - https://github.com/Cacti/spine/issues/7 - SOLVED
 * ICMP monitoring is not reliable under docker, responces are all <1ms when remote servers are 200ms away. 
 
 # ToDo
