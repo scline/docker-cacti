@@ -1,4 +1,3 @@
-# Docker Compose Examples
 
 ## Docker Cacti Architecture
 -----------------------------------------------------------------------------
@@ -55,7 +54,7 @@ services:
 ```
 
 ### Single DB, Multi Node - cacti_multi_shared.yml
-This instance would most likely be used if multiple servers are in close (same network/cluster) and uptime is not an issue. One or more remote pollers hang off a beefy master-cacti instance. All cacti databases need to be named differently for this to work, also note that due to how spine + boost work the database instance will utalize a bit of ram (~1-4GB per remote poller) and settings should be tweaked in this example to reflect this. This setup would be favorable if CPU becomes a bottleneck on one or many servers. Adding remote pollers can offset the load greatly. RDD files dont appear to be stored on remote systems.
+This instance would most likely be used if multiple servers are in close (same network/cluster) and uptime is not an issue. One or more remote pollers hang off a beefy master-cacti instance. All cacti databases need to be named differently for this to work, also note that due to how spine + boost work the database instance will utilize a bit of ram (~1-4GB per remote poller) and settings should be tweaked in this example to reflect this. This setup would be favorable if CPU becomes a bottleneck on one or many servers. Adding remote pollers can offset the load greatly. RDD files don't appear to be stored on remote systems.
 
 ![Alt text](https://github.com/scline/docker-cacti/blob/master/document_images/single_db.png?raw=true "Single DB, Multiple Hosts")
 
@@ -129,7 +128,7 @@ services:
 ```
 
 ### Multi DB, Multi Node - cacti_multi.yml
-Likely used for large deployments or where multiple locations/datacenters are at play. One master server for settings and a single window into all monitoring while pollers in remote locations gather information and feed it back home. The limiting factor will be latancy or disk IO on the master database since pollers will write data directly to it when gathering snmp/scripts. RDD files dont appear to be stored on remote systems.
+Likely used for large deployments or where multiple locations/datacenters are at play. One master server for settings and a single window into all monitoring while pollers in remote locations gather information and feed it back home. The limiting factor will be latency or disk IO on the master database since pollers will write data directly to it when gathering SNMP/scripts. RDD files don't appear to be stored on remote systems.
 
 ![Alt text](https://github.com/scline/docker-cacti/blob/master/document_images/multi_host.png?raw=true "Multiple Hosts and DB")
 
