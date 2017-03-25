@@ -262,6 +262,26 @@ services:
 
 ## Installation
 
+### Database Settings
+The folks at Cacti.net recommend the following settings for its MySQL based database. Please understand depending on your systems resources and amount of devices your installation is monitoring these settings may need to change for optimal performance. I would recommend shooting any questions around these settings to the [Cacti community forums][cacti_forums].
+
+|MySQL Variable| Recommended Value | Notes |
+|---|---|---|
+| Version | >= 5.6 | MySQL 5.6+ and MariaDB 10.0+ are great releases, and are very good versions to choose. Make sure you run the very latest release though which fixes a long standing low level networking issue that was casuing spine many issues with reliability. |
+| collation_server | utf8mb4_unicode_ci | When using Cacti with languages other than English, it is important to use the utf8mb4_unicode_ci collation type as some characters take more than a single byte. |
+| character_set_client | utf8mb4 | When using Cacti with languages other than English, it is important ot use the utf8mb4 character set as some characters take more than a single byte. |
+| max_connections | >= 100 | Depending on the number of logins and use of spine data collector, MySQL will need many connections. The calculation for spine is: total_connections = total_processes * (total_threads + script_servers + 1), then you must leave headroom for user connections, which will change depending on the number of concurrent login accounts. |
+| max_heap_table_size | >= 10% RAM |  If using the Cacti Performance Booster and choosing a memory storage engine, you have to be careful to flush your Performance Booster buffer before the system runs out of memory table space. This is done two ways, first reducing the size of your output column to just the right size. This column is in the tables poller_output, and poller_output_boost. The second thing you can do is allocate more memory to memory tables. We have arbitrarily chosen a recommended value of 10% of system memory, but if you are using SSD disk drives, or have a smaller system, you may ignore this recommendation or choose a different storage engine. You may see the expected consumption of the Performance Booster tables under Console -> System Utilities -> View Boost Status.|
+| max_allowed_packet | >= 16777216 | With Remote polling capabilities, large amounts of data will be synced from the main server to the remote pollers. Therefore, keep this value at or above 16M. |
+| tmp_table_size | >= 64M | When executing subqueries, having a larger temporary table size, keep those temporary tables in memory. |
+| join_buffer_size | >= 64M | When performing joins, if they are below this size, they will be kept in memory and never written to a temporary file. |
+| innodb_file_per_table | ON | When using InnoDB storage it is important to keep your table spaces separate. This makes managing the tables simpler for long time users of MySQL. If you are running with this currently off, you can migrate to the per file storage by enabling the feature, and then running an alter statement on all InnoDB tables. |
+| innodb_buffer_pool_size | >=25% RAM | InnoDB will hold as much tables and indexes in system memory as is possible. Therefore, you should make the innodb_buffer_pool large enough to hold as much of the tables and index in memory. Checking the size of the /var/lib/mysql/cacti directory will help in determining this value. We are recommending 25% of your systems total memory, but your requirements will vary depending on your systems size. |
+| innodb_doublewrite | OFF  | With modern SSD type storage, this operation actually degrades the disk more rapidly and adds a 50% overhead on all write operations. |
+| innodb_lock_wait_timeout | >= 50 | Rogue queries should not for the database to go offline to others. Kill these queries before they kill your system. |
+| innodb_flush_log_at_timeout | >= 3 |  As of MySQL 5.7.14-8, the you can control how often MySQL flushes transactions to disk. The default is 1 second, but in high I/O systems setting to a value greater than 1 can allow disk I/O to be more sequential |
+| innodb_read_io_threads | >= 32 | With modern SSD type storage, having multiple read io threads is advantageous for applications with high io characteristics. |
+| innodb_write_io_threads | >= 16 | With modern SSD type storage, having multiple write io threads is advantageous for applications with high io characteristics. |
 ### Cacti Master
 tba
 
@@ -311,4 +331,6 @@ tba
 * Local SNMP for monitoring
 * Documentation cleanup
 
+
+[cacti_forums]: http://forums.cacti.net/
 [cws]: http://cacti.net/

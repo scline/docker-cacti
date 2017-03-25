@@ -16,6 +16,9 @@ services:
       - TZ=America/Los_Angeles
     links:
       - db-master
+    volumes:
+      - plugins:/cacti/plugins
+      - backups:/backups
 
   cacti-poller:
     image: "smcline06/cacti:1.1.0"
@@ -39,6 +42,9 @@ services:
       - TZ=America/Los_Angeles
     links:
       - db-poller
+    volumes:
+      - plugins:/cacti/plugins
+      - backups:/backups
 
   db-master:
     image: "percona:5.7.14"
