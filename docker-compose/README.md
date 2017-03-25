@@ -2,7 +2,7 @@
 
 ## Docker Cacti Architecture
 -----------------------------------------------------------------------------
-With the recent update to version 1.0, Cacti has introduced the ability to have remote polling servers. This allows us to have one centrally located UI and information system while scaling out multiple datacenters or locations. Each instance, master or remote poller, requires its own MySQL based database. The pollers also have an addition requirement to access the Cacti master's database with read/write access.
+With the recent update to version 1+, Cacti has introduced the ability to have remote polling servers. This allows us to have one centrally located UI and information system while scaling out multiple datacenters or locations. Each instance, master or remote poller, requires its own MySQL based database. The pollers also have an addition requirement to access the Cacti master's database with read/write access.
 
 
 ### Single Instance - cacti_single_install.yml
@@ -35,7 +35,20 @@ services:
     image: "percona:5.7.14"
     ports:
       - "3306:3306"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max_connections=200 --max_heap_table_size=128M --max_allowed_packet=32M --tmp_table_size=128M --join_buffer_size=128M --innodb_buffer_pool_size=1G --innodb_doublewrite=OFF --innodb_flush_log_at_timeout=3 --innodb_read_io_threads=32 --innodb_write_io_threads=16
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=200
+      - --max_heap_table_size=128M
+      - --max_allowed_packet=32M
+      - --tmp_table_size=128M
+      - --join_buffer_size=128M
+      - --innodb_buffer_pool_size=1G
+      - --innodb_doublewrite=OFF
+      - --innodb_flush_log_at_timeout=3
+      - --innodb_read_io_threads=32
+      - --innodb_write_io_threads=16
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
@@ -71,7 +84,20 @@ services:
     image: "percona:5.7.14"
     ports:
       - "3306:3306"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max_connections=200 --max_heap_table_size=128M --max_allowed_packet=32M --tmp_table_size=128M --join_buffer_size=128M --innodb_buffer_pool_size=1G --innodb_doublewrite=OFF --innodb_flush_log_at_timeout=3 --innodb_read_io_threads=32 --innodb_write_io_threads=16
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=200
+      - --max_heap_table_size=128M
+      - --max_allowed_packet=32M
+      - --tmp_table_size=128M
+      - --join_buffer_size=128M
+      - --innodb_buffer_pool_size=1G
+      - --innodb_doublewrite=OFF
+      - --innodb_flush_log_at_timeout=3
+      - --innodb_read_io_threads=32
+      - --innodb_write_io_threads=16
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=UTC
@@ -132,7 +158,20 @@ services:
     image: "percona:5.7.14"
     ports:
       - "3306:3306"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max_connections=200 --max_heap_table_size=128M --max_allowed_packet=32M --tmp_table_size=128M --join_buffer_size=128M --innodb_buffer_pool_size=1G --innodb_doublewrite=OFF --innodb_flush_log_at_timeout=3 --innodb_read_io_threads=32 --innodb_write_io_threads=16
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=200
+      - --max_heap_table_size=128M
+      - --max_allowed_packet=32M
+      - --tmp_table_size=128M
+      - --join_buffer_size=128M
+      - --innodb_buffer_pool_size=1G
+      - --innodb_doublewrite=OFF
+      - --innodb_flush_log_at_timeout=3
+      - --innodb_read_io_threads=32
+      - --innodb_write_io_threads=16
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=UTC
@@ -165,7 +204,20 @@ services:
 
   db-poller:
     image: "percona:5.7.14"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max_connections=200 --max_heap_table_size=128M --max_allowed_packet=32M --tmp_table_size=128M --join_buffer_size=128M --innodb_buffer_pool_size=1G --innodb_doublewrite=OFF --innodb_flush_log_at_timeout=3 --innodb_read_io_threads=32 --innodb_write_io_threads=16
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=200
+      - --max_heap_table_size=128M
+      - --max_allowed_packet=32M
+      - --tmp_table_size=128M
+      - --join_buffer_size=128M
+      - --innodb_buffer_pool_size=1G
+      - --innodb_doublewrite=OFF
+      - --innodb_flush_log_at_timeout=3
+      - --innodb_read_io_threads=32
+      - --innodb_write_io_threads=16
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=UTC
