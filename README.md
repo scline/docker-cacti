@@ -1,4 +1,6 @@
 # Cacti v1+ Docker Container
+[![](https://images.microbadger.com/badges/image/smcline06/cacti.svg)](https://microbadger.com/images/smcline06/cacti "Get your own image badge on microbadger.com")
+
 ##### Github Repo: https://github.com/scline/docker-cacti
 ##### Dockerhub Repo: https://hub.docker.com/r/smcline06/cacti/
 
