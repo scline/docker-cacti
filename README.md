@@ -44,8 +44,9 @@ It is recommended to allow at least one of the above ports for access to the mon
 
 ### Cacti Master
 The main cacti poller settings, these are required for single cacti and multi cacti host installations.
+
 | Environment Variable | Function |
-|-|-|
+|---|---|
 | DB_NAME | The MySQL database name, this is used for both cacti settings and spine poller configurations. |
 | DB_USER | MySQL database user cacti should use. Both cacti and spine poller will share these settings. |
 | DB_PASS | MySQL database password assigned to `DB_USER` Both cacti and spine poller will share these settings. |
@@ -62,7 +63,7 @@ The main cacti poller settings, these are required for single cacti and multi ca
 Remote cacti poller containers require the following, the major differance here is the inclusion of RDB (remote database) variables which should be pointed at the master cacti installation settings. 
 
 | Environment Variable | Function |
-|-|-|
+|---|---|
 | DB_NAME | The MySQL database, this is used for both cacti settings and spine poller configurations. | 
 | DB_USER | MySQL database user cacti should use. Both cacti and spine poller will share these settings. | 
 | DB_PASS | MySQL database password assigned to `DB_USER` Both cacti and spine poller will share these settings. | 
@@ -383,6 +384,9 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ##### 1.1.1 - 03/27/2017
  * Update Cacti and Spine from 1.1.0 to 1.1.1 - [changelog link][CL1.1.1]
  * GitHub ReadMe organization
+
+##### 1.1.0 - 03/25/2017
+ * Initial push
 
 # Known Issues/Fixes
 * ICMP monitoring is not reliable under docker, responses are all <1ms when remote servers are 200ms away.  
