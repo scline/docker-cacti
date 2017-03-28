@@ -1,7 +1,7 @@
 version: '2'
 services:
   cacti-master:
-    image: "smcline06/cacti:1.1.0"
+    image: "smcline06/cacti:1.1.1"
     ports:
       - "80:80"
       - "443:443"
@@ -18,7 +18,7 @@ services:
       - db
 
   cacti-poller:
-    image: "smcline06/cacti:1.1.0"
+    image: "smcline06/cacti:1.1.1"
     ports:
       - "8080:80"
       - "8443:443"
