@@ -26,9 +26,6 @@ More information around this opensource product can be located at the following 
 ### Running the container
 This container contains Cacti v1+ and is not compatible with older version of cacti. It does rely on an external MySQL database that can be already configured before initial startup or having the container itself perform the setup and initialization. If you want this container to perform these steps for you, you will need to pass the root password for mysql login or startup will fail. This container automatically incorporates Cacti Spine's multithreaded poller.
 
-### Container Tags/Visioning 
-Containers are tagged by cacti version, for example `smcline06/cacti:1.1.0` contains cacti v1.1.0. Additions or bugfixes to the docker container or underlying OS will have letter tags, for instance you may see tags 1.1.0, 1.1.0a, 1.1.0b etc... I will keep a changelog at the end of this readme. I don't recommend using the `latest` tag due to automated version upgrades not working or implemented in this image. Use at your own risk, an update from latest will likely erase your graphs and settings today.
-
 ### Exposed Ports
 The following ports are important and used by Cacti
 
