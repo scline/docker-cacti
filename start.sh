@@ -92,7 +92,6 @@ if [ ${BACKUP_TIME} -gt 0 ]; then
 
 fi
 
-
 # start cron service
 echo "$(date +%F_%R) [Note] Starting crond service."
 /usr/sbin/crond &

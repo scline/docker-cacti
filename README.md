@@ -105,7 +105,7 @@ The folks at Cacti.net recommend the following settings for its MySQL based data
 Included is a backup script that will backup cacti (including settings/plugins), rrd files, and spine. This is accomplished by taking a complete copy of the root spine and cacti directory and performing a MySQL dump of the cacti database which stores all the settings and device information. To manually perform a backup, run the following exec commands: 
 
 ```
-docker exec -it <docker image ID or name> ./backup.sh
+docker exec <docker image ID or name> ./backup.sh
 ```
 
 This will store compressed backups in a tar.gz format within the cacti docker container under /backups directory. Its recommended to map this directory using volumes so data is persistent. By default it only stores 7 most recent backups and will automatically delete older ones, to change this value update `BACKUP_RETENTION` environmental variable with the number of backups you wish to store.
@@ -113,230 +113,40 @@ This will store compressed backups in a tar.gz format within the cacti docker co
 ##### Automatic backups - !!!Not Working!!!
 The environment variable `BACKUP_TIME` can be altered to have the container automatically backup cacti. The value is in days and will kick off at midnight by default. By default this is disabled with a value of 0, if you want to further customize backup times edit `configs/crontab.apache` in this repo and rebuild the docker image.
 
+### Restore Backup
+To restore from an existing backup, run the following docker exec command with the backup file location as an argument.
+```
+docker exec <docker image ID or name> ./restore.sh /backup/<filename>
+```
+
+To get a list of backups, the following command should display them:
+```
+docker exec <docker image ID or name> ls /backup
+```
+
+### Updating Cacti
+You can now update the Cacti/Spine version of this container using the included script. By default this will update to the *latest* version. 
+```
+docker exec <docker image ID or name> ./upgrade.sh
+```
+
+If you want to specify a specific version please update the `/upgrade.sh` values.
+ * [Cacti Version Links][cacti_download]
+ * [Spine Version Links][spine_download]
+```
+#!/bin/bash
+
+# script to upgrade a cacti instance to latest, if you want a specific version please update the following download links
+cacti_download_url=http://www.cacti.net/downloads/cacti-latest.tar.gz
+spine_download_url=http://www.cacti.net/downloads/spine/cacti-spine-latest.tar.gz
+
+``` 
 
 ## Docker Cacti Architecture
 -----------------------------------------------------------------------------
 With the recent update to version 1+, Cacti has introduced the ability to have remote polling servers. This allows us to have one centrally located UI and information system while scaling out multiple datacenters or locations. Each instance, master or remote poller, requires its own MySQL based database. The pollers also have an addition requirement to access the Cacti master's database with read/write access.
 
-
-### Single Instance - cacti_single_install.yml
-This is likely the most common example to deploy a cacti instance. This is not using any external pollers and is self-contained on one server. There are two separate docker containers, one for the cacti service and another for the MySQL based database. The example docker-compose file will have cacti setup a new database during the initial installation. This takes about 5-10 minutes on first boot before the web UI would be available, after the initial setup the service is up within 15 seconds. 
-
-![Alt text](https://github.com/scline/docker-cacti/blob/master/document_images/single_host.png?raw=true "Single Host")
-
-*docker-compose.yml*
-```
-version: '2'
-services:
-  cacti:
-    image: "smcline06/cacti"
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - DB_NAME=cacti_master
-      - DB_USER=cactiuser
-      - DB_PASS=cactipassword
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_ROOT_PASS=rootpassword
-      - INITIALIZE_DB=1
-      - TZ=America/Los_Angeles
-    links:
-      - db
-
-  db:
-    image: "percona:5.7.14"
-    ports:
-      - "3306:3306"
-    command:
-      - mysqld
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --max_connections=200
-      - --max_heap_table_size=128M
-      - --max_allowed_packet=32M
-      - --tmp_table_size=128M
-      - --join_buffer_size=128M
-      - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
-      - --innodb_flush_log_at_timeout=3
-      - --innodb_read_io_threads=32
-      - --innodb_write_io_threads=16
-    environment:
-      - MYSQL_ROOT_PASSWORD=rootpassword
-      - TZ=America/Los_Angeles
-```
-
-### Single DB, Multi Node - cacti_multi_shared.yml
-This instance would most likely be used if multiple servers are in close (same network/cluster) and uptime is not an issue. One or more remote pollers hang off a beefy master-cacti instance. All cacti databases need to be named differently for this to work, also note that due to how spine + boost work the database instance will utilize a bit of ram (~1-4GB per remote poller) and settings should be tweaked in this example to reflect this. This setup would be favorable if CPU becomes a bottleneck on one or many servers. Adding remote pollers can offset the load greatly. RDD files don't appear to be stored on remote systems.
-
-![Alt text](https://github.com/scline/docker-cacti/blob/master/document_images/single_db.png?raw=true "Single DB, Multiple Hosts")
-
-*docker-compose.yml (Server 01)*
-```
-version: '2'
-services:
-  cacti-master:
-    image: "smcline06/cacti"
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - DB_NAME=cacti_master
-      - DB_USER=cactiuser
-      - DB_PASS=cactipassword
-      - DB_HOST=db-master
-      - DB_PORT=3306
-      - DB_ROOT_PASS=rootpassword
-      - INITIALIZE_DB=1
-      - TZ=UTC
-    links:
-      - db
-
-  db:
-    image: "percona:5.7.14"
-    ports:
-      - "3306:3306"
-    command:
-      - mysqld
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --max_connections=200
-      - --max_heap_table_size=128M
-      - --max_allowed_packet=32M
-      - --tmp_table_size=128M
-      - --join_buffer_size=128M
-      - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
-      - --innodb_flush_log_at_timeout=3
-      - --innodb_read_io_threads=32
-      - --innodb_write_io_threads=16
-    environment:
-      - MYSQL_ROOT_PASSWORD=rootpassword
-      - TZ=UTC
-
-```
-
-*docker-compose.yml (Server 02)*
-```
-  cacti-poller:
-    image: "smcline06/cacti"
-    ports:
-      - "8080:80"
-      - "8443:443"
-    environment:
-      - DB_NAME=cacti_poller
-      - DB_USER=cactiuser
-      - DB_PASS=cactipassword
-      - DB_HOST=10.1.2.3
-      - DB_PORT=3306
-      - RDB_NAME=cacti_master
-      - RDB_USER=cactiuser
-      - RDB_PASS=cactipassword
-      - RDB_HOST=10.1.2.3
-      - RDB_PORT=3306
-      - DB_ROOT_PASS=rootpassword
-      - REMOTE_POLLER=1
-      - INITIALIZE_DB=1
-      - TZ=UTC
-```
-
-### Multi DB, Multi Node - cacti_multi.yml
-Likely used for large deployments or where multiple locations/datacenters are at play. One master server for settings and a single window into all monitoring while pollers in remote locations gather information and feed it back home. The limiting factor will be latency or disk IO on the master database since pollers will write data directly to it when gathering SNMP/scripts. RDD files don't appear to be stored on remote systems.
-
-![Alt text](https://github.com/scline/docker-cacti/blob/master/document_images/multi_host.png?raw=true "Multiple Hosts and DB")
-
-*docker-compose.yml (Server 01)*
-```
-version: '2'
-services:
-  cacti-master:
-    image: "smcline06/cacti"
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - DB_NAME=cacti_master
-      - DB_USER=cactiuser
-      - DB_PASS=cactipassword
-      - DB_HOST=db-master
-      - DB_PORT=3306
-      - DB_ROOT_PASS=rootpassword
-      - INITIALIZE_DB=1
-      - TZ=UTC
-    links:
-      - db-master
-
-  db-master:
-    image: "percona:5.7.14"
-    ports:
-      - "3306:3306"
-    command:
-      - mysqld
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --max_connections=200
-      - --max_heap_table_size=128M
-      - --max_allowed_packet=32M
-      - --tmp_table_size=128M
-      - --join_buffer_size=128M
-      - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
-      - --innodb_flush_log_at_timeout=3
-      - --innodb_read_io_threads=32
-      - --innodb_write_io_threads=16
-    environment:
-      - MYSQL_ROOT_PASSWORD=rootpassword
-      - TZ=UTC
-```
-
-*docker-compose.yml (Server 02)*
-```
-  cacti-poller:
-    image: "smcline06/cacti"
-    ports:
-      - "8080:80"
-      - "8443:443"
-    environment:
-      - DB_NAME=cacti_poller
-      - DB_USER=cactiuser
-      - DB_PASS=cactipassword
-      - DB_HOST=db-poller
-      - DB_PORT=3306
-      - RDB_NAME=cacti_master
-      - RDB_USER=cactiuser
-      - RDB_PASS=cactipassword
-      - RDB_HOST=10.1.2.3
-      - RDB_PORT=3306
-      - DB_ROOT_PASS=rootpassword
-      - REMOTE_POLLER=1
-      - INITIALIZE_DB=1
-      - TZ=UTC
-    links:
-      - db-poller
-
-  db-poller:
-    image: "percona:5.7.14"
-    command:
-      - mysqld
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --max_connections=200
-      - --max_heap_table_size=128M
-      - --max_allowed_packet=32M
-      - --tmp_table_size=128M
-      - --join_buffer_size=128M
-      - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
-      - --innodb_flush_log_at_timeout=3
-      - --innodb_read_io_threads=32
-      - --innodb_write_io_threads=16
-    environment:
-      - MYSQL_ROOT_PASSWORD=rootpassword
-      - TZ=UTC
-```
-
+Some docker-compose examples can be found in the following [readme][arch]
 
 ## Container Customization
 There are a few customizations you can do if you are building the container locally. During the build process Plugins and Device Templates can be added to folders where at startup, scripts will import and install.
@@ -381,11 +191,17 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
-##### 1.1.1 - 03/27/2017
+#### 1.1.2 - 04/02/2017
+ * Update Cacti and Spine from 1.1.1 to 1.1.2 - [changelog link][CL1.1.2]
+ * Restore from a cacti backup is now working via `restore.sh <backupfile>` command
+ * Minor cleanup of `backup.sh` script
+ * Upgrade cacti script created and tested using `upgrade.sh` script
+ 
+#### 1.1.1 - 03/27/2017
  * Update Cacti and Spine from 1.1.0 to 1.1.1 - [changelog link][CL1.1.1]
  * GitHub ReadMe organization
 
-##### 1.1.0 - 03/25/2017
+#### 1.1.0 - 03/25/2017
  * Initial push
 
 # Known Issues/Fixes
@@ -394,13 +210,15 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * HTTPS is not setup to work, it may work just understand no testing has been done.
 
 # ToDo
-* Restore command + script to restore cacti from a backup.
-* Cacti version upgrades w/o data loss, currently you will need to manually upgrade versions.
 * Enable container SNMP for monitoring, import/create local container template for use.
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.2]: http://www.cacti.net/release_notes_1_1_2.php
 [CL1.1.1]: http://www.cacti.net/release_notes_1_1_1.php
-[docker_volume_help]: https://docs.docker.com/engine/tutorials/dockervolumes/
-[cacti_forums]: http://forums.cacti.net/
-[cws]: http://cacti.net/
+[cacti_download]: http://www.cacti.net/downloads
+[spine_download]: http://www.cacti.net/downloads/spine
+[arch]: https://github.com/scline/docker-cacti/tree/master/docker-compose
+[docker_volume_help]: https://docs.docker.com/engine/tutorials/dockervolumes
+[cacti_forums]: http://forums.cacti.net
+[cws]: http://cacti.net
