@@ -1,5 +1,2 @@
 # Mac Files
 .DS_Store
-
-# Testing deployments
-docker-compose.yml
