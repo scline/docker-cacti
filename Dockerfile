@@ -10,7 +10,7 @@ RUN \
 
     yum install -y \
         rrdtool net-snmp net-snmp-utils cronie php-ldap php-devel mysql php \
-        ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl \
+        ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl nfs-utils \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo && \
 
     tar -xf /tmp/cacti-1*.tar.gz -C /tmp && \
