@@ -10,7 +10,7 @@ RUN \
 
     yum install -y \
         rrdtool net-snmp net-snmp-utils cronie php-ldap php-devel mysql php \
-        ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl nfs-utils \
+        ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo && \
 
     tar -xf /tmp/cacti-1*.tar.gz -C /tmp && \
@@ -34,9 +34,11 @@ RUN \
     yum clean all
 
 ## --- CRON ---
-COPY configs/crontab.apache /var/spool/cron/apache
-RUN chmod 0600 /var/spool/cron/*
+COPY configs/crontab /etc/crontab
+# Fix cron issues - https://github.com/CentOS/CentOS-Dockerfiles/issues/31
+RUN sed -i '/session required pam_loginuid.so/d' /etc/pamd.d/crond
 
+## --- SERVICE CONFIGS ---
 COPY configs/spine.conf /spine/etc
 COPY configs/cacti.conf /etc/httpd/conf.d
 COPY configs/config.php /cacti/include
