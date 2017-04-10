@@ -1,2 +1,0 @@
-*/5 * * * * php /cacti/poller.php > /dev/null 2>&1
-00 12 * * * php /cacti/cli/poller_reindex_hosts.php --id=all > /dev/null 2>&1
