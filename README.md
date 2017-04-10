@@ -188,7 +188,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
-#### 1.1.2 - 04/02/2017
+#### 1.1.2 - 04/09/2017
+ * Update crontab from apache user to /etc/crontab
+ * Apply https://github.com/CentOS/CentOS-Dockerfiles/issues/31 fix so cron works on Centos:7 container
+--- 04/02/2017 ---
  * Update Cacti and Spine from 1.1.1 to 1.1.2 - [changelog link][CL1.1.2]
  * Restore from a cacti backup is now working via `restore.sh <backupfile>` command
  * Minor cleanup of `backup.sh` script

@@ -36,7 +36,7 @@ RUN \
 ## --- CRON ---
 COPY configs/crontab /etc/crontab
 # Fix cron issues - https://github.com/CentOS/CentOS-Dockerfiles/issues/31
-RUN sed -i '/session required pam_loginuid.so/d' /etc/pamd.d/crond
+RUN sed -i '/session required pam_loginuid.so/d' /etc/pam.d/crond
 
 ## --- SERVICE CONFIGS ---
 COPY configs/spine.conf /spine/etc
