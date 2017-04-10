@@ -34,9 +34,11 @@ RUN \
     yum clean all
 
 ## --- CRON ---
-COPY configs/crontab.apache /var/spool/cron/apache
-RUN chmod 0600 /var/spool/cron/*
+COPY configs/crontab /etc/crontab
+# Fix cron issues - https://github.com/CentOS/CentOS-Dockerfiles/issues/31
+RUN sed -i '/session required pam_loginuid.so/d' /etc/pam.d/crond
 
+## --- SERVICE CONFIGS ---
 COPY configs/spine.conf /spine/etc
 COPY configs/cacti.conf /etc/httpd/conf.d
 COPY configs/config.php /cacti/include
@@ -76,6 +78,7 @@ ENV \
     BACKUP_RETENTION=7 \
     BACKUP_TIME=0 \
 
+    SNMP_COMMUNITY=public \
     REMOTE_POLLER=0 \
     INITIALIZE_DB=0 \
     INITIALIZE_INFLUX=0 \
