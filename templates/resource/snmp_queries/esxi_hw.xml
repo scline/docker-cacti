@@ -1,0 +1,39 @@
+<interface>
+        <name>Get ESXi hw</name>
+        <description>Get ESXi hw</description>
+        <index_order_type>numeric</index_order_type>
+        <oid_index>.1.3.6.1.2.1.25.3.2.1.1</oid_index>
+
+        <fields>
+                <hrIndex>
+                        <name>Index</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>1.3.6.1.2.1.25.3.2.1.1</oid>
+                </hrIndex>
+		<hrDescr>
+                        <name>Description</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>.1.3.6.1.2.1.25.3.2.1.3</oid>
+                </hrDescr>
+		<hrState>
+                        <name>State</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>.1.3.6.1.2.1.25.3.2.1.5</oid>
+                </hrState>
+		<hrOState>
+                        <name>State</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>output</direction>
+                        <oid>.1.3.6.1.2.1.25.3.2.1.5</oid>
+                </hrOState>
+
+
+        </fields>
+</interface>
