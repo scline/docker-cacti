@@ -14,7 +14,8 @@ sed -i -e "s/%DB_HOST%/${DB_HOST}/" \
        -e "s/%RDB_PASS%/${RDB_PASS}/" \
        /cacti/include/config.php \
        /settings/*.sql \
-       /spine/etc/spine.conf 
+       /spine/etc/spine.conf \
+       /cacti/scripts/ss_get_mysql_stats.php
 
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
@@ -51,16 +52,16 @@ if [ ! -f /cacti/install.lock ]; then
        cp -r /templates/resource /cacti
        cp -r /templates/scripts /cacti
 
-       # install additional templates
-       for filename in /templates/*.xml; do
-              echo "$(date +%F_%R) [New Install] Installing template file $filename"
-              php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
-       done
-
        # install additional settings
        for filename in /settings/*.sql; do
               echo "$(date +%F_%R) [New Install] Importing settings file $filename"
               mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
+       done
+
+       # install additional templates
+       for filename in /templates/*.xml; do
+              echo "$(date +%F_%R) [New Install] Installing template file $filename"
+              php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
        done
 
        # create lock file so this is not re-ran on restart

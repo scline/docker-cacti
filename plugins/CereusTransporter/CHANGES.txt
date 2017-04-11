@@ -1,3 +1,6 @@
+0.66
+ * Fixed 'index_type' error 
+
 0.64
  * Fixed some error warnings
  * Disabled error reporting for influxdb DB creation due to parse_url function not supporting empty user/passwords

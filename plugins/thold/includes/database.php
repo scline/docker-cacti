@@ -316,6 +316,11 @@ function thold_upgrade_database () {
 		api_plugin_db_add_column ('thold', 'thold_template', array('name' => 'thold_hrule_warning', 'type' => 'int(11)', 'unsigned' => true, 'NULL' => true, 'after' => 'thold_hrule_alert') );
 	}
 
+	if (version_compare($oldv, '1.0.2', '<')) {
+		db_execute('ALTER TABLE thold_data MODIFY COLUMN expression VARCHAR(128) NOT NULL DEFAULT ""');
+		db_execute('ALTER TABLE thold_template MODIFY COLUMN expression VARCHAR(128) NOT NULL DEFAULT ""');
+	}
+
 	db_execute('UPDATE settings SET value = "' . $v['version'] . '" WHERE name = "plugin_thold_version"');
 	db_execute('UPDATE plugin_config SET version = "' . $v['version'] . '" WHERE directory = "thold"');
 }
@@ -368,7 +373,7 @@ function thold_setup_database () {
 	$data['columns'][] = array('name' => 'data_type', 'type' => 'int(12)', 'NULL' => false, 'default' => '0');
 	$data['columns'][] = array('name' => 'cdef', 'type' => 'int(11)', 'NULL' => false, 'default' => '0');
 	$data['columns'][] = array('name' => 'percent_ds', 'type' => 'varchar(64)', 'NULL' => false, 'default' => '');
-	$data['columns'][] = array('name' => 'expression', 'type' => 'varchar(70)', 'NULL' => false, 'default' => '');
+	$data['columns'][] = array('name' => 'expression', 'type' => 'varchar(128)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'thold_template_id', 'type' => 'int(11)', 'NULL' => false, 'default' => '0');
 	$data['columns'][] = array('name' => 'template_enabled', 'type' => 'char(3)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'tcheck', 'type' => 'int(1)', 'NULL' => false, 'default' => '0');
@@ -436,7 +441,7 @@ function thold_setup_database () {
 	$data['columns'][] = array('name' => 'data_type', 'type' => 'int(12)', 'NULL' => false, 'default' => '0');
 	$data['columns'][] = array('name' => 'cdef', 'type' => 'int(11)', 'NULL' => false, 'default' => '0');
 	$data['columns'][] = array('name' => 'percent_ds', 'type' => 'varchar(64)', 'NULL' => false, 'default' => '');
-	$data['columns'][] = array('name' => 'expression', 'type' => 'varchar(70)', 'NULL' => false, 'default' => '');
+	$data['columns'][] = array('name' => 'expression', 'type' => 'varchar(128)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'exempt', 'type' => 'char(3)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'thold_hrule_alert', 'type' => 'int(11)', 'unsigned' => true, 'NULL' => true);
 	$data['columns'][] = array('name' => 'thold_hrule_warning', 'type' => 'int(11)', 'unsigned' => true, 'NULL' => true);

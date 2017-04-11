@@ -1,0 +1,35 @@
+<interface>
+        <name>Get ESXi CPU Load</name>
+        <description>ESXi CPU</description>
+        <index_order_type>numeric</index_order_type>
+        <oid_index>1.3.6.1.2.1.25.3.3.1</oid_index>
+        <oid_index_parse>OID/REGEXP:.*\.([0-9]{1,2})$</oid_index_parse>
+
+        <fields>
+                <hrProcessorIndex>
+                        <name>Index</name>
+                        <method>walk</method>
+                        <source>index</source>
+                        <direction>input</direction>
+                </hrProcessorIndex>
+
+                <hrProcessorLoad>
+                        <name>ProcessorLoad</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>1.3.6.1.2.1.25.3.3.1.2</oid>
+                </hrProcessorLoad>
+                
+                <hrLoad>
+                        <name>Load</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>output</direction>
+                        <oid>1.3.6.1.2.1.25.3.3.1.2</oid>
+                </hrLoad>
+                
+                
+                
+        </fields>
+</interface>

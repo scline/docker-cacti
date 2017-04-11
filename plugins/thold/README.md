@@ -36,7 +36,17 @@ The thold plugin has been in development for well over a decade with increasing 
 
 ##ChangeLog
 
---- 1.0 ---
+--- 1.0.2 ---
+* issue#60: Threshold Templates could not be exported
+* issue#61: RPN Expression column too narrow
+* issue#64: Request High/Low Threshold allow for floating point values
+
+--- 1.0.1 ---
+* issue#57: Thold can not display graph with hrules due to lack of escaping
+* issue#58: Autocreate creates too many thresholds
+* bug: Resolve issue where wrong graph could be attached to email
+
+--- 1.0.0 ---
 * feature: Initial Support for Cacti 1.0
 * feature: Multiple tholds per data source
 * feature: Moving most SQL to prepared statements for security

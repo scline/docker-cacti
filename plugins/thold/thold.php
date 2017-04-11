@@ -387,9 +387,6 @@ function list_tholds() {
 
 	$sql_where = '';
 
-	$sort = get_request_var('sort_column');
-	$limit = ' LIMIT ' . ($rows*(get_request_var('page')-1)) . ", $rows";
-
 	if (!isempty_request_var('host_id') && get_request_var('host_id') != '-1') {
 		$sql_where .= (!strlen($sql_where) ? '(' : ' AND ') . "td.host_id = " . get_request_var('host_id');
 	}
@@ -406,7 +403,11 @@ function list_tholds() {
 		$sql_where .= ')';
 	}
 
-	$tholds = get_allowed_thresholds($sql_where, $sort . ' ' . get_request_var('sort_direction'), ($rows*(get_request_var('page')-1)) . ", $rows", $total_rows);
+	$sql_order = get_order_string();
+	$sql_limit = ($rows*(get_request_var('page')-1)) . ',' . $rows;
+	$sql_order = str_replace('ORDER BY ', '', $sql_order);
+
+	$tholds = get_allowed_thresholds($sql_where, $sql_order, $sql_limit, $total_rows);
 
 	$data_templates = db_fetch_assoc('SELECT DISTINCT dt.id, dt.name
 		FROM data_template AS dt
