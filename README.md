@@ -174,6 +174,11 @@ To have plugins automatically loaded on boot, simply have the uncompressed plugi
 
 To add plugins after the container is built, for example if pulling directly form dockerhub, mount the `/cacti/plugins` directory using [docker volumes][docker_volume_help]. 
 
+The following plugins are included by default with this container
+|Plugin Name | Version |
+| THOLD | 1.0.2 |
+| CereusTransporter | 0.66 |
+
 ### Settings
 Settings can be passed through to cacti at initial install by placing the SQL changes in the form of filename.sql under the settings folder. start.sh will automatically merge all *.sql files during install. For example the folling is there to enable spine by default:
 ##### /settings/spine.sql
@@ -188,9 +193,16 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
-#### 1.1.2 - 04/09/2017
+#### 1.1.2 - 04/11/2017
+ * Added 1 Minute polling template
+ * Updated plugin THOLD 1.0.1 -> 1.0.2
+ * Updated CereusTransporter 0.65 -> 0.66
+ * Added F5, ESX, PerconaDB, and Linux host templates
+
+--- 04/09/2017 ---
  * Update crontab from apache user to /etc/crontab
  * Apply https://github.com/CentOS/CentOS-Dockerfiles/issues/31 fix so cron works on Centos:7 container
+
 --- 04/02/2017 ---
  * Update Cacti and Spine from 1.1.1 to 1.1.2 - [changelog link][CL1.1.2]
  * Restore from a cacti backup is now working via `restore.sh <backupfile>` command

@@ -176,7 +176,7 @@ EOT;
 			if ( isset( $ds[ 'polling_time' ] ) ) {
 				$ds_info[ $ds_id ][ 'polling_time' ] = $ds[ 'polling_time' ];
 			}
-			if ( isset( $field_info[ $ds_id ] ) && isset( $field_info[ $ds_id ][ 'index_type' ] ) && is_null( $ds_info[ $ds_id ][ 'index_type' ] ) ) {
+			if ( array_key_exists( $ds_id, $field_info ) && array_key_exists( 'index_type', $field_info[ $ds_id ] ) && is_null( $ds_info[ $ds_id ][ 'index_type' ] ) ) {
 				$ds_info[ $ds_id ][ 'index_type' ]  = $field_info[ $ds_id ][ 'index_type' ];
 				$ds_info[ $ds_id ][ 'index_value' ] = $field_info[ $ds_id ][ 'index_value' ];
 			}
