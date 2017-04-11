@@ -42,6 +42,9 @@ if [ ! -f /cacti/install.lock ]; then
               # allow required access to mysql timezone table
               echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
               mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
+              # allow super,process for monitoring
+              echo "$(date +%F_%R) [New Install] GRANT SUPER, PROCESS ON *.* TO '${DB_USER}' IDENTIFIED BY '*******';"
+              mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT GRANT SUPER, PROCESS ON *.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"     
        fi
 
        # fresh install db merge
