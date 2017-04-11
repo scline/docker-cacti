@@ -14,7 +14,8 @@ sed -i -e "s/%DB_HOST%/${DB_HOST}/" \
        -e "s/%RDB_PASS%/${RDB_PASS}/" \
        /cacti/include/config.php \
        /settings/*.sql \
-       /spine/etc/spine.conf 
+       /spine/etc/spine.conf \
+       /cacti/scripts/ss_get_mysql_stats.php
 
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
