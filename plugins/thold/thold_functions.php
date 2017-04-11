@@ -1206,16 +1206,16 @@ function thold_log($save){
 }
 
 function plugin_thold_duration_convert($rra, $data, $type, $field = 'local_data_id') {
-	global $config;
+	global $config, $repeatarray, $alertarray, $timearray;
 
 	/* handle a null data value */
 	if ($data == '') {
 		return '';
 	}
 
-	$step = db_fetch_cell("SELECT rrd_step FROM data_template_data WHERE $field=$rra");
+	include_once($config['base_path'] . '/plugins/thold/includes/arrays.php');
 
-	include($config['base_path'] . '/plugins/thold/includes/arrays.php');
+	$step = db_fetch_cell("SELECT rrd_step FROM data_template_data WHERE $field=$rra");
 
 	switch ($type) {
 	case 'repeat':
@@ -2430,7 +2430,7 @@ function get_thold_alert_text($name, $thold, $h, $currentval, $local_graph_id) {
 	$alert_text = str_replace('<DATE_RFC822>',   date(DATE_RFC822), $alert_text);
 	$alert_text = str_replace('<DEVICENOTE>',    $h['notes'], $alert_text);
 
-	$alert_text = str_replace('<URL>',           "<a href='" . htmlspecialchars("$httpurl/graph.php?local_graph_id=$local_graph_id&rra_id=1") . "'>$httpurl/graph.php?local_graph_id=$local_graph_id&rra_id=1</a>", $alert_text);
+	$alert_text = str_replace('<URL>',           "<a href='" . htmlspecialchars("$httpurl/graph.php?local_graph_id=$local_graph_id") . "'>" . __('Link to Graph in Cacti') . "</a>", $alert_text);
 
 	return $alert_text;
 }
@@ -2476,7 +2476,7 @@ function get_thold_warning_text($name, $thold, $h, $currentval, $local_graph_id)
 	$warning_text = str_replace('<DATE_RFC822>',  date(DATE_RFC822), $warning_text);
 	$warning_text = str_replace('<DEVICENOTE>',   $h['notes'], $warning_text);
 
-	$warning_text = str_replace('<URL>',          "<a href='" . htmlspecialchars("$httpurl/graph.php?local_graph_id=$local_graph_id&rra_id=1") . "'>$httpurl/graph.php?local_graph_id=$local_graph_id&rra_id=1</a>", $warning_text);
+	$warning_text = str_replace('<URL>',          "<a href='" . htmlspecialchars("$httpurl/graph.php?local_graph_id=$local_graph_id") . "'>" . __('Link to Graph in Cacti') . "</a>", $warning_text);
 
 	return $warning_text;
 }
@@ -2510,9 +2510,9 @@ function thold_format_name($template, $local_graph_id, $local_data_id, $data_sou
 }
 
 function get_reference_types($rra = 0, $step = 300) {
-	global $config;
+	global $config, $timearray;
 
-	include($config['base_path'] . '/plugins/thold/includes/arrays.php');
+	include_once($config['base_path'] . '/plugins/thold/includes/arrays.php');
 
 	$rra_steps = db_fetch_assoc('SELECT DISTINCT dspr.steps
 		FROM data_template_data AS dtd
@@ -2970,89 +2970,6 @@ function save_thold() {
 		return get_filter_request_var('id');
 	}
 
-	if (isset_request_var('id')) {
-		/* Do Some error Checks */
-		$banner = "<span class='textError'>";
-		if (get_filter_request_var('thold_type') == 0 && 
-			get_filter_request_var('thold_hi', FILTER_VALIDATE_FLOAT) == '' && 
-			get_filter_request_var('thold_low', FILTER_VALIDATE_FLOAT) == '' && 
-			get_filter_request_var('thold_fail_trigger') != 0) {
-			$banner .= __('You must specify either &quot;High Alert Threshold&quot; or &quot;Low Alert Threshold&quot; or both!<br>RECORD NOT UPDATED!</span>');
-
-			$_SESSION['thold_message'] = $banner;
-			raise_message('thold_message');
-
-			return get_filter_request_var('id');
-		}
-
-		if (get_filter_request_var('thold_type') == 0 && 
-			get_filter_request_var('thold_warning_hi', FILTER_VALIDATE_FLOAT) == '' && 
-			get_filter_request_var('thold_warning_low', FILTER_VALIDATE_FLOAT) == '' && 
-			get_filter_request_var('thold_warning_fail_trigger') != 0) {
-			$banner .= __('You must specify either &quot;High Warning Threshold&quot; or &quot;Low Warning Threshold&quot; or both!<br>RECORD NOT UPDATED!</span>');
-
-			$_SESSION['thold_message'] = $banner;
-			raise_message('thold_message');
-
-			return get_filter_request_var('id');
-		}
-
-		if (get_filter_request_var('thold_type') == 0 && 
-			get_filter_request_var('thold_hi', FILTER_VALIDATE_FLOAT) != '' && 
-			get_filter_request_var('thold_low', FILTER_VALIDATE_FLOAT) != '' && 
-			round(get_filter_request_var('thold_low'),4) >= round(get_filter_request_var('thold_hi'), 4)) {
-			$banner .= __('Impossible thresholds: &quot;High Threshold&quot; smaller than or equal to &quot;Low Threshold&quot;<br>RECORD NOT UPDATED!</span>');
-
-			$_SESSION['thold_message'] = $banner;
-			raise_message('thold_message');
-
-			return get_filter_request_var('id');
-		}
-
-		if (get_filter_request_var('thold_type') == 0 && 
-			get_filter_request_var('thold_warning_hi', FILTER_VALIDATE_FLOAT) != '' && 
-			get_filter_request_var('thold_warning_low', FILTER_VALIDATE_FLOAT) != '' && 
-			round(get_filter_request_var('thold_warning_low'),4) >= round(get_filter_request_var('thold_warning_hi'), 4)) {
-			$banner .= __('Impossible thresholds: &quot;High Warning Threshold&quot; smaller than or equal to &quot;Low Warning Threshold&quot;<br>RECORD NOT UPDATED!</span>');
-
-			$_SESSION['thold_message'] = $banner;
-			raise_message('thold_message');
-
-			return get_filter_request_var('id');
-		}
-
-		if (get_filter_request_var('thold_type') == 1) {
-			$banner .= __('With baseline thresholds enabled.');
-
-			if (!thold_mandatory_field_ok('bl_ref_time_range', 'Time reference in the past')) {
-				$banner .= '</span>';
-
-				$_SESSION['thold_message'] = $banner;
-				raise_message('thold_message');
-
-				return get_filter_request_var('id');
-			}
-
-			if (isempty_request_var('bl_pct_down') && isempty_request_var('bl_pct_up')) {
-				$banner .= __('You must specify either &quot;Baseline Deviation UP&quot; or &quot;Baseline Deviation DOWN&quot; or both!<br>RECORD NOT UPDATED!</span>');
-
-				$_SESSION['thold_message'] = $banner;
-				raise_message('thold_message');
-
-				return get_filter_request_var('id');
-			}
-		}
-	}
-
-	$save = array();
-
-	if (isset_request_var('id')) {
-		$save['id'] = get_filter_request_var('id');
-	} else {
-		$save['id'] = '0';
-		$save['thold_template_id'] = '';
-	}
-
 	get_filter_request_var('thold_hi', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('thold_low', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('thold_fail_trigger');
@@ -3079,6 +2996,89 @@ function save_thold() {
 	get_filter_request_var('bl_pct_down', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('bl_pct_up', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('bl_fail_trigger');
+
+	if (isset_request_var('id')) {
+		/* Do Some error Checks */
+		$banner = "<span class='textError'>";
+		if (get_request_var('thold_type') == 0 && 
+			get_request_var('thold_hi') == '' && 
+			get_request_var('thold_low') == '' && 
+			get_request_var('thold_fail_trigger') != 0) {
+			$banner .= __('You must specify either &quot;High Alert Threshold&quot; or &quot;Low Alert Threshold&quot; or both!<br>RECORD NOT UPDATED!</span>');
+
+			$_SESSION['thold_message'] = $banner;
+			raise_message('thold_message');
+
+			return get_request_var('id');
+		}
+
+		if (get_request_var('thold_type') == 0 && 
+			get_request_var('thold_warning_hi') == '' && 
+			get_request_var('thold_warning_low') == '' && 
+			get_request_var('thold_warning_fail_trigger') != 0) {
+			$banner .= __('You must specify either &quot;High Warning Threshold&quot; or &quot;Low Warning Threshold&quot; or both!<br>RECORD NOT UPDATED!</span>');
+
+			$_SESSION['thold_message'] = $banner;
+			raise_message('thold_message');
+
+			return get_request_var('id');
+		}
+
+		if (get_request_var('thold_type') == 0 && 
+			get_request_var('thold_hi') != '' && 
+			get_request_var('thold_low') != '' && 
+			round(get_request_var('thold_low'),4) >= round(get_request_var('thold_hi'), 4)) {
+			$banner .= __('Impossible thresholds: &quot;High Threshold&quot; smaller than or equal to &quot;Low Threshold&quot;<br>RECORD NOT UPDATED!</span>');
+
+			$_SESSION['thold_message'] = $banner;
+			raise_message('thold_message');
+
+			return get_request_var('id');
+		}
+
+		if (get_request_var('thold_type') == 0 && 
+			get_request_var('thold_warning_hi') != '' && 
+			get_request_var('thold_warning_low') != '' && 
+			round(get_request_var('thold_warning_low'),4) >= round(get_request_var('thold_warning_hi'), 4)) {
+			$banner .= __('Impossible thresholds: &quot;High Warning Threshold&quot; smaller than or equal to &quot;Low Warning Threshold&quot;<br>RECORD NOT UPDATED!</span>');
+
+			$_SESSION['thold_message'] = $banner;
+			raise_message('thold_message');
+
+			return get_request_var('id');
+		}
+
+		if (get_request_var('thold_type') == 1) {
+			$banner .= __('With baseline thresholds enabled.');
+
+			if (!thold_mandatory_field_ok('bl_ref_time_range', 'Time reference in the past')) {
+				$banner .= '</span>';
+
+				$_SESSION['thold_message'] = $banner;
+				raise_message('thold_message');
+
+				return get_request_var('id');
+			}
+
+			if (isempty_request_var('bl_pct_down') && isempty_request_var('bl_pct_up')) {
+				$banner .= __('You must specify either &quot;Baseline Deviation UP&quot; or &quot;Baseline Deviation DOWN&quot; or both!<br>RECORD NOT UPDATED!</span>');
+
+				$_SESSION['thold_message'] = $banner;
+				raise_message('thold_message');
+
+				return get_request_var('id');
+			}
+		}
+	}
+
+	$save = array();
+
+	if (isset_request_var('id')) {
+		$save['id'] = get_request_var('id');
+	} else {
+		$save['id'] = '0';
+		$save['thold_template_id'] = '';
+	}
 
 	if (isset_request_var('snmp_event_category')) {
 		set_request_var('snmp_event_category', trim(str_replace(array("\\", "'", '"'), '', get_nfilter_request_var('snmp_event_category'))));
@@ -3303,27 +3303,31 @@ function autocreate($host_id) {
 
 	$host_template_id = db_fetch_cell_prepared('SELECT host_template_id FROM host WHERE id = ?', array($host_id));
 
-	$template_list = array_rekey(db_fetch_assoc_prepared('SELECT tt.data_template_id 
+	$template_list = array_rekey(db_fetch_assoc_prepared('SELECT tt.data_template_id, tt.id
 		FROM thold_template AS tt
 		INNER JOIN plugin_thold_host_template AS ptht
 		ON tt.id=ptht.thold_template_id
-		WHERE ptht.host_template_id = ?', array($host_template_id)), 'data_template_id', 'data_template_id');
+		WHERE ptht.host_template_id = ?', array($host_template_id)), 'data_template_id', 'id');
 
-	if (!count($template_list)) {
+	if (!sizeof($template_list)) {
 		$_SESSION['thold_message'] = '<font size=-2>' . __('No Thresholds Templates associated with the Host\'s Template.') . '</font>';
 		return 0;
+	}
+
+	foreach($template_list as $data_template_id => $thold_template_id) {
+		$data_templates[$data_template_id] = $data_template_id;
+		$thold_template_ids[$thold_template_id] = $thold_template_id;
 	}
 
 	$rralist = db_fetch_assoc_prepared('SELECT id, data_template_id 
 		FROM data_local 
 		WHERE host_id = ? 
-		AND data_template_id IN (' . implode(',', $template_list) . ')', 
+		AND data_template_id IN (' . implode(',', array_keys($data_templates)) . ')', 
 		array($host_id));
 
 	foreach ($rralist as $row) {
 		$local_data_id      = $row['id'];
 		$data_template_id   = $row['data_template_id'];
-		$thold_template_ids = db_fetch_assoc_prepared('SELECT id FROM thold_template WHERE data_template_id = ?', array($data_template_id));
 
 		if (sizeof($thold_template_ids)) {
 			foreach($thold_template_ids as $ttid) {
@@ -3467,6 +3471,12 @@ function thold_mail($to_email, $from_email, $subject, $message, $filename, $head
 	$attachments = array();
 
 	if (is_array($filename) && sizeof($filename) && strstr($message, '<GRAPH>') !== 0) {
+		if (isset($filename['local_data_id'])) {
+			$tmp      = array();
+			$tmp[]    = $filename;
+			$filename = $tmp;
+		}
+
 		foreach($filename as $val) {
 			$graph_data_array = array(
 				'graph_start'   => time()-86400,

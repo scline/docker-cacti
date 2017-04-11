@@ -254,14 +254,10 @@ function tholds() {
 	form_thold_filter();
 	html_end_box();
 
-	/* build the SQL query and WHERE clause */
-	if (get_request_var('sort_column') == 'lastread') {
-		$sort = get_request_var('sort_column') . "/1";
-	}else{
-		$sort = get_request_var('sort_column');
-	}
-
-	$limit = ' LIMIT ' . ($rows*(get_request_var('page')-1)) . ',' . $rows;
+	$sql_order = get_order_string();
+	$sql_limit = ($rows*(get_request_var('page')-1)) . ',' . $rows;
+	$sql_order = str_replace('lastread', 'lastread/1', $sql_order);
+	$sql_order = str_replace('ORDER BY ', '', $sql_order);
 
 	$sql_where = '';
 
@@ -293,7 +289,7 @@ function tholds() {
 		$sql_where .= ')';
 	}
 
-	$tholds = get_allowed_thresholds($sql_where, $sort . ' ' . get_request_var('sort_direction'), ($rows*(get_request_var('page')-1)) . ", $rows", $total_rows);
+	$tholds = get_allowed_thresholds($sql_where, $sql_order, $sql_limit, $total_rows);
 
 	$nav = html_nav_bar('thold_graph.php?action=thold', MAX_DISPLAY_PAGES, get_request_var('page'), $rows, $total_rows, 13, 'Thresholds', 'page', 'main');
 
@@ -565,15 +561,14 @@ function hosts() {
 
 	$sql_where .= (strlen($sql_where) ? ')':'');
 
-	$sortby = get_request_var('sort_column');
-	if ($sortby=='hostname') {
-		$sortby = 'INET_ATON(hostname)';
-	}
+	$sql_order = get_order_string();
+	$sql_limit = ($rows*(get_request_var('page')-1)) . ',' . $rows;
+	$sql_order = str_replace('ORDER BY ', '', $sql_order);
 
 	$host_graphs       = array_rekey(db_fetch_assoc('SELECT host_id, count(*) as graphs FROM graph_local GROUP BY host_id'), 'host_id', 'graphs');
 	$host_data_sources = array_rekey(db_fetch_assoc('SELECT host_id, count(*) as data_sources FROM data_local GROUP BY host_id'), 'host_id', 'data_sources');
 
-	$hosts = get_allowed_devices($sql_where, $sortby . ' ' . get_request_var('sort_direction'), ($rows*(get_request_var('page')-1)) . ',' . $rows, $total_rows);
+	$hosts = get_allowed_devices($sql_where, $sql_order, $sql_limit, $total_rows);
 
 	$nav = html_nav_bar('thold_graph.php?action=hoststat', MAX_DISPLAY_PAGES, get_request_var('page'), $rows, $total_rows, 12, __('Devices'), 'page', 'main');
 
@@ -893,10 +888,11 @@ function thold_show_log() {
 		$sql_where .= (strlen($sql_where) ? ' AND':'') . " tl.description LIKE '%" . get_request_var('filter') . "%'";
 	}
 
-	$sortby = get_request_var('sort_column') . ' ' . get_request_var('sort_direction');
-	$limit  = ($rows*(get_request_var('page')-1)) . ',' . $rows;
+	$sql_order = get_order_string();
+	$sql_limit = ($rows*(get_request_var('page')-1)) . ',' . $rows;
+	$sql_order = str_replace('ORDER BY ', '', $sql_order);
 
-	$logs = get_allowed_threshold_logs($sql_where, $sortby, $limit, $total_rows);
+	$logs = get_allowed_threshold_logs($sql_where, $sql_order, $sql_limit, $total_rows);
 
 	$nav = html_nav_bar('thold_graph.php?action=log', MAX_DISPLAY_PAGES, get_request_var('page'), $rows, $total_rows, 8, __('Log Entries'), 'page', 'main');
 

@@ -33,6 +33,8 @@ $thold_actions = array(
 	2 => __('Delete')
 );
 
+set_default_action();
+
 $action = get_nfilter_request_var('action');
 
 if (isset_request_var('drp_action') && get_filter_request_var('drp_action') == 2) {
@@ -371,24 +373,24 @@ function template_save_edit() {
 	/* ================= input validation ================= */
 	get_filter_request_var('id');
 	get_filter_request_var('thold_type');
-	get_filter_request_var('thold_hi');
-	get_filter_request_var('thold_low');
+	get_filter_request_var('thold_hi', FILTER_VALIDATE_FLOAT);
+	get_filter_request_var('thold_low', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('thold_fail_trigger');
-	get_filter_request_var('time_hi');
-	get_filter_request_var('time_low');
+	get_filter_request_var('time_hi', FILTER_VALIDATE_FLOAT);
+	get_filter_request_var('time_low', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('time_fail_trigger');
 	get_filter_request_var('time_fail_length');
 	get_filter_request_var('thold_warning_type');
-	get_filter_request_var('thold_warning_hi');
-	get_filter_request_var('thold_warning_low');
+	get_filter_request_var('thold_warning_hi', FILTER_VALIDATE_FLOAT);
+	get_filter_request_var('thold_warning_low', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('thold_warning_fail_trigger');
-	get_filter_request_var('time_warning_hi');
-	get_filter_request_var('time_warning_low');
+	get_filter_request_var('time_warning_hi', FILTER_VALIDATE_FLOAT);
+	get_filter_request_var('time_warning_low', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('time_warning_fail_trigger');
 	get_filter_request_var('time_warning_fail_length');
 	get_filter_request_var('bl_ref_time_range');
-	get_filter_request_var('bl_pct_down');
-	get_filter_request_var('bl_pct_up');
+	get_filter_request_var('bl_pct_down', FILTER_VALIDATE_FLOAT);
+	get_filter_request_var('bl_pct_up', FILTER_VALIDATE_FLOAT);
 	get_filter_request_var('bl_fail_trigger');
 	get_filter_request_var('repeat_alert');
 	get_filter_request_var('data_type');
@@ -984,12 +986,12 @@ function template_edit() {
 		),
 		'expression' => array(
 			'friendly_name' => __('RPN Expression'),
-			'method' => 'textbox',
+			'method' => 'textarea',
+			'textarea_rows' => 3,
+			'textarea_cols' => 80,
 			'default' => '',
 			'description' => __('An RPN Expression is an RRDtool Compatible RPN Expression.  Syntax includes all functions below in addition to both Device and Data Query replacement expressions such as <span style="color:blue;">|query_ifSpeed|</span>.  To use a Data Source in the RPN Expression, you must use the syntax: <span style="color:blue;">|ds:dsname|</span>.  For example, <span style="color:blue;">|ds:traffic_in|</span> will get the current value of the traffic_in Data Source for the RRDfile(s) associated with the Graph. Any Data Source for a Graph can be included.<br>Math Operators: <span style="color:blue;">+, -, /, *, &#37;, ^</span><br>Functions: <span style="color:blue;">SIN, COS, TAN, ATAN, SQRT, FLOOR, CEIL, DEG2RAD, RAD2DEG, ABS, EXP, LOG, ATAN, ADNAN</span><br>Flow Operators: <span style="color:blue;">UN, ISINF, IF, LT, LE, GT, GE, EQ, NE</span><br>Comparison Functions: <span style="color:blue;">MAX, MIN, INF, NEGINF, NAN, UNKN, COUNT, PREV</span>%s %s', $replacements, $datasources),
-			'value' => isset($thold_data['expression']) ? $thold_data['expression'] : '',
-			'max_length' => '255',
-			'size' => '80'
+			'value' => isset($thold_data['expression']) ? $thold_data['expression'] : ''
 		),
 		'other_header' => array(
 			'friendly_name' => __('Other Settings'),
@@ -1451,15 +1453,15 @@ function templates() {
 
 	$sql_where = '';
 
-	$limit = ' LIMIT ' . ($rows * (get_request_var('page')-1)) . ',' . $rows;
-	$order = 'ORDER BY ' . get_request_var('sort_column') . ' ' . get_request_var('sort_direction');
-
 	if (strlen(get_request_var('filter'))) {
 		$sql_where .= (strlen($sql_where) ? ' AND': 'WHERE') . " thold_template.name LIKE '%" . get_request_var('filter') . "%'";
 	}
 
+	$sql_order = get_order_string();
+	$sql_limit = ' LIMIT ' . ($rows*(get_request_var('page')-1)) . ',' . $rows;
+
 	$total_rows    = db_fetch_cell('SELECT count(*) FROM thold_template');
-	$template_list = db_fetch_assoc("SELECT * FROM thold_template $sql_where $order $limit");
+	$template_list = db_fetch_assoc("SELECT * FROM thold_template $sql_where $sql_order $sql_limit");
 
 	$nav = html_nav_bar('thold_templates.php?filter=' . get_request_var('filter'), MAX_DISPLAY_PAGES, get_request_var('page'), $rows, $total_rows, 10, __('Templates'), 'page', 'main');
 
@@ -1557,7 +1559,7 @@ function templates() {
 	/* draw the dropdown containing a list of available actions for this form */
 	draw_actions_dropdown($thold_actions);
 
-	form_end();
+	thold_form_end();
 }
 
 function import() {
@@ -1605,6 +1607,7 @@ function import() {
 
 	html_end_box();
 	form_hidden_box('save_component_import','1','');
+
 	form_save_button('', 'import');
 }
 
@@ -1714,3 +1717,30 @@ function template_import() {
 	header('Location: thold_templates.php?action=import');
 }
 
+/* form_end - draws post form end. To be combined with form_start() */
+function thold_form_end($ajax = true) {
+	global $form_id, $form_action;
+
+	print "</form>\n";
+
+	if ($ajax) { ?>
+		<script type='text/javascript'>
+		$(function() {
+			$('#<?php print $form_id;?>').submit(function(event) {
+				if ($('#drp_action').val() != '1') {
+					event.preventDefault();
+					strURL = '<?php print $form_action;?>';
+					strURL += (strURL.indexOf('?') >= 0 ? '&':'?') + 'header=false';
+					json =  $('#<?php print $form_id;?>').serializeObject();
+					$.post(strURL, json).done(function(data) {
+						$('#main').html(data);
+						applySkin();
+						window.scrollTo(0, 0);
+					});
+				}
+			});
+		});
+		</script>
+		<?php
+	}
+}
