@@ -52,16 +52,16 @@ if [ ! -f /cacti/install.lock ]; then
        cp -r /templates/resource /cacti
        cp -r /templates/scripts /cacti
 
-       # install additional templates
-       for filename in /templates/*.xml; do
-              echo "$(date +%F_%R) [New Install] Installing template file $filename"
-              php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
-       done
-
        # install additional settings
        for filename in /settings/*.sql; do
               echo "$(date +%F_%R) [New Install] Importing settings file $filename"
               mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
+       done
+
+       # install additional templates
+       for filename in /templates/*.xml; do
+              echo "$(date +%F_%R) [New Install] Installing template file $filename"
+              php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
        done
 
        # create lock file so this is not re-ran on restart
