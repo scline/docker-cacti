@@ -198,12 +198,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
  * Updated plugin THOLD 1.0.1 -> 1.0.2
  * Updated CereusTransporter 0.65 -> 0.66
  * Added F5, ESX, PerconaDB, and Linux host templates
-
---- 04/09/2017 ---
+##### --- 04/09/2017 ---
  * Update crontab from apache user to /etc/crontab
  * Apply https://github.com/CentOS/CentOS-Dockerfiles/issues/31 fix so cron works on Centos:7 container
-
---- 04/02/2017 ---
+##### --- 04/02/2017 ---
  * Update Cacti and Spine from 1.1.1 to 1.1.2 - [changelog link][CL1.1.2]
  * Restore from a cacti backup is now working via `restore.sh <backupfile>` command
  * Minor cleanup of `backup.sh` script
