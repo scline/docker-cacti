@@ -11,7 +11,7 @@ REPLACE INTO `%DB_NAME%`.`data_source_profiles_cf` (`data_source_profile_id`,`co
 
 REPLACE INTO `%DB_NAME%`.`data_source_profiles_rra` (`id`, `data_source_profile_id`,`name`,`steps`,`rows`) VALUES('10','4','Daily','1','1440');
 REPLACE INTO `%DB_NAME%`.`data_source_profiles_rra` (`id`, `data_source_profile_id`,`name`,`steps`,`rows`) VALUES('11','4','Weekly','1','10080');
-REPLACE INTO `%DB_NAME%`.`data_source_profiles_rra` (`id`, `data_source_profile_id`,`name`,`steps`,`rows`) VALUES('12','4','Monthly ( 5 minute avg)','5','8760');
+REPLACE INTO `%DB_NAME%`.`data_source_profiles_rra` (`id`, `data_source_profile_id`,`name`,`steps`,`rows`) VALUES('12','4','Monthly (5 minute avg)','5','8760');
 REPLACE INTO `%DB_NAME%`.`data_source_profiles_rra` (`id`, `data_source_profile_id`,`name`,`steps`,`rows`) VALUES('13','4','Yearly (1 hour avg)','60','8760');
 
 REPLACE INTO `%DB_NAME%`.`data_source_profiles` (`id`,`hash`,`name`,`step`,`heartbeat`,`x_files_factor`,`default`) VALUES('1','d62c52891f4f9688729a5bc9fad91b18','System Default','300','600','0.5','');
