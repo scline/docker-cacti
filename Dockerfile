@@ -28,6 +28,9 @@ RUN \
     chown root:root /spine/bin/spine && \
     chmod +s /spine/bin/spine && \
     
+## --- Cacti 1.1.2 Graph Automation Bug ---
+COPY /tmp/api_automation.php-1.1.2_fix /lib/api_automation.php
+
 ## --- CLEANUP ---
 #   yum remove -y gcc net-snmp-devel && \
     rm -rf /tmp/*  && \
