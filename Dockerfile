@@ -32,7 +32,7 @@ RUN \
 COPY /tmp/api_automation.php-1.1.2_fix /lib/api_automation.php
 
 ## --- CLEANUP ---
-#   yum remove -y gcc net-snmp-devel && \
+RUN \
     rm -rf /tmp/*  && \
     yum clean all
 
