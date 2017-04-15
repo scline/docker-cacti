@@ -130,13 +130,12 @@ docker exec <docker image ID or name> ./upgrade.sh
 If you want to specify a specific version please update the `/upgrade.sh` values.
  * [Cacti Version Links][cacti_download]
  * [Spine Version Links][spine_download]
+
 ```
 #!/bin/bash
-
 # script to upgrade a cacti instance to latest, if you want a specific version please update the following download links
 cacti_download_url=http://www.cacti.net/downloads/cacti-latest.tar.gz
 spine_download_url=http://www.cacti.net/downloads/spine/cacti-spine-latest.tar.gz
-
 ``` 
 
 ## Docker Cacti Architecture

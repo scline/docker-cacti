@@ -30,16 +30,16 @@ function ss_esxi_vhosts($hostname,$snmp_community,$snmp_port,$snmp_timeout) {
 	$array = cacti_snmp_walk($hostname, $snmp_community,$oids["vh_state"], 1, "","", "","", "", "", $snmp_port, $snmp_timeout, 2, 20,SNMP_POLLER);
 
 	foreach ($array as $key => $value)	{
-	    if (strtolower(trim($value[value])) == "powered on" || strtolower(trim($value[value])) == "poweredon" )
+	    if (strtolower(trim($value["value"])) == "powered on" || strtolower(trim($value["value"])) == "poweredon" )
 		$vh_state++;
 	}
 
 	$array = cacti_snmp_walk($hostname, $snmp_community,$oids["vh_tools"], 1, "","", "","", "", "", $snmp_port, $snmp_timeout, 2, 20,SNMP_POLLER);
 //var_dump($array);
 	foreach ($array as $key => $value)	{
-	    if (strpos ($value[value], "not installed") )
+	    if (strpos ($value["value"], "not installed") )
 		$vh_tools_ninst++;
-	    elseif (strpos ($value[value], "not running") !== false)
+	    elseif (strpos ($value["value"], "not running") !== false)
 	        $vh_tools_nrun++;
 	    else
 		$vh_tools_run++;
