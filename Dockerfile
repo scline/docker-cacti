@@ -8,6 +8,8 @@ COPY cacti /tmp
 RUN \
     rpm --rebuilddb && yum clean all && \
 
+    yum update -y && \
+
     yum install -y \
         rrdtool net-snmp net-snmp-utils cronie php-ldap php-devel mysql php \
         ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl \
@@ -29,7 +31,6 @@ RUN \
     chmod +s /spine/bin/spine && \
     
 ## --- CLEANUP ---
-#   yum remove -y gcc net-snmp-devel && \
     rm -rf /tmp/*  && \
     yum clean all
 
@@ -60,6 +61,9 @@ COPY backup.sh /backup.sh
 RUN chmod +x /backup.sh
 
 RUN mkdir /backup
+
+## --- Cacti 1.1.2 Graph Automation Bug ---
+COPY /cacti/api_automation.php-1.1.2_fix /lib/api_automation.php
 
 ## --- ENV ---
 ENV \

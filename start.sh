@@ -14,8 +14,7 @@ sed -i -e "s/%DB_HOST%/${DB_HOST}/" \
        -e "s/%RDB_PASS%/${RDB_PASS}/" \
        /cacti/include/config.php \
        /settings/*.sql \
-       /spine/etc/spine.conf \
-       /cacti/scripts/ss_get_mysql_stats.php
+       /spine/etc/spine.conf
 
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
@@ -41,7 +40,7 @@ if [ ! -f /cacti/install.lock ]; then
               mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
               # allow required access to mysql timezone table
               echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
-              mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
+              mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"   
        fi
 
        # fresh install db merge
