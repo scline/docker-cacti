@@ -62,9 +62,6 @@ RUN chmod +x /backup.sh
 
 RUN mkdir /backup
 
-## --- Cacti 1.1.2 Graph Automation Bug ---
-COPY /cacti/api_automation.php-1.1.2_fix /lib/api_automation.php
-
 ## --- ENV ---
 ENV \
     DB_NAME=cacti \

@@ -192,6 +192,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.1.2 - 04/15/2017
+ * Update Cacti and Spine from 1.1.2 to 1.1.3 - [changelog link][CL1.1.3]
+ * remove temp automation_api file fix since this has been solved in 1.1.3
+
 #### 1.1.2 - 04/11/2017
  * Added 1 Minute polling template
  * Updated plugin THOLD 1.0.1 -> 1.0.2
@@ -223,6 +227,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.3]: http://www.cacti.net/release_notes_1_1_3.php
 [CL1.1.2]: http://www.cacti.net/release_notes_1_1_2.php
 [CL1.1.1]: http://www.cacti.net/release_notes_1_1_1.php
 [cacti_download]: http://www.cacti.net/downloads
