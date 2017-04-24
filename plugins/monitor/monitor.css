@@ -1,0 +1,69 @@
+.monitor {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.monitor_main {
+	vertical-align: top;
+	margin-left: auto;
+	margin-right: auto;
+	display: table-row;
+	position: relative;
+	padding: 3px;
+	margin: 4px;
+}
+
+.monitor_frame {
+	float: left;
+	display: table-cell;
+}
+
+.monitor_tree_title {
+	padding: 3px;
+	margin: 4px;
+	width: 100%;
+}
+
+.monitor_tree_title table:first-child {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.monitor_tree_frame {
+	vertical-align: top;
+	float: left;
+	position: relative;
+	padding: 3px;
+	margin: 4px;
+	white-space: nowrap;
+}
+
+.monitor_device_frame {
+	text-align:center;
+	display: block;
+	padding: 3px;
+	margin: 2px;
+	float: left;
+}
+
+.monitor_device_frame a {
+	display: block;
+}
+
+.monitor_legend {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+.monitor_legend table {
+	padding: 2px;
+	width: 100%;
+}
+

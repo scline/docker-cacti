@@ -1,0 +1,669 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-08 08:20-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../poller_monitor.php:189 ../setup.php:338 ../monitor.php:39
+msgid "Disabled"
+msgstr ""
+
+#: ../poller_monitor.php:190 ../setup.php:76 ../setup.php:339
+#: ../monitor.php:40
+msgid "Low"
+msgstr ""
+
+#: ../poller_monitor.php:191 ../setup.php:77 ../setup.php:340
+#: ../monitor.php:41 ../monitor.php:73
+msgid "Medium"
+msgstr ""
+
+#: ../poller_monitor.php:192 ../setup.php:78 ../setup.php:341
+#: ../monitor.php:42
+msgid "High"
+msgstr ""
+
+#: ../poller_monitor.php:193 ../setup.php:79 ../setup.php:342
+#: ../monitor.php:43
+msgid "Mission Critical"
+msgstr ""
+
+#: ../poller_monitor.php:237 ../poller_monitor.php:239
+msgid "Cacti Monitor Plugin Ping Threshold Notification"
+msgstr ""
+
+#: ../poller_monitor.php:241
+msgid ""
+"The following report will identify Devices that have eclipsed their ping\n"
+"\t\t\tlatency thresholds.  You are receiving this report since you are "
+"subscribed to a Device \n"
+"\t\t\tassociated with the Cacti system located at the following URL below."
+msgstr ""
+
+#: ../poller_monitor.php:248
+#, php-format
+msgid ""
+"You will receive notifications every %d minutes if the Device is above its "
+"threshold."
+msgstr ""
+
+#: ../poller_monitor.php:250
+msgid ""
+"You will receive notifications every time the Device is above its threshold."
+msgstr ""
+
+#: ../poller_monitor.php:254
+msgid "The following Devices have breached their Alert Notification Threshold."
+msgstr ""
+
+#: ../poller_monitor.php:275
+msgid ""
+"The following Devices have breached their Warning Notification Threshold."
+msgstr ""
+
+#: ../setup.php:74
+msgid "Any"
+msgstr ""
+
+#: ../setup.php:75 ../monitor.php:301
+msgid "None"
+msgstr ""
+
+#: ../setup.php:82
+msgid "Criticality"
+msgstr ""
+
+#: ../setup.php:261
+#, php-format
+msgid "Click 'Continue' to %s monitoring on these Device(s)"
+msgstr ""
+
+#: ../setup.php:268
+msgid ""
+"Click 'Continue' to Change the Monitoring settings for the following Device"
+"(s). Remember to check 'Update this Field' to indicate which columns to "
+"update."
+msgstr ""
+
+#: ../setup.php:291
+msgid "Update this Field"
+msgstr ""
+
+#: ../setup.php:306
+msgid "Change Monitoring Options"
+msgstr ""
+
+#: ../setup.php:307
+msgid "Enable Monitoring"
+msgstr ""
+
+#: ../setup.php:308
+msgid "Disable Monitoring"
+msgstr ""
+
+#: ../setup.php:346
+msgid "Indefinately"
+msgstr ""
+
+#: ../setup.php:347
+#, php-format
+msgid "%d Month"
+msgstr ""
+
+#: ../setup.php:348 ../setup.php:349 ../setup.php:350 ../setup.php:351
+#, php-format
+msgid "%d Months"
+msgstr ""
+
+#: ../setup.php:352
+#, php-format
+msgid "%d Year"
+msgstr ""
+
+#: ../setup.php:360 ../setup.php:394
+msgid "Alarm Sound"
+msgstr ""
+
+#: ../setup.php:361 ../setup.php:395
+msgid "This is the sound file that will be played when a Device goes down."
+msgstr ""
+
+#: ../setup.php:367 ../setup.php:444
+msgid "Show Icon Legend"
+msgstr ""
+
+#: ../setup.php:368 ../setup.php:445
+msgid "Check this to show an icon legend on the Monitor display"
+msgstr ""
+
+#: ../setup.php:382
+msgid "Monitor Settings"
+msgstr ""
+
+#: ../setup.php:387
+msgid "Notification/Reboot Log Retention"
+msgstr ""
+
+#: ../setup.php:388
+msgid "Keep Notification and Reboot Logs for this number of days."
+msgstr ""
+
+#: ../setup.php:401
+msgid "Warning Latency Notification"
+msgstr ""
+
+#: ../setup.php:402
+msgid ""
+"If a Device has a Round Trip Ping Latency above the Warning Threshold and "
+"above the Criticality below, subscribing emails to the Device will receive "
+"an email notification.  Select 'Disabled' to Disable.  The Thold Plugin is "
+"required to enable this feature."
+msgstr ""
+
+#: ../setup.php:408
+msgid "Alert Latency Notification"
+msgstr ""
+
+#: ../setup.php:409
+msgid ""
+"If a Device has a Round Trip Ping Latency above the Alert Threshold and "
+"above the Criticality below, subscribing emails to the Device will receive "
+"an email notification.  Select 'Disabled' to Disable.  The Thold Plugin is "
+"required to enable this feature."
+msgstr ""
+
+#: ../setup.php:415
+msgid "Format File to Use"
+msgstr ""
+
+#: ../setup.php:418
+msgid ""
+"Choose the custom html wrapper and CSS file to use.  This file contains both "
+"html and CSS to wrap around your report.  If it contains more than simply "
+"CSS, you need to place a special <REPORT> tag inside of the file.  This "
+"format tag will be replaced by the report content.\n"
+"\t\t\tThese files are located in the 'formats' directory."
+msgstr ""
+
+#: ../setup.php:423
+msgid "How Often to Resend Emails"
+msgstr ""
+
+#: ../setup.php:424
+msgid ""
+"How often should emails notifications be sent to subscribers for these hosts "
+"if they are exceeding their latency thresholds"
+msgstr ""
+
+#: ../setup.php:428
+msgid "Every Occurrence"
+msgstr ""
+
+#: ../setup.php:429 ../setup.php:430
+#, php-format
+msgid "Every %d Minutes"
+msgstr ""
+
+#: ../setup.php:431
+msgid "Every Hour"
+msgstr ""
+
+#: ../setup.php:432 ../setup.php:433
+#, php-format
+msgid "Every %d Hours"
+msgstr ""
+
+#: ../setup.php:437
+msgid "Refresh Interval"
+msgstr ""
+
+#: ../setup.php:438
+msgid "This is the time in seconds before the page refreshes.  (1 - 300)"
+msgstr ""
+
+#: ../setup.php:449
+msgid "Grouping"
+msgstr ""
+
+#: ../setup.php:450
+msgid "This is how monitor will Group Devices."
+msgstr ""
+
+#: ../setup.php:452 ../setup.php:454 ../setup.php:464 ../setup.php:466
+#: ../monitor.php:412 ../monitor.php:418
+msgid "Default"
+msgstr ""
+
+#: ../setup.php:455
+msgid "Default with permissions"
+msgstr ""
+
+#: ../setup.php:456 ../monitor.php:419
+msgid "Tree"
+msgstr ""
+
+#: ../setup.php:457 ../monitor.php:420
+msgid "Device Template"
+msgstr ""
+
+#: ../setup.php:461
+msgid "View"
+msgstr ""
+
+#: ../setup.php:462
+msgid "This is how monitor will render Devices."
+msgstr ""
+
+#: ../setup.php:467 ../monitor.php:413
+msgid "Tiles"
+msgstr ""
+
+#: ../setup.php:468
+msgid "Tiles & Downtime"
+msgstr ""
+
+#: ../setup.php:501 ../setup.php:503
+msgid "Monitor"
+msgstr ""
+
+#: ../setup.php:512
+msgid "Do not Change"
+msgstr ""
+
+#: ../setup.php:513 ../setup.php:514 ../setup.php:515 ../setup.php:516
+#: ../setup.php:517 ../setup.php:518 ../setup.php:519 ../setup.php:520
+#: ../setup.php:521 ../setup.php:522 ../setup.php:523 ../setup.php:524
+#: ../setup.php:525 ../setup.php:526 ../setup.php:527 ../setup.php:528
+#, php-format
+msgid "%d Percent Above Average"
+msgstr ""
+
+#: ../setup.php:537
+msgid "Device Monitoring Settings"
+msgstr ""
+
+#: ../setup.php:543
+msgid "Monitor Device"
+msgstr ""
+
+#: ../setup.php:544
+msgid "Check this box to monitor this Device on the Monitor Tab."
+msgstr ""
+
+#: ../setup.php:550
+msgid "Device Criticality"
+msgstr ""
+
+#: ../setup.php:551
+msgid "What is the Criticality of this Device."
+msgstr ""
+
+#: ../setup.php:558
+msgid "Ping Warning Threshold"
+msgstr ""
+
+#: ../setup.php:559
+msgid ""
+"If the round-trip latency via any of the predefined Cacti ping methods "
+"raises above this threshold, log a warning or send email based upon the "
+"Devices Criticality and Monitor setting.  The unit is in milliseconds.  "
+"Setting to 0 disables. The Thold Plugin is required to leverage this "
+"functionality."
+msgstr ""
+
+#: ../setup.php:568
+msgid "Ping Alert Threshold"
+msgstr ""
+
+#: ../setup.php:569
+msgid ""
+"If the round-trip latency via any of the predefined Cacti ping methods "
+"raises above this threshold, log an alert or send an email based upon the "
+"Devices Criticality and Monitor setting.  The unit is in milliseconds.  "
+"Setting to 0 disables. The Thold Plugin is required to leverage this "
+"functionality."
+msgstr ""
+
+#: ../setup.php:578
+msgid "Re-Baseline Warning"
+msgstr ""
+
+#: ../setup.php:579
+msgid ""
+"The percentage above the current average ping time to consider a Warning "
+"Threshold.  If updated, this will automatically adjust the Ping Warning "
+"Threshold."
+msgstr ""
+
+#: ../setup.php:586
+msgid "Re-Baseline Alert"
+msgstr ""
+
+#: ../setup.php:587
+msgid ""
+"The percentage above the current average ping time to consider a Alert "
+"Threshold.  If updated, this will automatically adjust the Ping Alert "
+"Threshold."
+msgstr ""
+
+#: ../setup.php:594
+msgid "Down Device Message"
+msgstr ""
+
+#: ../setup.php:595
+msgid ""
+"This is the message that will be displayed when this Device is reported as "
+"down."
+msgstr ""
+
+#: ../setup.php:657
+msgid "Monitoring"
+msgstr ""
+
+#: ../monitor.php:59
+msgid "Unknown"
+msgstr ""
+
+#: ../monitor.php:60
+msgid "Down"
+msgstr ""
+
+#: ../monitor.php:61
+msgid "Recovering"
+msgstr ""
+
+#: ../monitor.php:62
+msgid "Up"
+msgstr ""
+
+#: ../monitor.php:63
+msgid "Triggered"
+msgstr ""
+
+#: ../monitor.php:64
+msgid "Down (Muted/Acked)"
+msgstr ""
+
+#: ../monitor.php:65
+msgid "No Availability Check"
+msgstr ""
+
+#: ../monitor.php:66
+msgid "Warning Ping"
+msgstr ""
+
+#: ../monitor.php:67
+msgid "Alert Ping"
+msgstr ""
+
+#: ../monitor.php:71
+msgid "Extra Small"
+msgstr ""
+
+#: ../monitor.php:72
+msgid "Small"
+msgstr ""
+
+#: ../monitor.php:74
+msgid "Large"
+msgstr ""
+
+#: ../monitor.php:373
+msgid "All Monitored Devices"
+msgstr ""
+
+#: ../monitor.php:376
+msgid "Monitored Devices either Down or Recovering"
+msgstr ""
+
+#: ../monitor.php:379
+msgid "Monitored Devices either Down, Recovering, with Breached Thresholds"
+msgstr ""
+
+#: ../monitor.php:385
+msgid ", and All Criticalities"
+msgstr ""
+
+#: ../monitor.php:388
+msgid ", and of Low Criticality or Higher"
+msgstr ""
+
+#: ../monitor.php:391
+msgid ", and of Medium Criticality or Higher"
+msgstr ""
+
+#: ../monitor.php:394
+msgid ", and of High Criticality or Higher"
+msgstr ""
+
+#: ../monitor.php:397
+msgid ", and of Mission Critical Status"
+msgstr ""
+
+#: ../monitor.php:401
+msgid ""
+"<br><b>Remember to first select eligible Devices to be Monitored from the "
+"Devices page!</b>"
+msgstr ""
+
+#: ../monitor.php:411
+msgid "View Type"
+msgstr ""
+
+#: ../monitor.php:414
+msgid "Tiles & Time"
+msgstr ""
+
+#: ../monitor.php:417
+msgid "Device Grouping"
+msgstr ""
+
+#: ../monitor.php:426
+msgid "Select Tree"
+msgstr ""
+
+#: ../monitor.php:427
+msgid "All Trees"
+msgstr ""
+
+#: ../monitor.php:431 ../monitor.php:852
+msgid "Non-Tree Devices"
+msgstr ""
+
+#: ../monitor.php:440
+msgid "Refresh Frequency"
+msgstr ""
+
+#: ../monitor.php:446
+msgid "Select Minimum Criticality"
+msgstr ""
+
+#: ../monitor.php:447
+msgid "All Criticalities"
+msgstr ""
+
+#: ../monitor.php:455
+msgid "Device Icon Size"
+msgstr ""
+
+#: ../monitor.php:461
+msgid "Device Status"
+msgstr ""
+
+#: ../monitor.php:462
+msgid "All Monitored"
+msgstr ""
+
+#: ../monitor.php:463
+msgid "Not Up"
+msgstr ""
+
+#: ../monitor.php:464
+msgid "Not Up or Triggered"
+msgstr ""
+
+#: ../monitor.php:467
+msgid "Refresh"
+msgstr ""
+
+#: ../monitor.php:467
+msgid "Refresh the Device List"
+msgstr ""
+
+#: ../monitor.php:468
+msgid "Save"
+msgstr ""
+
+#: ../monitor.php:468
+msgid "Save Filter Settings"
+msgstr ""
+
+#: ../monitor.php:470
+#, php-format
+msgid "%s Alert for downed Devices"
+msgstr ""
+
+#: ../monitor.php:470
+#, php-format
+msgid "%s Alerts for downed Devices"
+msgstr ""
+
+#: ../monitor.php:477
+#, php-format
+msgid "Last Refresh: %s"
+msgstr ""
+
+#: ../monitor.php:477
+#, php-format
+msgid "Refresh Again in <i id=\"timer\">%d</i> Seconds"
+msgstr ""
+
+#: ../monitor.php:483
+msgid "Mute"
+msgstr ""
+
+#: ../monitor.php:485
+msgid "Acknowledge"
+msgstr ""
+
+#: ../monitor.php:491
+msgid "Un-Mute"
+msgstr ""
+
+#: ../monitor.php:493
+msgid "Reset"
+msgstr ""
+
+#: ../monitor.php:990
+msgid "Just Up"
+msgstr ""
+
+#: ../monitor.php:1063
+msgid "Edit Device"
+msgstr ""
+
+#: ../monitor.php:1066
+msgid "View Graphs"
+msgstr ""
+
+#: ../monitor.php:1069
+msgid "View Thresholds"
+msgstr ""
+
+#: ../monitor.php:1072
+msgid "View Syslog Alerts"
+msgstr ""
+
+#: ../monitor.php:1075
+msgid "View Syslog Messages"
+msgstr ""
+
+#: ../monitor.php:1086
+msgid "Device:"
+msgstr ""
+
+#: ../monitor.php:1090
+msgid "Criticality:"
+msgstr ""
+
+#: ../monitor.php:1094
+msgid "Status:"
+msgstr ""
+
+#: ../monitor.php:1098
+msgid "Admin Note:"
+msgstr ""
+
+#: ../monitor.php:1102
+msgid "IP/Hostname:"
+msgstr ""
+
+#: ../monitor.php:1106
+msgid "Notes:"
+msgstr ""
+
+#: ../monitor.php:1110
+msgid "Links:"
+msgstr ""
+
+#: ../monitor.php:1115
+msgid "Curr/Avg:"
+msgstr ""
+
+#: ../monitor.php:1116
+#, php-format
+msgid "%d ms"
+msgstr ""
+
+#: ../monitor.php:1119
+msgid "Warn/Alert:"
+msgstr ""
+
+#: ../monitor.php:1120
+#, php-format
+msgid "%0.2d ms"
+msgstr ""
+
+#: ../monitor.php:1123
+msgid "Last Fail:"
+msgstr ""
+
+#: ../monitor.php:1127
+msgid "Time In State:"
+msgstr ""
+
+#: ../monitor.php:1131
+msgid "Availability:"
+msgstr ""
+
+#: ../monitor.php:1135
+msgid "Agent Uptime:"
+msgstr ""
+
+#: ../monitor.php:1139
+msgid "Sys Description:"
+msgstr ""
+
+#: ../monitor.php:1143
+msgid "Location:"
+msgstr ""
+
+#: ../monitor.php:1147
+msgid "Contact:"
+msgstr ""
+
+#: ../monitor.php:1178
+msgid "Never"
+msgstr ""
