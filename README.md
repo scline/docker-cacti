@@ -192,7 +192,11 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
-#### 1.1.2 - 04/15/2017
+#### 1.1.4 - 04/24/2017
+ * Update Cacti and Spine from 1.1.3 to 1.1.4 - [changelog link][CL1.1.4]
+ * Update THOLD template with master due to function bug on cacti 1.1+
+
+#### 1.1.3 - 04/15/2017
  * Update Cacti and Spine from 1.1.2 to 1.1.3 - [changelog link][CL1.1.3]
  * remove temp automation_api file fix since this has been solved in 1.1.3
 
@@ -218,7 +222,6 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
  * Initial push
 
 # Known Issues/Fixes
-* ICMP monitoring is not reliable under docker, responses are all <1ms when remote servers are 200ms away.  
 * Automatic data backups using the variable `BACKUP_TIME` does not work. I am not able to get the cronjob to properly run backup.sh :(
 * HTTPS is not setup to work, it may work just understand no testing has been done.
 
@@ -227,6 +230,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.4]: http://www.cacti.net/release_notes_1_1_4.php
 [CL1.1.3]: http://www.cacti.net/release_notes_1_1_3.php
 [CL1.1.2]: http://www.cacti.net/release_notes_1_1_2.php
 [CL1.1.1]: http://www.cacti.net/release_notes_1_1_1.php
