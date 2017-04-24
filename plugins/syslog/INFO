@@ -1,7 +1,7 @@
 [info]
-name = thold
-version = 1.0.2
-longname = Thresholds
+name = syslog
+version = 2.1
+longname = Syslog Monitoring
 author = The Cacti Group
 email = 
 homepage = http://www.cacti.net

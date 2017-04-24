@@ -303,4 +303,4 @@ $data_types = array (
 
 /* perform database upgrade */
 include_once($config['base_path'] . '/plugins/thold/setup.php');
-thold_check_upgrade();
+plugin_thold_upgrade ();

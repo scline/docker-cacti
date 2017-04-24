@@ -2859,15 +2859,16 @@ function thold_check_baseline($local_data_id, $data_template_rrd_id, $current_va
 		$t0 = $midnight + floor(($now - $midnight) / $thold_data['bl_ref_time_range']) * $thold_data['bl_ref_time_range'];
 
 		$ref_values    = thold_get_ref_value($thold_data['local_data_id'], $thold_data['data_template_rrd_id'], $t0, $thold_data['bl_ref_time_range']);
-		$ref_value_min = min($ref_values);
-		$ref_value_max = max($ref_values);
+		if ($ref_values === false || sizeof($ref_values) == 0) {
+			return -1;
+		}
 
-		if (!is_array($ref_values) || sizeof($ref_values) == 0) {
-			$thold_data['thold_low'] = '';
-			$thold_data['thold_hi'] = '';
-			$thold_data['bl_thold_valid'] = $now;
-			$returnvalue = -1;
-			return $returnvalue; // Baseline reference value not yet established
+		if (sizeof($ref_values) > 1) {
+			$ref_value_min = min($ref_values);
+			$ref_value_max = max($ref_values);
+		}else{
+			$ref_value_min = $ref_values[0];
+			$ref_value_max = $ref_values[0];
 		}
 
 		$ref_value = $ref_values[0];
@@ -3331,7 +3332,7 @@ function autocreate($host_id) {
 
 		if (sizeof($thold_template_ids)) {
 			foreach($thold_template_ids as $ttid) {
-				$thold_template_id = $ttid['id'];
+				$thold_template_id = $ttid;
 
 				$template = db_fetch_row_prepared('SELECT * FROM thold_template WHERE id = ?', array($thold_template_id));
 

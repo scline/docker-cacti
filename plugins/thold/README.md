@@ -40,6 +40,8 @@ The thold plugin has been in development for well over a decade with increasing 
 * issue#60: Threshold Templates could not be exported
 * issue#61: RPN Expression column too narrow
 * issue#64: Request High/Low Threshold allow for floating point values
+* issue#65: Link in Thold Email not working due to &rra_id=1
+* issue#73: PHP Warnings when saving baseline alerts
 
 --- 1.0.1 ---
 * issue#57: Thold can not display graph with hrules due to lack of escaping
