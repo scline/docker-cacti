@@ -53,6 +53,7 @@ chdir(dirname(__FILE__));
 chdir('../../');
 
 require_once('./include/global.php');
+require_once($config['base_path'] . '/lib/rrd.php');
 require($config['base_path'] . '/plugins/thold/includes/arrays.php');
 require_once($config['base_path'] . '/plugins/thold/thold_functions.php');
 require_once($config['library_path'] . '/snmp.php');
@@ -123,11 +124,11 @@ if (sizeof($parms)) {
 if($pid === false) {
 	display_help();
 }else {
-	db_execute("UPDATE `plugin_thold_daemon_processes` SET `start` = " . time() . " WHERE `pid` = '" . $pid . "'");
+	db_execute_prepared("UPDATE plugin_thold_daemon_processes SET start = ? WHERE pid = ?", array(time(), $pid));
 }
 
 $sql_query = "SELECT tdd.id, tdd.rrd_reindexed, tdd.rrd_time_reindexed, 
-	td.id AS thold_id td.name AS thold_name, td.local_graph_id,
+	td.id AS thold_id, td.name AS thold_name, td.local_graph_id,
 	td.percent_ds, td.expression, td.data_type, td.cdef, td.local_data_id,
 	td.data_template_rrd_id, td.lastread,
 	UNIX_TIMESTAMP(td.lasttime) AS lasttime, td.oldvalue,
@@ -140,10 +141,10 @@ $sql_query = "SELECT tdd.id, tdd.rrd_reindexed, tdd.rrd_time_reindexed,
 	ON dtr.id = td.data_template_rrd_id
 	LEFT JOIN data_template_data AS dtd
 	ON dtd.local_data_id = td.local_data_id
-	WHERE tdd.pid = '$pid'
-	AND dtr.data_source_name!=''";
+	WHERE tdd.pid = ?
+	AND dtr.data_source_name != ''";
 
-$tholds = db_fetch_assoc($sql_query, false);
+$tholds = db_fetch_assoc_prepared($sql_query, array($pid), false);
 
 if (sizeof($tholds)) {
 	$rrd_reindexed = array();
@@ -152,8 +153,8 @@ if (sizeof($tholds)) {
 	foreach ($tholds as $thold_data) {
 		thold_debug("Checking Threshold Name: '" . $thold_data['thold_name'] . "', Graph: '" . $thold_data['local_graph_id'] . "'");
 		$item = array();
-		$rrd_reindexed[$thold_data['local_data_id']] = unserialize($thold_data['thold_server_rrd_reindexed']);
-		$rrd_time_reindexed[$thold_data['local_data_id']] = $thold_data['thold_server_rrd_time_reindexed'];
+		$rrd_reindexed[$thold_data['local_data_id']] = unserialize($thold_data['rrd_reindexed']);
+		$rrd_time_reindexed[$thold_data['local_data_id']] = $thold_data['rrd_time_reindexed'];
 		$currenttime = 0;
 		$currentval = thold_get_currentval($thold_data, $rrd_reindexed, $rrd_time_reindexed, $item, $currenttime);
 
@@ -183,11 +184,9 @@ if (sizeof($tholds)) {
 			$currentval = '';
 		}
 
-		db_execute("UPDATE thold_data SET 
-			tcheck=1, lastread='$currentval',
-			lasttime='" . date('Y-m-d H:i:s', $currenttime) . "',
-			oldvalue='" . $item[$thold_data['name']] . "'
-			WHERE id = " . $thold_data['thold_id']);
+		db_execute_prepared("UPDATE thold_data SET tcheck = 1, lastread= ?, lasttime = ?, oldvalue = ?  WHERE id = ?",
+			array($currentval, date('Y-m-d H:i:s', $currenttime),  $item[$thold_data['name']], $thold_data['thold_id'])
+		);
 	}
 
 	/* check all thresholds */
@@ -197,20 +196,24 @@ if (sizeof($tholds)) {
 		ON td.id = tdd.id
 		LEFT JOIN data_template_rrd AS dtr
 		ON dtr.id = td.data_template_rrd_id
-		WHERE tdd.pid = '$pid' 
+		WHERE tdd.pid = ? 
 		AND td.thold_enabled='on' 
 		AND td.tcheck=1";
 
-	$tholds = api_plugin_hook_function('thold_get_live_hosts', db_fetch_assoc($sql_query));
+	$tholds = api_plugin_hook_function('thold_get_live_hosts', db_fetch_assoc_prepared($sql_query, array($pid)));
 
 	$total_tholds = sizeof($tholds);
 	foreach ($tholds as $thold) {
 		thold_check_threshold($thold);
 	}
 
-	db_execute("UPDATE thold_data SET thold_data.thold_server_pid = '', tcheck=0 WHERE thold_data.thold_server_pid = '$pid'");
-	db_execute("DELETE FROM `plugin_thold_daemon_data` WHERE `pid` = '$pid'");
-	db_execute("UPDATE `plugin_thold_daemon_processes` SET `end` = " . time() . ", `processed_items` = " . $total_tholds);
+	db_execute_prepared("UPDATE thold_data SET thold_data.thold_daemon_pid = '', tcheck=0 WHERE thold_data.thold_daemon_pid = ?",
+		array($pid)
+	);
+	db_execute_prepared("DELETE FROM plugin_thold_daemon_data WHERE pid = ?", array($pid));
+	db_execute_prepared("UPDATE plugin_thold_daemon_processes SET end = ?, processed_items = ? WHERE pid = ?",
+		array(time(), $total_tholds, $pid)
+	);
 }
 
 function display_version() {

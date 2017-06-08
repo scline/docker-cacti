@@ -371,18 +371,18 @@ function tholds() {
 			print "<td width='1%' style='white-space:nowrap;'>";
 
 			if (api_user_realm_auth('thold.php')) {
-				print '<a href="' .  htmlspecialchars($config['url_path'] . 'plugins/thold/thold.php?action=edit&id=' . $row['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" border="0" alt="" title="' . __('Edit Threshold') . '"></a>';
+				print '<a href="' .  htmlspecialchars($config['url_path'] . 'plugins/thold/thold.php?action=edit&id=' . $row['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" alt="" title="' . __('Edit Threshold') . '"></a>';
 			}
 
 			if ($row['thold_enabled'] == 'on') {
-				print '<a class="hyperLink" href="' .  htmlspecialchars($config['url_path'] . 'plugins/thold/thold_graph.php?action=disable&id=' . $row['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/disable_thold.png" border="0" alt="" title="' . __('Disable Threshold') . '"></a>';
+				print '<a class="hyperLink" href="' .  htmlspecialchars($config['url_path'] . 'plugins/thold/thold_graph.php?action=disable&id=' . $row['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/disable_thold.png" alt="" title="' . __('Disable Threshold') . '"></a>';
 			}else{
-				print '<a class="hyperLink" href="' .  htmlspecialchars($config['url_path'] . 'plugins/thold/thold_graph.php?action=enable&id=' . $row['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/enable_thold.png" border="0" alt="" title="' . __('Enable Threshold') . '"></a>';
+				print '<a class="hyperLink" href="' .  htmlspecialchars($config['url_path'] . 'plugins/thold/thold_graph.php?action=enable&id=' . $row['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/enable_thold.png" alt="" title="' . __('Enable Threshold') . '"></a>';
 			}
 
-			print "<a href='". htmlspecialchars($config['url_path'] . 'graph.php?local_graph_id=' . $row['local_graph_id'] . '&rra_id=all') . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_graphs.gif' border='0' alt='' title='" . __('View Graph') . "'></a>";
+			print "<a href='". htmlspecialchars($config['url_path'] . 'graph.php?local_graph_id=' . $row['local_graph_id'] . '&rra_id=all') . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_graphs.gif' alt='' title='" . __('View Graph') . "'></a>";
 
-			print "<a class='hyperLink' href='". htmlspecialchars($config['url_path'] . 'plugins/thold/thold_graph.php?action=log&threshold_id=' . $row['id'] . '&status=-1') . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_log.gif' border='0' alt='' title='" . __('View Threshold History') . "'></a>";
+			print "<a class='hyperLink' href='". htmlspecialchars($config['url_path'] . 'plugins/thold/thold_graph.php?action=log&threshold_id=' . $row['id'] . '&status=-1') . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_log.gif' alt='' title='" . __('View Threshold History') . "'></a>";
 
 			print '</td>';
 			print "<td class='left nowrap'>" . ($row['name'] != '' ? filter_value($row['name'], get_request_var('filter')) : __('No name set')) . '</td>';
@@ -625,9 +625,9 @@ function hosts() {
 				form_host_status_row_color($host['status'], $host['disabled']); 
 				print "<td width='1%' class='nowrap'>";
 				if (api_user_realm_auth('host.php')) {
-					print '<a href="' . htmlspecialchars($config['url_path'] . 'host.php?action=edit&id=' . $host['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" border="0" alt="" title="' . __('Edit Device') . '"></a>';
+					print '<a href="' . htmlspecialchars($config['url_path'] . 'host.php?action=edit&id=' . $host['id']) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" alt="" title="' . __('Edit Device') . '"></a>';
 				}
-				print "<a href='" . htmlspecialchars($config['url_path'] . 'graph_view.php?action=preview&graph_template_id=0&filter=&host_id=' . $host['id']) . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_graphs.gif' border='0' alt='' title='" . __('View Graphs') . "'></a>";
+				print "<a href='" . htmlspecialchars($config['url_path'] . 'graph_view.php?action=preview&graph_template_id=0&filter=&host_id=' . $host['id']) . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_graphs.gif' alt='' title='" . __('View Graphs') . "'></a>";
 				print '</td>';
 				?>
 				<td style='text-align:left'>
@@ -648,9 +648,9 @@ function hosts() {
 				print "<tr class='deviceNotMonFull'>\n";
 				print "<td width='1%' class='nowrap'>\n";
 				if (api_user_realm_auth('host.php')) {
-					print '<a href="' . htmlspecialchars($config['url_path'] . 'host.php?action=edit&id=' . $host["id"]) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" border="0" alt="" title="' . __('Edit Device') . '"></a>';
+					print '<a href="' . htmlspecialchars($config['url_path'] . 'host.php?action=edit&id=' . $host["id"]) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" alt="" title="' . __('Edit Device') . '"></a>';
 				}
-				print "<a href='" . htmlspecialchars($config['url_path'] . "graph_view.php?action=preview&graph_template_id=0&filter=&host_id=" . $host["id"]) . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_graphs.gif' border='0' alt='' title='" . __('View Graphs') . "'></a>";
+				print "<a href='" . htmlspecialchars($config['url_path'] . "graph_view.php?action=preview&graph_template_id=0&filter=&host_id=" . $host["id"]) . "'><img src='" . $config['url_path'] . "plugins/thold/images/view_graphs.gif' alt='' title='" . __('View Graphs') . "'></a>";
 				print "</td>";
 				?>
 				<td style='text-align:left'>

@@ -59,12 +59,14 @@ The sylog plugin has been in development for well over a decade with increasing 
 ## ChangeLog
 
 --- 2.1  ---
-* bug#18: Issues with syslog statistics display
-* bug#17: Compatibility with remote database
-* bug#19: Removal rules issues
-* bug#20: Issues viewing removed records
-* bug: SQL for matching Cacti host incorrect
-* bug: Syslog Reports were not functional
+* issue#18: Issues with syslog statistics display
+* issue#17: Compatibility with remote database
+* issue#19: Removal rules issues
+* issue#20: Issues viewing removed records
+* issue#23: Threshold rule alert format issues
+* issue: SQL for matching Cacti host incorrect
+* issue: Syslog Reports were not functional
+* issue: Cleanup formating of Threshold messaging and viewing
 
 --- 2.0  ---
 * feature: Compatibility with Cacti 1.0
@@ -74,19 +76,19 @@ The sylog plugin has been in development for well over a decade with increasing 
 * feature: Allow Processing of Removal Rules on Main Syslog Table
 * feature: Cleanup UI irregularities
 * feature: Allow purging of old host entries
-* bug: Remove syslog 'message' from Log message to prvent deadlock on cacti log syslog processing
+* issue: Remove syslog 'message' from Log message to prvent deadlock on cacti log syslog processing
 
 --- 1.22  ---
-* bug: Upgrade script does not properly handle all conditions
-* bug: Strip domain does not always work as expected
-* bug: Resizing a page on IE6 caused a loop on the syslog page
-* bug: Correct issue where 'warning' is used instead of 'warn' on log insert
-* bug: Issue with Plugin Realm naming
+* issue: Upgrade script does not properly handle all conditions
+* issue: Strip domain does not always work as expected
+* issue: Resizing a page on IE6 caused a loop on the syslog page
+* issue: Correct issue where 'warning' is used instead of 'warn' on log insert
+* issue: Issue with Plugin Realm naming
 
 --- 1.21 ---
-* bug: Fix timespan selector
-* bug: Reintroduce Filter time range view
-* bug: Syslog Statistics Row Counter Invalid
+* issue: Fix timespan selector
+* issue: Reintroduce Filter time range view
+* issue: Syslog Statistics Row Counter Invalid
 * feature: Provide option to tag invalid hosts
 
 --- 1.20 ---
@@ -95,60 +97,60 @@ The sylog plugin has been in development for well over a decade with increasing 
 * feature: Support re-alert cycles for all alert type
 * feature: Limit re-alert cycles to the max log retention
 * feature: Make the default timespan 30 minutes for performance reasons
-* bug: sort fields interfering with one another between syslog and alarm tabs
-* bug: Message column was date column
+* issue: sort fields interfering with one another between syslog and alarm tabs
+* issue: Message column was date column
 
 --- 1.10 ---
 * feature: Allow Syslog to Strip Domains Suffix's.
 * feature: Make compatible with earlier versions of Cacti.
 * feature: Allow Plugins to extend filtering
-* bug: Minor issue with wrong db function being called.
-* bug: Legend had Critical and Alert reversed.
-* bug: Syslog filter can cause SQL errors
-* bug: Wrong page redirect links.
-* bug: Partitioning was writing always to the dMaxValue partition
-* bug: Emergency Logs were not being highlighted correctly
-* bug: Can not add disabled alarm/removal/report rule
+* issue: Minor issue with wrong db function being called.
+* issue: Legend had Critical and Alert reversed.
+* issue: Syslog filter can cause SQL errors
+* issue: Wrong page redirect links.
+* issue: Partitioning was writing always to the dMaxValue partition
+* issue: Emergency Logs were not being highlighted correctly
+* issue: Can not add disabled alarm/removal/report rule
 
 --- 1.07 ---
-* bug: Rearchitect to improve support mutliple databases
-* bug: Don't process a report if it's not enabled.
-* bug: Don't process an alert if it's not enabled.
-* bug: Don't process a removal rule if it's not enabled.
+* issue: Rearchitect to improve support mutliple databases
+* issue: Don't process a report if it's not enabled.
+* issue: Don't process an alert if it's not enabled.
+* issue: Don't process a removal rule if it's not enabled.
 
 --- 1.06 ---
-* bug#0001854: Error found in Cacti Log
-* bug#0001871: Priority dropdown labels in syslog.php for "All Priorities" set to incorrect priority id 
-* bug#0001872: Priorities drop drown to show specific value
-* bug: Only show one facility in the dropdown
-* bug: Hex Errors Upon Install
+* issue#0001854: Error found in Cacti Log
+* issue#0001871: Priority dropdown labels in syslog.php for "All Priorities" set to incorrect priority id 
+* issue#0001872: Priorities drop drown to show specific value
+* issue: Only show one facility in the dropdown
+* issue: Hex Errors Upon Install
 
 --- 1.05 ---
-* bug: Remove poorly defined security settings
-* bug: Don't show actions if you don't have permissions
-* bug: Fix page refresh dropdown bug
+* issue: Remove poorly defined security settings
+* issue: Don't show actions if you don't have permissions
+* issue: Fix page refresh dropdown bug
 * feature: Re-add refresh settings to syslog
 
 --- 1.04 ---
-* bug#0001824: Syslog icon is not shown in graph view 
-* bug: Link on Alarm Log does not properly redirect to 'current' tab
-* bug: Unselecting all hosts results in SQL error
-* bug: Exporting to CSV not working properly
+* issue#0001824: Syslog icon is not shown in graph view 
+* issue: Link on Alarm Log does not properly redirect to 'current' tab
+* issue: Unselecting all hosts results in SQL error
+* issue: Exporting to CSV not working properly
 * compat: Remove deprecated split() command
 
 --- 1.03 ---
 * feature: Add alarm host and counts to sms messages
-* bug: Fix issue with individual syslog html messages
-* bug: Fix creating alarms and removals from the syslog tab
-* bug: Fix syslog removal UI with respect to rule type's
+* issue: Fix issue with individual syslog html messages
+* issue: Fix creating alarms and removals from the syslog tab
+* issue: Fix syslog removal UI with respect to rule type's
 
 --- 1.02 ---
 * feature: Add syslog database functions to mitigate issues with same system installs
 
 --- 1.01 ---
 * feature: Add alert commands by popular demand
-* bug#0001788: missing closing quote in syslog_alerts.php
-* bug#0001785: revision 1086 can not save reports when using seperate syslog mysql database
+* issue#0001788: missing closing quote in syslog_alerts.php
+* issue#0001785: revision 1086 can not save reports when using seperate syslog mysql database
 
 --- 1.0 ---
 * feature: Support SMS e-mail messages
@@ -171,11 +173,11 @@ The sylog plugin has been in development for well over a decade with increasing 
 * feature: Turn images to buttons
 
 --- 0.5.2 ---
-* bug: Fixes to make syslog work properly when using the Superlinks plugin
-* bug: Fix a few image errors
+* issue: Fixes to make syslog work properly when using the Superlinks plugin
+* issue: Fix a few image errors
 
-* --- 0.5.1 ---
-* bug: More 0.8.7 Compatibility fixes
+--- 0.5.1 ---
+* issue: More 0.8.7 Compatibility fixes
 
 --- 0.5 ---
 * feature: Modified Message retrieval function to better make use of indexes, which greatly speeds it up
@@ -187,33 +189,33 @@ The sylog plugin has been in development for well over a decade with increasing 
 * feature: Use mailer options from the Settings Plugin
 * feature: Add option for From Email address and From Display Name
 * feature: Use new "api_user_realm_auth" from Plugin Architecture
-* bug#0000046 - Event text colors (black) when setup a event color in black
-* bug#0000047 - Change the Priority and Levels to be in Ascending order
-* bug: Fixes for errors when using removal rules
-* bug: Minor fix for error that would sometimes cause Syslog to not be processed
-* bug: Update SQL to include indexes
-* bug: Fix pagination of Alerts and Removal Rules
-* bug: Lots of code / html cleanup for faster pages loads (use a little CSS also)
-* bug: Fix for improper display of html entities in the syslog message (thanks dagonet)
-* bug: Fix Cacti 0.8.7 compatibility
+* issue#0000046 - Event text colors (black) when setup a event color in black
+* issue#0000047 - Change the Priority and Levels to be in Ascending order
+* issue: Fixes for errors when using removal rules
+* issue: Minor fix for error that would sometimes cause Syslog to not be processed
+* issue: Update SQL to include indexes
+* issue: Fix pagination of Alerts and Removal Rules
+* issue: Lots of code / html cleanup for faster pages loads (use a little CSS also)
+* issue: Fix for improper display of html entities in the syslog message (thanks dagonet)
+* issue: Fix Cacti 0.8.7 compatibility
 
 --- 0.4 ---
-* bug#0000034 - Fix for shadow.gif file error in httpd logs.
-* bug#0000036 - Syslog plugin causes duplicates if multiple log processors are running at once
-* bug#0000037 - Option for max time to save syslog events
-* bug: Removed some debugging code
+* issue#0000034 - Fix for shadow.gif file error in httpd logs.
+* issue#0000036 - Syslog plugin causes duplicates if multiple log processors are running at once
+* issue#0000037 - Option for max time to save syslog events
+* issue: Removed some debugging code
 
 --- 0.3 ---
 * feature: Move Processing code to its own file
 * feature: Add Debugging to the Processing Code (/debug)
-* bug: Fixed an issue with "message" being hard coded
-* bug: Fixed a typo in the removal code
+* issue: Fixed an issue with "message" being hard coded
+* issue: Fixed a typo in the removal code
 
 --- 0.2 ---
-* bug#0000010 Remove use of CURRENT_TIMESTAMP so that Mysql 3.x works again
-* bug#0000013 - Fix issues with database names with uncommon characters by enclosing in back-ticks
-* bug: Fixed a minor error that caused the graphs page to not refresh
-* bug: Modified SQL query in syslog processor to speed things up greatly
+* issue#0000010 Remove use of CURRENT_TIMESTAMP so that Mysql 3.x works again
+* issue#0000013 - Fix issues with database names with uncommon characters by enclosing in back-ticks
+* issue: Fixed a minor error that caused the graphs page to not refresh
+* issue: Modified SQL query in syslog processor to speed things up greatly
 
 --- 0.1 ---
 * Initial release

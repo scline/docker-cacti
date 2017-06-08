@@ -352,7 +352,7 @@ function monitor_config_settings() {
 		'365' => __('%d Year', 1)
 	);
 
-	$tabs_graphs += array('monitor' => 'Monitor Settings');
+	$tabs_graphs += array('monitor' => __('Monitor Settings'));
 
 	$settings_user += array(
 		'monitor' => array(
@@ -371,7 +371,7 @@ function monitor_config_settings() {
 		)
 	);
 
-	if (isset($_SERVER['PHP_SELF']) && basename($_SERVER['PHP_SELF']) != 'settings.php') {
+	if (get_current_page() != 'settings.php') {
 		return;
 	}
 
@@ -478,7 +478,7 @@ function monitor_config_settings() {
 }
 
 function monitor_top_graph_refresh($refresh) {
-	if (basename($_SERVER['PHP_SELF']) != 'monitor.php') {
+	if (get_current_page() != 'monitor.php') {
 		return $refresh;
 	}
 
@@ -498,9 +498,9 @@ function monitor_show_tab() {
 
 	if (api_user_realm_auth('monitor.php')) {
 		if (substr_count($_SERVER['REQUEST_URI'], 'monitor.php')) {
-			print '<a href="' . $config['url_path'] . 'plugins/monitor/monitor.php"><img src="' . $config['url_path'] . 'plugins/monitor/images/tab_monitor_down.gif" alt="' . __('Monitor') . '" align="absmiddle" border="0"></a>';
+			print '<a href="' . $config['url_path'] . 'plugins/monitor/monitor.php"><img src="' . $config['url_path'] . 'plugins/monitor/images/tab_monitor_down.gif" alt="' . __('Monitor') . '"></a>';
 		}else{
-			print '<a href="' . $config['url_path'] . 'plugins/monitor/monitor.php"><img src="' . $config['url_path'] . 'plugins/monitor/images/tab_monitor.gif" alt="' . __('Monitor') . '" align="absmiddle" border="0"></a>';
+			print '<a href="' . $config['url_path'] . 'plugins/monitor/monitor.php"><img src="' . $config['url_path'] . 'plugins/monitor/images/tab_monitor.gif" alt="' . __('Monitor') . '"></a>';
 		}
 	}
 }

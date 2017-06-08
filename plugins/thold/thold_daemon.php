@@ -71,9 +71,10 @@ if(function_exists('pcntl_fork')) {
 }else {
     fwrite(STDOUT, '[WARNING] This system does not support forking.' . PHP_EOL);
 }
-
 require_once('./include/global.php');
 require_once($config['base_path'] . '/lib/poller.php');
+
+$cnn_id = thold_db_reconnect();
 
 db_execute("TRUNCATE plugin_thold_daemon_processes");
 db_execute("TRUNCATE plugin_thold_daemon_data");
@@ -84,19 +85,21 @@ $path_php_binary = read_config_option('path_php_binary');
 while(true) {
 	if (thold_db_connection()) {
 		/* initiate concurrent background processes as long as we do not hit the limits */
-		$queue = db_fetch_assoc('SELECT * FROM `plugin_thold_daemon_processes` WHERE start = 0 ORDER BY `pid`');
+		$queue = db_fetch_assoc('SELECT * FROM plugin_thold_daemon_processes WHERE start = 0 ORDER BY pid');
 		$queued_processes = sizeof($queue);
 
 		if ($queued_processes) {
 			$thold_max_concurrent_processes = read_config_option('thold_max_concurrent_processes');
-			$running_processes              = db_fetch_cell('SELECT COUNT(*) FROM `plugin_thold_daemon_processes` WHERE start != 0 AND end = 0');
+			$running_processes              = db_fetch_cell('SELECT COUNT(*) FROM plugin_thold_daemon_processes WHERE start != 0 AND end = 0');
 			$free_processes                 = $thold_max_concurrent_processes - $running_processes;
 
 			if($free_processes > 0) {
 				for($i=0; $i<$free_processes; $i++) {
 					if(isset($queue[$i])) {
 						$pid = $queue[$i]['pid'];
-						exec($path_php_binary . ' ' . $config['base_path'] . '/plugins/thold/thold_process.php ' . "--pid=$pid > /dev/null &");
+						$process = $path_php_binary . ' ' . $config['base_path'] . '/plugins/thold/thold_process.php ' . "--pid=$pid > /dev/null &";
+						cacti_log("DEBUG: Starting process: $process", false, 'THOLD', POLLER_VERBOSITY_DEBUG);
+						exec($process);
 					}else {
 						break;
 					}
@@ -105,7 +108,7 @@ while(true) {
 		}
 	} else {
 		/* try to reconnect */
-		thold_db_reconnect();
+		$cnn_id = thold_db_reconnect();
 	}
 
 	sleep(2);

@@ -49,9 +49,10 @@
 	float: left;
 }
 
-.monitor_device_frame a {
+.monitor_device_frame a, .monitor_device_frame span {
 	display: block;
 	width: 80px;
+	font-size: 12px;
 }
 
 .monitor_legend {

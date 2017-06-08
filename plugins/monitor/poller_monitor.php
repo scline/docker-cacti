@@ -319,7 +319,7 @@ function process_email($email, $lists, $global_list, $notify_list) {
 
 		monitor_debug('HTML Processed');
 
-		$v = db_fetch_cell('SELECT cacti FROM version');
+		$v = get_cacti_version();
 		$headers['User-Agent'] = 'Cacti-Monitor-v' . $v;
 
 		$from_email = read_config_option('settings_from_email');

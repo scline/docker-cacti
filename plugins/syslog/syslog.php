@@ -138,12 +138,12 @@ function syslog_view_alarm() {
 
 	include(dirname(__FILE__) . '/config.php');
 
-	echo "<table class='cactiTableTitle' cellpadding='3' cellspacing='0' align='center' width='100%'>";
+	echo "<table class='cactiTable'>";
 	echo "<tr class='tableHeader'><td class='textHeaderDark'>" . __('Syslog Alert View') . "</td></tr>";
 	echo "<tr><td class='odd'>\n";
 
 	$html = syslog_db_fetch_cell('SELECT html FROM `' . $syslogdb_default . '`.`syslog_logs` WHERE seq=' . get_request_var('id'));
-	echo $html;
+	echo trim($html, "' ");
 
 	echo '</td></tr></table>';
 
@@ -775,7 +775,7 @@ function get_syslog_messages(&$sql_where, $rows, $tab) {
 		if (get_request_var('removal') == '-1') {
 			$query_sql = "SELECT syslog.*, syslog_programs.program, 'main' AS mtype
 				FROM `" . $syslogdb_default . "`.`syslog` 
-				LEFT JOIN  `" . $syslogdb_default . "`.`syslog_programs` 
+				LEFT JOIN `" . $syslogdb_default . "`.`syslog_programs` 
 				ON syslog.program_id=syslog_programs.program_id " .
 				$sql_where . "
 				$sql_order
@@ -783,12 +783,12 @@ function get_syslog_messages(&$sql_where, $rows, $tab) {
 		}elseif (get_request_var('removal') == '1') {
 			$query_sql = "(SELECT syslog.*, syslog_programs.program, 'main' AS mtype
 				FROM `" . $syslogdb_default . "`.`syslog` AS syslog
-				LEFT JOIN  `" . $syslogdb_default . "`.`syslog_programs` 
+				LEFT JOIN `" . $syslogdb_default . "`.`syslog_programs` 
 				ON syslog.program_id=syslog_programs.program_id " .
 				$sql_where . "
 				) UNION (SELECT syslog.*, syslog_programs.program, 'remove' AS mtype
 				FROM `" . $syslogdb_default . "`.`syslog_removed` AS syslog
-				LEFT JOIN  `" . $syslogdb_default . "`.`syslog_programs` 
+				LEFT JOIN `" . $syslogdb_default . "`.`syslog_programs` 
 				ON syslog.program_id=syslog_programs.program_id " .
 				$sql_where . ")
 				$sql_order
@@ -796,7 +796,7 @@ function get_syslog_messages(&$sql_where, $rows, $tab) {
 		}else{
 			$query_sql = "SELECT syslog.*, syslog_programs.program, 'remove' AS mtype
 				FROM `" . $syslogdb_default . "`.`syslog_removed` AS syslog
-				LEFT JOIN  `" . $syslogdb_default . "`.`syslog_programs` AS syslog_programs
+				LEFT JOIN `" . $syslogdb_default . "`.`syslog_programs` AS syslog_programs
 				ON syslog.program_id=syslog_programs.program_id " .
 				$sql_where . "
 				$sql_order
@@ -1431,8 +1431,8 @@ function syslog_messages($tab = 'syslog') {
 				if (api_plugin_user_realm_auth('syslog_alerts.php')) {
 					print "<td class='nowrap left' style='width:1%:padding:1px !important;'>";
 					if ($syslog_message['mtype'] == 'main') {
-						print "<a style='padding:1px' href='" . htmlspecialchars('syslog_alerts.php?id=' . $syslog_message[$syslog_incoming_config['id']] . '&action=newedit&type=0') . "'><img src='images/add.png' border='0'></a>
-						<a style='padding:1px' href='" . htmlspecialchars('syslog_removal.php?id=' . $syslog_message[$syslog_incoming_config['id']] . '&action=newedit&type=new&type=0') . "'><img src='images/delete.png' border='0'></a>\n";
+						print "<a style='padding:1px' href='" . htmlspecialchars('syslog_alerts.php?id=' . $syslog_message[$syslog_incoming_config['id']] . '&action=newedit&type=0') . "'><img src='images/add.png'></a>
+						<a style='padding:1px' href='" . htmlspecialchars('syslog_removal.php?id=' . $syslog_message[$syslog_incoming_config['id']] . '&action=newedit&type=new&type=0') . "'><img src='images/delete.png'></a>\n";
 					}
 					print "</td>\n";
 				}

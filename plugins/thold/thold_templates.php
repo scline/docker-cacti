@@ -524,6 +524,8 @@ function template_save_edit() {
 	$save['notify_alert']         = get_nfilter_request_var('notify_alert');
 	$save['cdef']                 = get_nfilter_request_var('cdef');
 
+	$save['notes']                = get_nfilter_request_var('notes');
+
 	$save['data_type']            = get_nfilter_request_var('data_type');
 	$save['percent_ds']           = get_nfilter_request_var('percent_ds');
 	$save['expression']           = get_nfilter_request_var('expression');
@@ -1097,6 +1099,18 @@ function template_edit() {
 
 		$form_array += $extra;
 	}
+
+	$extra = array(
+		'notes' => array(
+			'friendly_name' => __('Operator Notes'),
+			'method' => 'textarea',
+			'textarea_rows' => 3,
+			'textarea_cols' => 50,
+			'description' => __('Enter instructions here for an operator who may be receiving the threshold message.'),
+			'value' => isset($thold_data['notes']) ? $thold_data['notes'] : ''
+		)
+	);
+	$form_array += $extra;
 
 	form_start('thold_templates.php', 'thold');
 
@@ -1691,7 +1705,9 @@ function template_import() {
 
 				break;
 			default:
-				$save[$name] = $value;
+				if (db_column_exists('thold_template', $name)) {
+					$save[$name] = $value;
+				}
 
 				break;
 			}
