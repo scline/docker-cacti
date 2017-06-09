@@ -322,27 +322,27 @@ if (sizeof($query)) {
 
 					if ($alert['method'] == '1') {
 						$alertm .= "-----------------------------------------------\n";
-						$alertm .= __("WARNING: A Syslog Plugin Instance Count Alert has Been Triggered") . "\n";
-						$alertm .= __("Name:")           . ' ' . htmlspecialchars($alert['name'], ENT_QUOTES, 'UTF-8') . "\n";
-						$alertm .= __("Severity:")       . ' ' . $severities[$alert['severity']] . "\n";
-						$alertm .= __("Threshold:")      . ' ' . $alert['num'] . "\n";
-						$alertm .= __("Count:")          . ' ' . sizeof($at)       . "\n";
-						$alertm .= __("Message String:") . ' ' . htmlspecialchars($alert['message'], ENT_QUOTES, 'UTF-8') . "\n";
+						$alertm .= __('WARNING: A Syslog Plugin Instance Count Alert has Been Triggered') . "\n";
+						$alertm .= __('Name:')           . ' ' . htmlspecialchars($alert['name'], ENT_QUOTES, 'UTF-8') . "\n";
+						$alertm .= __('Severity:')       . ' ' . $severities[$alert['severity']] . "\n";
+						$alertm .= __('Threshold:')      . ' ' . $alert['num'] . "\n";
+						$alertm .= __('Count:')          . ' ' . sizeof($at)       . "\n";
+						$alertm .= __('Message String:') . ' ' . htmlspecialchars($alert['message'], ENT_QUOTES, 'UTF-8') . "\n";
 
-						$htmlm  .= "<body><h1>" . __('Cacti Syslog Plugin Threshold Alert \'%s\'', $alert['name']) . "</h1>";
-						$htmlm  .= "<table cellspacing='0' cellpadding='3' border='1'>";
-						$htmlm  .= "<tr><th>" . __('Alert Name') . "</th><th>" . __('Severity') . "</th><th>" . __('Threshold') . "</th><th>" . __('Count') . "</th><th>" . __('Match String') . "</th></tr>";
-						$htmlm  .= "<tr><td>" . htmlspecialchars($alert['name'], ENT_QUOTES, 'UTF-8') . "</td>\n";
-						$htmlm  .= "<td>"     . $severities[$alert['severity']]  . "</td>\n";
-						$htmlm  .= "<td>"     . $alert['num']     . "</td>\n";
-						$htmlm  .= "<td>"     . sizeof($at)       . "</td>\n";
-						$htmlm  .= "<td>"     . htmlspecialchars($alert['message'], ENT_QUOTES, 'UTF-8') . "</td></tr></table><br>\n";
+						$htmlm  .= '<body><h1>' . __("Cacti Syslog Plugin Threshold Alert '%s'", $alert['name']) . '</h1>';
+						$htmlm  .= '<table cellspacing="0" cellpadding="3" border="1">';
+						$htmlm  .= '<tr><th>' . __('Alert Name') . '</th><th>' . __('Severity') . '</th><th>' . __('Threshold') . '</th><th>' . __('Count') . '</th><th>' . __('Match String') . '</th></tr>';
+						$htmlm  .= '<tr><td>' . htmlspecialchars($alert['name'], ENT_QUOTES, 'UTF-8') . '</td>';
+						$htmlm  .= '<td>'     . $severities[$alert['severity']]  . '</td>';
+						$htmlm  .= '<td>'     . $alert['num']     . '</td>';
+						$htmlm  .= '<td>'     . sizeof($at)       . '</td>';
+						$htmlm  .= '<td>'     . htmlspecialchars($alert['message'], ENT_QUOTES, 'UTF-8') . '</td></tr></table><br>';
 					}else{
-						$htmlm .= "<body><h1>" . __('Cacti Syslog Plugin Alert \'%s\'', $alert['name']) . "</h1>\n";
+						$htmlm .= '<body><h1>' . __('Cacti Syslog Plugin Alert \'%s\'', $alert['name']) . '</h1>';
 					}
 
-					$htmlm .= "<table>";
-					$htmlm .= "<tr><th'>" . __('Hostname') . "</th><th>" . __('Date') . "</th><th>" . __('Severity') . "</th><th>" . __('Level') . "</th><th>" . __('Message') . "</th></tr>";
+					$htmlm .= '<table>';
+					$htmlm .= '<tr><th>' . __('Hostname') . '</th><th>' . __('Date') . '</th><th>' . __('Severity') . '</th><th>' . __('Level') . '</th><th>' . __('Message') . '</th></tr>';
 
 					$max_alerts  = read_config_option('syslog_maxrecords');
 					$alert_count = 0;
@@ -362,12 +362,12 @@ if (sizeof($query)) {
 							$alertm .= __('Level:')    . ' ' . $syslog_levels[$a['priority_id']] . "\n\n";
 							$alertm .= __('Message:')  . ' ' . "\n" . htmlspecialchars($a['message'], ENT_QUOTES, 'UTF-8') . "\n";
 
-							if ($alert["method"] == 0) $htmlm   = $htmlh;
-							$htmlm  .= "<tr><td>" . $a['host']                        . "</td>"      . "\n";
-							$htmlm  .= "<td>"     . $a['date'] . ' ' . $a['time']     . "</td>"      . "\n";
-							$htmlm  .= "<td>"     . $severities[$alert['severity']]   . "</td>"      . "\n";
-							$htmlm  .= "<td>"     . $syslog_levels[$a['priority_id']] . "</td>"      . "\n";
-							$htmlm  .= "<td>"     . htmlspecialchars($a['message'], ENT_QUOTES, 'UTF-8') . "</td></tr>" . "\n";
+							if ($alert['method'] == 0) $htmlm   = $htmlh;
+							$htmlm  .= '<tr><td>' . $a['host']                        . '</td>';
+							$htmlm  .= '<td>'     . $a['date'] . ' ' . $a['time']     . '</td>';
+							$htmlm  .= '<td>'     . $severities[$alert['severity']]   . '</td>';
+							$htmlm  .= '<td>'     . $syslog_levels[$a['priority_id']] . '</td>';
+							$htmlm  .= '<td>'     . htmlspecialchars($a['message'], ENT_QUOTES, 'UTF-8') . '</td></tr>';
 						}
 
 						$syslog_alarms++;
@@ -387,7 +387,7 @@ if (sizeof($query)) {
 								$hostlist[] = $a['host'];
 								$htmlm  .= '</table></body></html>';
 								$sequence = syslog_log_alert($alert['id'], $alert['name'], $alert['severity'], $a, 1, $htmlm);
-								$smsalert = __('Sev:') . $severities[$alert['severity']] . __(', Host:') . $a['host'] . __(', URL:') . read_config_option('alert_base_url') . 'plugins/syslog/syslog.php?tab=current&id=' . $sequence;
+								$smsalert = __('Sev:') . $severities[$alert['severity']] . __(', Host:') . $a['host'] . __(', URL:') . read_config_option('base_url') . '/plugins/syslog/syslog.php?tab=current&id=' . $sequence;
 
 								syslog_sendemail(trim($alert['email']), $from, __('Event Alert - %s', $alert['name']), ($html ? $htmlm:$alertm), $smsalert);
 
@@ -418,7 +418,7 @@ if (sizeof($query)) {
 
 					if ($alert['method'] == 1) {
 						$sequence = syslog_log_alert($alert['id'], $alert['name'], $alert['severity'], $at[0], sizeof($at), $htmlm, $hostlist);
-						$smsalert = __('Sev:') . $severities[$alert['severity']] . __(', Count:') . sizeof($at) . __(', URL:') . read_config_option('alert_base_url') . 'plugins/syslog/syslog.php?tab=current&id=' . $sequence;
+						$smsalert = __('Sev:') . $severities[$alert['severity']] . __(', Count:') . sizeof($at) . __(', URL:') . read_config_option('base_url') . '/plugins/syslog/syslog.php?tab=current&id=' . $sequence;
 					}
 
 					syslog_debug("Alert Rule '" . $alert['name'] . "' has been activated");

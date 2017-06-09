@@ -97,6 +97,7 @@ function thold_add_graphs_action_execute() {
 			$insert['notify_extra']       = $template['notify_extra'];
 			$insert['cdef']               = $template['cdef'];
 			$insert['thold_template_id']  = $template['id'];
+			$insert['notes']              = $template['notes'];
 			$insert['template_enabled']   = 'on';
 
 			$rrdlist = db_fetch_assoc("SELECT id, data_input_field_id

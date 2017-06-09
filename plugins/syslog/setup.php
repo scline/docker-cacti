@@ -185,7 +185,7 @@ function syslog_check_upgrade() {
 
 	// Let's only run this check if we are on a page that actually needs the data
 	$files = array('plugins.php', 'syslog.php', 'syslog_removal.php', 'syslog_alerts.php', 'syslog_reports.php');
-	if (isset($_SERVER['PHP_SELF']) && !in_array(basename($_SERVER['PHP_SELF']), $files)) {
+	if (!in_array(get_current_page(), $files)) {
 		return;
 	}
 
@@ -840,9 +840,9 @@ function syslog_show_tab() {
 
 	if (api_user_realm_auth('syslog.php')) {
 		if (substr_count($_SERVER['REQUEST_URI'], 'syslog.php')) {
-			print '<a href="' . $config['url_path'] . 'plugins/syslog/syslog.php"><img src="' . $config['url_path'] . 'plugins/syslog/images/tab_syslog_down.gif" alt="syslog" align="absmiddle" border="0"></a>';
+			print '<a href="' . $config['url_path'] . 'plugins/syslog/syslog.php"><img src="' . $config['url_path'] . 'plugins/syslog/images/tab_syslog_down.gif" alt="' . __('Syslog') . '"></a>';
 		}else{
-			print '<a href="' . $config['url_path'] . 'plugins/syslog/syslog.php"><img src="' . $config['url_path'] . 'plugins/syslog/images/tab_syslog.gif" alt="syslog" align="absmiddle" border="0"></a>';
+			print '<a href="' . $config['url_path'] . 'plugins/syslog/syslog.php"><img src="' . $config['url_path'] . 'plugins/syslog/images/tab_syslog.gif" alt="' . __('Syslog') . '"></a>';
 		}
 	}
 }
@@ -1070,7 +1070,7 @@ function syslog_graph_buttons($graph_elements = array()) {
 					$host_id = syslog_db_fetch_cell('SELECT host_id FROM syslog_hosts ' . $sql_where);
 
 					if ($host_id) {
-						print "<a class='iconLink' href='" . htmlspecialchars($config['url_path'] . 'plugins/syslog/syslog.php?tab=syslog&reset=1&host=' . $host_id . '&date1=' . $date1 . '&date2=' . $date2) . "'><img src='" . $config['url_path'] . "plugins/syslog/images/view_syslog.png' border='0' alt='' title='" . __('Display Syslog in Range') . "'></a><br>";
+						print "<a class='iconLink' href='" . htmlspecialchars($config['url_path'] . 'plugins/syslog/syslog.php?tab=syslog&reset=1&host=' . $host_id . '&date1=' . $date1 . '&date2=' . $date2) . "'><img src='" . $config['url_path'] . "plugins/syslog/images/view_syslog.png' alt='' title='" . __('Display Syslog in Range') . "'></a><br>";
 					}
 				}
 			}

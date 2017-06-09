@@ -1382,6 +1382,18 @@ function thold_edit() {
 		$form_array += $extra;
 	}
 
+	$extra = array(
+		'notes' => array(
+			'friendly_name' => __('Operator Notes'),
+			'method' => 'textarea',
+			'textarea_rows' => 3,
+			'textarea_cols' => 50,
+			'description' => __('Enter instructions here for an operator who may be receiving the threshold message.'),
+			'value' => isset($thold_data['notes']) ? $thold_data['notes'] : ''
+		)
+	);
+	$form_array += $extra;
+
 	draw_edit_form(
 		array(
 			'config' => array(

@@ -24,7 +24,7 @@
 */
 
 function thold_poller_bottom() {
-	global $config;
+	global $config, $database_type, $database_default, $database_hostname, $database_username, $database_password, $database_port, $database_ssl;
 
 	if (!read_config_option('thold_daemon_enable')) {
 		/* record the start time */
@@ -51,19 +51,24 @@ function thold_poller_bottom() {
 		/* collect some stats */
 		$current_time = time();
 		$max_concurrent_processes = read_config_option('thold_max_concurrent_processes');
-		$stats = db_fetch_row('SELECT
+
+		/* begin transaction for repeatable read isolation level */
+		$db_conn = db_connect_real($database_hostname, $database_username, $database_password, $database_default, $database_type, $database_port, $database_ssl);
+		$db_conn->beginTransaction();
+
+		$stats = db_fetch_row_prepared('SELECT
 			COUNT(*) as completed,
 			SUM(processed_items) as processed_items,
-			MAX(`end`-`start`) as max_processing_time,
-			SUM(`end`-`start`) as total_processing_time
-			FROM `plugin_thold_daemon_processes`
-			WHERE `start` != 0 AND `end` != 0 AND `end` <=' . $current_time . " AND `processed_items` != '-1'");
+			MAX(end-start) as max_processing_time,
+			SUM(end-start) as total_processing_time
+			FROM plugin_thold_daemon_processes
+			WHERE start != 0 AND end != 0 AND end <= ? AND processed_items != -1', array($current_time));
 
-		$broken_processes = db_fetch_cell("SELECT COUNT(*) FROM `plugin_thold_daemon_processes` WHERE `processed_items` = '-1'");
-		$running_processes = db_fetch_cell("SELECT COUNT(*) FROM `plugin_thold_daemon_processes` WHERE `start` != 0 AND `end` = 0");
+		$broken_processes = db_fetch_cell('SELECT COUNT(*) FROM plugin_thold_daemon_processes WHERE processed_items = -1');
+		$running_processes = db_fetch_cell('SELECT COUNT(*) FROM plugin_thold_daemon_processes WHERE start != 0 AND end = 0');
 
 		/* system clean up */
-		db_execute("DELETE FROM `plugin_thold_daemon_processes` WHERE `end` != 0 AND `end` <=" . $current_time);
+		db_execute_prepared("DELETE FROM plugin_thold_daemon_processes WHERE end != 0 AND end <= ?", array($current_time));
 
 		/* host_status processed by thold server */
 		$nhosts = thold_update_host_status ();
@@ -76,6 +81,8 @@ function thold_poller_bottom() {
 		$thold_stats = sprintf('CPUTime:%u MaxRuntime:%u Tholds:%u TotalDevices:%u DownDevices:%u NewDownDevices:%u Processes: %u completed, %u running, %u broken', $stats['total_processing_time'], $stats['max_processing_time'], $stats['processed_items'], $total_hosts, $down_hosts, $nhosts, $stats['completed'], $running_processes, $broken_processes);
 		cacti_log('THOLD STATS: ' . $thold_stats, false, 'SYSTEM');
 		db_execute("REPLACE INTO settings (name, value) VALUES ('stats_thold', '$thold_stats')");
+
+		$db_conn->commit();
 	}
 }
 
@@ -129,7 +136,7 @@ function thold_poller_output(&$rrd_update_array) {
 				$sql_max_inserts = 1000;
 				$thold_items = array_chunk($thold_items, $sql_max_inserts);
 
-				$sql_insert = 'INSERT INTO `plugin_thold_daemon_data` (id, pid, rrd_reindexed, rrd_time_reindexed) VALUES ';
+				$sql_insert = 'INSERT INTO plugin_thold_daemon_data (id, pid, rrd_reindexed, rrd_time_reindexed) VALUES ';
 				$sql_values = '';
 				foreach($thold_items as $packet) {
 					foreach($packet as $thold_item) {
@@ -140,7 +147,7 @@ function thold_poller_output(&$rrd_update_array) {
 				}
 
 				/* queue a new thold process */
-				db_execute("INSERT INTO `plugin_thold_daemon_processes` (pid) VALUES('$thold_pid')");
+				db_execute("INSERT INTO plugin_thold_daemon_processes (pid) VALUES('$thold_pid')");
 			}
 
 			return $rrd_update_array;

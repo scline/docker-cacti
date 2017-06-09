@@ -107,7 +107,7 @@ function plugin_thold_upgrade () {
 
 	// Let's only run this check if we are on a page that actually needs the data
 	$files = array('thold.php', 'thold_graph.php', 'thold_templates.php', 'poller.php');
-	if (isset($_SERVER['PHP_SELF']) && !in_array(basename($_SERVER['PHP_SELF']), $files)) {
+	if (!in_array(get_current_page(), $files)) {
 		return false;
 	}
 
@@ -192,7 +192,7 @@ function thold_graph_button($data) {
 	}
 
 	if (api_user_realm_auth('thold_graph.php')) {
-		print '<a class="iconLink" href="' .  $url . $separator . 'thold_vrule=' . $vrules . '"><img src="' . $config['url_path'] . 'plugins/thold/images/reddot.png" border="0" alt="" title="' . __('Toggle Threshold VRULES %s', ($vrules == 'on' ? __('Off') : __('On'))) . '"></a><br>';
+		print '<a class="iconLink" href="' .  $url . $separator . 'thold_vrule=' . $vrules . '"><img src="' . $config['url_path'] . 'plugins/thold/images/reddot.png" alt="" title="' . __('Toggle Threshold VRULES %s', ($vrules == 'on' ? __('Off') : __('On'))) . '"></a><br>';
 	}
 
 	// Add Threshold Creation button
@@ -204,7 +204,7 @@ function thold_graph_button($data) {
 			get_filter_request_var('leaf_id');
 		}
 
-		print '<a class="iconLink" href="' . htmlspecialchars($config['url_path'] . 'plugins/thold/thold.php?action=add' . '&usetemplate=1&local_graph_id=' . $local_graph_id) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" border="0" alt="" title="' . __('Create Threshold') . '"></a><br>';
+		print '<a class="iconLink" href="' . htmlspecialchars($config['url_path'] . 'plugins/thold/thold.php?action=add' . '&usetemplate=1&local_graph_id=' . $local_graph_id) . '"><img src="' . $config['url_path'] . 'plugins/thold/images/edit_object.png" alt="" title="' . __('Create Threshold') . '"></a><br>';
 	}
 }
 
@@ -788,6 +788,9 @@ function thold_data_source_action_execute($action) {
 						$insert['thold_hrule_alert']          = $template['thold_hrule_alert'];
 						$insert['thold_hrule_warning']        = $template['thold_hrule_warning'];
 
+						/* notes */
+						$insert['notes']                      = $template['notes'];
+
 						$insert['cdef']                       = $template['cdef'];
 						$insert['thold_template_id']          = $template['id'];
 						$insert['template_enabled']           = 'on';
@@ -1037,6 +1040,9 @@ function thold_graphs_action_execute($action) {
 						$insert['thold_hrule_alert']          = $template['thold_hrule_alert'];
 						$insert['thold_hrule_warning']        = $template['thold_hrule_warning'];
 
+						/* notes */
+						$insert['notes']                      = $template['notes'];
+
 						$insert['cdef']                       = $template['cdef'];
 						$insert['thold_template_id']          = $template['id'];
 						$insert['template_enabled']           = 'on';
@@ -1281,7 +1287,7 @@ function thold_device_edit_pre_bottom() {
 			$i++;
 		}
 	}else{ 
-		print '<tr><td colspan="2"><em>' . __('No Associated Threshold Templates.') . '</em></td></tr>'; 
+		print '<tr><td class="templateAdd" colspan="2"><em>' . __('No Associated Threshold Templates.') . '</em></td></tr>'; 
 	}
 
 	html_end_box();
@@ -1313,7 +1319,7 @@ function thold_device_template_edit() {
 			$i++;
 		}
 	}else{ 
-		print '<tr><td colspan="2"><em>' . __('No Associated Threshold Templates.') . '</em></td></tr>'; 
+		print '<tr><td class="templateAdd" colspan="2"><em>' . __('No Associated Threshold Templates.') . '</em></td></tr>'; 
 	}
 
 	$unmapped = db_fetch_assoc_prepared('SELECT DISTINCT tt.id, tt.name

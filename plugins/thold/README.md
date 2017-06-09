@@ -1,11 +1,11 @@
-#thold
+# thold
 
 The Cacti thold plugin is designed to be a fault management system driven by Cacti's Graph information.  It provides the facility to inspect data in a Cacti Graph and the underlying RRDfile, and generate alerts for management and operations personnel.  It provides  Email, Syslog, and SNMP Trap or Inform escalations.  In addition, it also can notify personnel of Cacti Device status changes through Email, Syslog, and either SNMP Trap or Inform.
 
 NOTE: The Thold plugin that is in GitHub is ONLY compatible with Cacti 1.0.0 and above!
 
-##Installation
-	
+## Installation
+
 To install the plugin, simply copy the plugin_thold directory to Cacti's plugins directory and rename it to simply 'thold'.  Once this is complete, goto Cacti's Plugin Management section, and Install and Enable the plugin.  Once this is complete, you can grant users permission to view and create Thresholds.
 
 Once you have installed thold, you should verify that Email support is functioning in Cacti by going to Cacti's Console and under Configuration select Settings, and from there the 'Mail/Reporting/DNS'.  From there, you can test your mail settings to validate that users will receive notifications via email.
@@ -14,7 +14,7 @@ After you have completed that, you should goto the 'Thresholds' Settings tab, an
 
 As with much of Cacti, settings should be documented in line with the actual setting.  If you find that any of these settings are ambiguous, please create a pull request with your proposed changes.
 
-##Usage
+## Usage
 
 The Cacti 1.0 version of thold is designed to work with Device Templates.  Therefore, when you configure a Device Template, you can add default Thresold Templates to that Device Template and when a Device in Cacti is created with that Device Template, all the required Thresolds will be created automatically.  Of course, creating stand alone Thresholds is still supported.
 
@@ -30,11 +30,15 @@ Thold has multiple Data Manipulation types, including: Exact Value, CDEF, Percen
 
 Lastly, please note that several forks of the thold plugin are available from different sources.  These forks of thold are not necessarily compatible with the current version of Cacti's thold plugin.  Please be aware of this when installing thold for the first time.
 
-##Authors
+## Authors
 
 The thold plugin has been in development for well over a decade with increasing functionality and stability over that time.  There have been several contributors to thold over the years.  Chief amonst them are Jimmy Conner, Larry Adams, and Andreas Braun.  We hope that version 1.0 and beyond are the most stable and robust versions of thold ever published.  We are always looking for new ideas.  So, this won't be the last release of thold, you can rest assured of that.
 
-##ChangeLog
+## ChangeLog
+
+--- 1.0.3 ---
+* feature#34: Allow notes to be attached to thresholds and templates
+* issue#86: Undefined variable in snmptrap function
 
 --- 1.0.2 ---
 * issue#60: Threshold Templates could not be exported
@@ -52,7 +56,7 @@ The thold plugin has been in development for well over a decade with increasing 
 * feature: Initial Support for Cacti 1.0
 * feature: Multiple tholds per data source
 * feature: Moving most SQL to prepared statements for security
-* feature: Moving away from direct use of $_GET, $_REQUEST, and $_POST for security
+* feature: Moving away from direct use of GET, REQUEST, and POST variables for security
 * feature: Rename several legacy database columns to match Cacti's default schema, making the thold code much more readable
 * feature: complete audit and rewrite of several functions addressing: readability, clarity, and consistency
 
