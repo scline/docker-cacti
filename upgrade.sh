@@ -13,11 +13,11 @@ mkdir /tmp/update/cacti
 
 # download and uncompress cacti
 echo "$(date +%F_%R) [Upgrade] Downloading Cacti from $cacti_download_url"
-curl $cacti_download_url | tar xzC /tmp/update/cacti
+wget -qO- $cacti_download_url | tar xzC /tmp/update/cacti
 
 # download and uncompress spine
 echo "$(date +%F_%R) [Upgrade] Downloading Spine from $spine_download_url"
-curl /tmp/update $spine_download_url | tar xzC /tmp/update/spine
+wget -qO- /tmp/update $spine_download_url | tar xzC /tmp/update/spine
 
 # cacti install
 echo "$(date +%F_%R) [Upgrade] Installing new version of Cacti."
