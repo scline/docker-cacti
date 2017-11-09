@@ -19,10 +19,9 @@ RUN \
 RUN \
     yum install -y \ 
         autoconf automake gcc gzip help2man libtool make net-snmp-devel \
-        m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget mariadb-devel
+        m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget mariadb-devel \
     
 ## --- CLEANUP ---
-    rm -rf /tmp/*  && \
     yum clean all
 
 ## --- CRON ---
