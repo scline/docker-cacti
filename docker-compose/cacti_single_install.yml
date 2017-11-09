@@ -1,5 +1,4 @@
 version: '2'
-restart: always
 services:
   cacti:
     image: "smcline06/cacti"
@@ -16,8 +15,8 @@ services:
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
     volumes:
-      -/docker/cacti:/cacti
-      -/docker/backups:/backups
+      - /docker/cacti:/cacti
+      - /docker/backups:/backups
     links:
       - db
   db:
