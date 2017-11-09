@@ -1,0 +1,60 @@
+Cacti - MacTrack CHANGELOG
+
+3.0
+-bug#0002310: SNMP Option Set Call to undefined function mactrack_save_button()
+
+1.0
+-feature: Make mac_track_temp_ports and mac_track_ips memory tables for faster performance
+-bug: Fix all export functions.  Only allow upto 10k records to be exported at any time.
+-bug: Allow import to work with csv files that are 1) out of order, 2) contain extra columns
+-bug: Initial polling does not start automatically as it should
+
+Pre-Beta:
+-bug: Complete implementation of the export sites.  Can't believe that I did not finish this before I changed jobs
+-bug: Fix Devices and Device Types in order to export all rows, not just the current display
+-bug: Modify database structure to create distinction between operating ports and active mac addresses
+-bug: Correct the valid_snmp_host function that was incorrectly allowing a host to change snmp communities when it was down
+-bug: Correct the storing of sysObjectID into the mac_track_devices table in Windows
+-bug: Change some table Pk's to be more consistent with actual deployments
+-bug: Allow changing of database maintenance time to work as expected
+-bug: Do not include bridge root ports in data collection
+-bug: Detect ignore ports properly on Cabletron SEHI's
+-bug: Fix Enable/Disable device support
+-bug: Fix raw DNS UDP datagram creation code
+-bug: Don't clear filters for other reports when clearing for one
+-bug: Fix the utilities section of MacTrack.  Did not look too good
+-bug: Correct issue where Hex IP address was not being converted properly
+-feature: Implement Device sorting from the console
+-feature: Implement ignorePorts processing for pre-defined functions
+-feature: Implement device and device type import functions
+-feature: Implement device, device type, and port result export functions
+-feature: Implement scanning_function registration in the vendor include files
+-feature: Implement row's pulldown feature in MacTrack reporting interface
+-feature: Use Cacti's builtin snmp functions instead of php_snmp extension
+-feature: Fully implement device_types support as intended in the alpha release
+-feature: Add the snmp_port to the devices table for those who have to poke holes in firewall's to gain access to devices
+-feature: Implement ignorePorts processing for pre-defined functions
+-feature: Implement device and device type import functions
+-feature: Implement device, device type, and port result export functions
+-feature: Implement scanning_function registration in the vendor include files
+-feature: Implement row's pulldown feature in MacTrack Viewer
+-feature: Use Cacti's builtin snmp functions instead of php_snmp extension
+-feature: Fully implement device_types support as intended in the alpha release
+-feature: Allow the detection of Cisco Voice VLAN's properly for some model Cisco switches
+-feature: Add new module "mactrack_resolver.php" to perform reverse DNS (1 thread for now)
+-feature: Add DNS hostname to MacTrack reporting interface
+-feature: Add MacTrack reporting interface.  Add sites, and devices reports.  Allow export of Devices and Macs/IP's
+-feature: Add filtering of sites in the new reporting interface
+-feature: Major revamp to Reporting interface, some bug fixes and adding of IP's to Device table.
+-bug: Changed devicetype and availability ERROR's to WARNINGS
+-bug: Don't display DNS Hostname or search from it if you are not performing reverse lookup
+-bug: Correct row's counter in Detailed Site Report View
+-feature: Allow the administrator to dynamically change the number of concurrent processes
+-bug: Perform Database Maintenance as it should be
+-bug: When in site detail, don't give the option to edit a site.  It does not make sense
+-feature: Add export to IP Range Report.
+-bug: Fix Max/Current IP's count in IP Range Report.
+-feature: Add Refresh Selector to Tracking Collection Status Page
+-bug: Do not rescan using a Rotational Readstring that was already used by default
+-bug: Device Import error message showing incorrect header field
+-feature: Modify the "mac_track_temp_ports" and "mac_track_ips" tables to be HEAP Type, meaning they only reside in memory

@@ -31,6 +31,6 @@ function thold_show_tab () {
 			$cp = true;
 		}
 
-		print '<a href="' . $config['url_path'] . 'plugins/thold/thold_graph.php"><img src="' . $config['url_path'] . 'plugins/thold/images/tab_thold' . ($cp ? '_down': '') . '.gif" alt="' . __('Thold') . '"></a>';
+		print '<a href="' . $config['url_path'] . 'plugins/thold/thold_graph.php"><img src="' . $config['url_path'] . 'plugins/thold/images/tab_thold' . ($cp ? '_down': '') . '.gif" alt="' . __esc('Thold', 'thold') . '"></a>';
 	}
 }

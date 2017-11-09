@@ -1,0 +1,15 @@
+#!/bin/sh
+
+path_thold=/var/www/html/cacti/plugins/thold
+
+start() {
+  exec php -q ${path_thold}/thold_daemon.php
+}
+
+stop() {
+  exec kill `pgrep -a php | grep thold_daemon.php | awk '{print $1}'`
+}
+
+case $1 in
+  start|stop) "$1" ;;
+esac

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-08 08:20-0500\n"
+"POT-Creation-Date: 2017-07-08 11:23-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,388 +16,334 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../syslog.php:44
+#: ../syslog.php:45
+msgid "Syslog Viewer"
+msgstr ""
+
+#: ../syslog.php:48
 msgid "All Text"
 msgstr ""
 
-#: ../syslog.php:45 ../syslog.php:46 ../syslog.php:47 ../syslog.php:48
-#: ../syslog.php:49 ../syslog.php:50
+#: ../syslog.php:49 ../syslog.php:50 ../syslog.php:51 ../syslog.php:52
+#: ../syslog.php:53 ../syslog.php:54
 #, php-format
 msgid "%d Chars"
 msgstr ""
 
-#: ../syslog.php:102
+#: ../syslog.php:110
 msgid "System Logs"
 msgstr ""
 
-#: ../syslog.php:104
+#: ../syslog.php:112
 msgid "Statistics"
 msgstr ""
 
-#: ../syslog.php:106
+#: ../syslog.php:114
 msgid "Alert Logs"
 msgstr ""
 
-#: ../syslog.php:115
+#: ../syslog.php:123
 msgid "Selected Alert"
 msgstr ""
 
-#: ../syslog.php:138
+#: ../syslog.php:146
 msgid "Syslog Alert View"
 msgstr ""
 
-#: ../syslog.php:212
+#: ../syslog.php:231
 msgid "Syslog Statistics Filter"
 msgstr ""
 
-#: ../syslog.php:244 ../syslog.php:1277
+#: ../syslog.php:265 ../syslog.php:1367
 msgid "Messages"
 msgstr ""
 
-#: ../syslog.php:251
+#: ../syslog.php:272
 msgid "Device Name"
 msgstr ""
 
-#: ../syslog.php:252 ../syslog.php:341 ../syslog.php:1286 ../syslog.php:1294
-#: ../syslog.php:1354
+#: ../syslog.php:273 ../syslog.php:421 ../syslog.php:1376 ../syslog.php:1384
+#: ../syslog.php:1466
 msgid "Facility"
 msgstr ""
 
-#: ../syslog.php:253 ../syslog.php:362 ../syslog.php:1287 ../syslog.php:1295
-#: ../syslog.php:1355
+#: ../syslog.php:274 ../syslog.php:441 ../syslog.php:1377 ../syslog.php:1385
+#: ../syslog.php:1467
 msgid "Priority"
 msgstr ""
 
-#: ../syslog.php:254
+#: ../syslog.php:275 ../syslog.php:1374 ../syslog.php:1382
+msgid "Program"
+msgstr ""
+
+#: ../syslog.php:276 ../syslog.php:1372 ../syslog.php:1380 ../syslog.php:1462
+#: ../syslog_process.php:345 ../syslog_process.php:653
+msgid "Date"
+msgstr ""
+
+#: ../syslog.php:277
 msgid "Records"
 msgstr ""
 
-#: ../syslog.php:268
+#: ../syslog.php:304
 msgid "No Syslog Statistics Found"
 msgstr ""
 
-#: ../syslog.php:345 ../syslog.php:366 ../syslog.php:746
-#: ../syslog_removal.php:465 ../syslog_reports.php:452
-#: ../syslog_alerts.php:541
+#: ../syslog.php:401 ../syslog.php:1373 ../syslog.php:1381 ../syslog.php:1465
+msgid "Device"
+msgstr ""
+
+#: ../syslog.php:405 ../syslog.php:425 ../syslog.php:445 ../syslog.php:844
+#: ../syslog_removal.php:467 ../syslog_reports.php:453
+#: ../syslog_alerts.php:537
 msgid "All"
 msgstr ""
 
-#: ../syslog.php:346 ../syslog.php:367 ../syslog.php:747
+#: ../syslog.php:406 ../syslog.php:426 ../syslog.php:446 ../syslog.php:845
 msgid "None"
 msgstr ""
 
-#: ../syslog.php:383
-msgid "Entries"
-msgstr ""
-
-#: ../syslog.php:387 ../syslog.php:1067 ../syslog_removal.php:475
-#: ../syslog_reports.php:462 ../syslog_alerts.php:551
-msgid "Default"
-msgstr ""
-
-#: ../syslog.php:398 ../syslog.php:996 ../syslog_removal.php:486
-#: ../syslog_reports.php:473 ../syslog_alerts.php:562
-msgid "Go"
-msgstr ""
-
-#: ../syslog.php:401 ../syslog.php:999 ../syslog_removal.php:489
-#: ../syslog_reports.php:476 ../syslog_alerts.php:565
-msgid "Clear"
-msgstr ""
-
-#: ../syslog.php:408 ../syslog.php:777 ../syslog_removal.php:455
-#: ../syslog_reports.php:442 ../syslog_alerts.php:531
+#: ../syslog.php:472 ../syslog.php:875 ../syslog_removal.php:457
+#: ../syslog_reports.php:443 ../syslog_alerts.php:527
 msgid "Search"
 msgstr ""
 
-#: ../syslog.php:717
+#: ../syslog.php:478
+msgid "Time Range"
+msgstr ""
+
+#: ../syslog.php:482 ../setup.php:913
+#, php-format
+msgid "%d Minute"
+msgstr ""
+
+#: ../syslog.php:483 ../syslog.php:484 ../syslog.php:485 ../syslog.php:486
+#: ../syslog_alerts.php:330 ../syslog_alerts.php:331 ../syslog_alerts.php:332
+#: ../syslog_alerts.php:333 ../syslog_alerts.php:334 ../syslog_alerts.php:335
+#: ../setup.php:914 ../setup.php:915 ../setup.php:916
+#, php-format
+msgid "%d Minutes"
+msgstr ""
+
+#: ../syslog.php:487 ../syslog_alerts.php:336
+#, php-format
+msgid "%d Hour"
+msgstr ""
+
+#: ../syslog.php:488 ../syslog.php:489 ../syslog.php:490
+#: ../syslog_alerts.php:337 ../syslog_alerts.php:338 ../syslog_alerts.php:339
+#: ../syslog_alerts.php:340 ../syslog_alerts.php:341 ../syslog_alerts.php:342
+#, php-format
+msgid "%d Hours"
+msgstr ""
+
+#: ../syslog.php:491 ../syslog_alerts.php:343 ../setup.php:875
+#: ../setup.php:894
+#, php-format
+msgid "%d Day"
+msgstr ""
+
+#: ../syslog.php:495
+msgid "Entries"
+msgstr ""
+
+#: ../syslog.php:499 ../syslog.php:1173 ../syslog_removal.php:477
+#: ../syslog_reports.php:463 ../syslog_alerts.php:547
+msgid "Default"
+msgstr ""
+
+#: ../syslog.php:815
 #, php-format
 msgid " [ Start: '%s' to End: '%s', Unprocessed Messages: %s ]"
 msgstr ""
 
-#: ../syslog.php:719
+#: ../syslog.php:817
 #, php-format
 msgid "[ Unprocessed Messages: %s ]"
 msgstr ""
 
-#: ../syslog.php:735
+#: ../syslog.php:833
 msgid "Select Device(s)"
 msgstr ""
 
-#: ../syslog.php:737
+#: ../syslog.php:835
 msgid "Devices Selected"
 msgstr ""
 
-#: ../syslog.php:740
+#: ../syslog.php:838
 msgid "All Devices Selected"
 msgstr ""
 
-#: ../syslog.php:927
+#: ../syslog.php:1033
 #, php-format
 msgid "Syslog Message Filter %s"
 msgstr ""
 
-#: ../syslog.php:937
+#: ../syslog.php:1043
 msgid "Custom"
 msgstr ""
 
-#: ../syslog.php:959
+#: ../syslog.php:1065
 msgid "From"
 msgstr ""
 
-#: ../syslog.php:965
-msgid "Start Date Selector"
-msgstr ""
-
-#: ../syslog.php:968
+#: ../syslog.php:1074
 msgid "To"
 msgstr ""
 
-#: ../syslog.php:974
-msgid "End Date Selector"
-msgstr ""
-
-#: ../syslog.php:977
-msgid "Shift Time Backward"
-msgstr ""
-
-#: ../syslog.php:980
-msgid "Define Shifting Interval"
-msgstr ""
-
-#: ../syslog.php:993
-msgid "Shift Time Forward"
-msgstr ""
-
-#: ../syslog.php:999
-msgid "Return filter values to their user defined defaults"
-msgstr ""
-
-#: ../syslog.php:1002
-msgid "Export"
-msgstr ""
-
-#: ../syslog.php:1002
-msgid "Export Records to CSV"
-msgstr ""
-
-#: ../syslog.php:1005
-msgid "Save"
-msgstr ""
-
-#: ../syslog.php:1005
-msgid "Save Default Settings"
-msgstr ""
-
-#: ../syslog.php:1009 ../syslog_alerts.php:674
-msgid "Alerts"
-msgstr ""
-
-#: ../syslog.php:1009
-msgid "View Syslog Alert Rules"
-msgstr ""
-
-#: ../syslog.php:1012
-msgid "Removals"
-msgstr ""
-
-#: ../syslog.php:1012
-msgid "View Syslog Removal Rules"
-msgstr ""
-
-#: ../syslog.php:1015
-msgid "Reports"
-msgstr ""
-
-#: ../syslog.php:1015
-msgid "View Syslog Reports"
-msgstr ""
-
-#: ../syslog.php:1032
+#: ../syslog.php:1138
 msgid "Show All Devices"
 msgstr ""
 
-#: ../syslog.php:1033
+#: ../syslog.php:1139
 msgid "Show All Logs"
 msgstr ""
 
-#: ../syslog.php:1034
+#: ../syslog.php:1140
 msgid "Threshold Logs"
 msgstr ""
 
-#: ../syslog.php:1066
-msgid "Display Rows"
-msgstr ""
-
-#: ../syslog.php:1070
+#: ../syslog.php:1176
 #, php-format
 msgid "%d Messages"
 msgstr ""
 
-#: ../syslog.php:1076
-msgid "Message Trim"
-msgstr ""
-
-#: ../syslog.php:1099
-msgid "Programs to filter on"
-msgstr ""
-
-#: ../syslog.php:1100
-msgid "All Programs"
-msgstr ""
-
-#: ../syslog.php:1116
-msgid "Facilities to filter on"
-msgstr ""
-
-#: ../syslog.php:1117
+#: ../syslog.php:1207
 msgid "All Facilities"
 msgstr ""
 
-#: ../syslog.php:1135
+#: ../syslog.php:1225
 msgid "Priority Levels"
 msgstr ""
 
-#: ../syslog.php:1136
+#: ../syslog.php:1226
 msgid "All Priorities"
 msgstr ""
 
-#: ../syslog.php:1137 ../syslog.php:1180
+#: ../syslog.php:1227 ../syslog.php:1270
 msgid "Emergency"
 msgstr ""
 
-#: ../syslog.php:1138
+#: ../syslog.php:1228
 msgid "Critical++"
 msgstr ""
 
-#: ../syslog.php:1139 ../syslog.php:1181 ../syslog.php:1200 ../setup.php:943
+#: ../syslog.php:1229 ../syslog.php:1271 ../syslog.php:1290 ../setup.php:922
 msgid "Critical"
 msgstr ""
 
-#: ../syslog.php:1140
+#: ../syslog.php:1230
 msgid "Alert++"
 msgstr ""
 
-#: ../syslog.php:1141 ../syslog.php:1182
+#: ../syslog.php:1231 ../syslog.php:1272
 msgid "Alert"
 msgstr ""
 
-#: ../syslog.php:1142
+#: ../syslog.php:1232
 msgid "Error++"
 msgstr ""
 
-#: ../syslog.php:1143 ../syslog.php:1183
+#: ../syslog.php:1233 ../syslog.php:1273
 msgid "Error"
 msgstr ""
 
-#: ../syslog.php:1144
+#: ../syslog.php:1234
 msgid "Warning++"
 msgstr ""
 
-#: ../syslog.php:1145 ../syslog.php:1184 ../syslog.php:1201 ../setup.php:942
+#: ../syslog.php:1235 ../syslog.php:1274 ../syslog.php:1291 ../setup.php:921
 msgid "Warning"
 msgstr ""
 
-#: ../syslog.php:1146
+#: ../syslog.php:1236
 msgid "Notice++"
 msgstr ""
 
-#: ../syslog.php:1147 ../syslog.php:1185 ../syslog.php:1202 ../setup.php:941
+#: ../syslog.php:1237 ../syslog.php:1275 ../syslog.php:1292 ../setup.php:920
 msgid "Notice"
 msgstr ""
 
-#: ../syslog.php:1148
+#: ../syslog.php:1238
 msgid "Info++"
 msgstr ""
 
-#: ../syslog.php:1149 ../syslog.php:1186
+#: ../syslog.php:1239 ../syslog.php:1276
 msgid "Info"
 msgstr ""
 
-#: ../syslog.php:1150 ../syslog.php:1187
+#: ../syslog.php:1240 ../syslog.php:1277
 msgid "Debug"
 msgstr ""
 
-#: ../syslog.php:1155
-msgid "Removal Handling"
-msgstr ""
-
-#: ../syslog.php:1156
+#: ../syslog.php:1246
 msgid "All Records"
 msgstr ""
 
-#: ../syslog.php:1157
+#: ../syslog.php:1247
 msgid "Main Records"
 msgstr ""
 
-#: ../syslog.php:1158
+#: ../syslog.php:1248
 msgid "Removed Records"
 msgstr ""
 
-#: ../syslog.php:1203
+#: ../syslog.php:1293
 msgid "Informational"
 msgstr ""
 
-#: ../syslog.php:1281
+#: ../syslog.php:1371
 msgid "Actions"
 msgstr ""
 
-#: ../syslog.php:1282 ../syslog.php:1290 ../syslog.php:1350
-#: ../syslog_process.php:334 ../syslog_process.php:602
-msgid "Date"
-msgstr ""
-
-#: ../syslog.php:1283 ../syslog.php:1291 ../syslog.php:1353
-msgid "Device"
-msgstr ""
-
-#: ../syslog.php:1284 ../syslog.php:1292
-msgid "Program"
-msgstr ""
-
-#: ../syslog.php:1285 ../syslog.php:1293 ../syslog.php:1351
-#: ../syslog_process.php:334 ../syslog_process.php:602
+#: ../syslog.php:1375 ../syslog.php:1383 ../syslog.php:1463
+#: ../syslog_process.php:345 ../syslog_process.php:653
 msgid "Message"
 msgstr ""
 
-#: ../syslog.php:1330
+#: ../syslog.php:1420
 msgid "No Syslog Messages"
 msgstr ""
 
-#: ../syslog.php:1343
+#: ../syslog.php:1455
 msgid "Alert Log Rows"
 msgstr ""
 
-#: ../syslog.php:1348 ../syslog_alerts.php:362 ../syslog_alerts.php:683
+#: ../syslog.php:1460 ../syslog_process.php:334 ../syslog_alerts.php:365
+#: ../syslog_alerts.php:679
 msgid "Alert Name"
 msgstr ""
 
-#: ../syslog.php:1349 ../syslog_process.php:334 ../syslog_alerts.php:370
-#: ../syslog_alerts.php:684
+#: ../syslog.php:1461 ../syslog_process.php:334 ../syslog_process.php:345
+#: ../syslog_alerts.php:373 ../syslog_alerts.php:680
 msgid "Severity"
 msgstr ""
 
-#: ../syslog.php:1352
+#: ../syslog.php:1464 ../syslog_process.php:334
 msgid "Count"
 msgstr ""
 
-#: ../syslog.php:1368
+#: ../syslog.php:1480
 msgid "Alert Removed"
 msgstr ""
 
-#: ../syslog.php:1379
+#: ../syslog.php:1491
 msgid "No Alert Log Messages"
 msgstr ""
 
-#: ../syslog_removal.php:31 ../setup.php:850
+#: ../syslog.php:1551 ../syslog.php:1571
+msgid "All Programs"
+msgstr ""
+
+#: ../syslog_removal.php:31 ../setup.php:829
 msgid "Delete"
 msgstr ""
 
-#: ../syslog_removal.php:32 ../setup.php:851
+#: ../syslog_removal.php:32 ../setup.php:830
 msgid "Disable"
 msgstr ""
 
-#: ../syslog_removal.php:33 ../setup.php:852
+#: ../syslog_removal.php:33 ../setup.php:831
 msgid "Enable"
 msgstr ""
 
@@ -409,51 +355,20 @@ msgstr ""
 msgid "Click 'Continue' to Delete the following Syslog Removal Rule(s)."
 msgstr ""
 
-#: ../syslog_removal.php:157
-msgid "Delete Syslog Removal Rule(s)"
-msgstr ""
-
 #: ../syslog_removal.php:161
 msgid "Click 'Continue' to Disable the following Syslog Removal Rule(s)."
-msgstr ""
-
-#: ../syslog_removal.php:167
-msgid "Disable Syslog Removal Rule(s)"
 msgstr ""
 
 #: ../syslog_removal.php:171
 msgid "Click 'Continue' to Enable the following Syslog Removal Rule(s)."
 msgstr ""
 
-#: ../syslog_removal.php:177
-msgid "Enable Syslog Removal Rule(s)"
-msgstr ""
-
 #: ../syslog_removal.php:181
 msgid "Click 'Continue' to Re-process the following Syslog Removal Rule(s)."
 msgstr ""
 
-#: ../syslog_removal.php:187
-msgid "Retroactively Process Syslog Removal Rule(s)"
-msgstr ""
-
-#: ../syslog_removal.php:190 ../syslog_reports.php:168
-#: ../syslog_alerts.php:171 ../setup.php:687
-msgid "Cancel"
-msgstr ""
-
-#: ../syslog_removal.php:190 ../syslog_reports.php:168
-#: ../syslog_alerts.php:171
-msgid "Continue"
-msgstr ""
-
 #: ../syslog_removal.php:192
 msgid "You must select at least one Syslog Removal Rule."
-msgstr ""
-
-#: ../syslog_removal.php:193 ../syslog_reports.php:171
-#: ../syslog_alerts.php:174
-msgid "Return"
 msgstr ""
 
 #: ../syslog_removal.php:270
@@ -461,148 +376,151 @@ msgstr ""
 msgid "There were %s messages removed, and %s messages transferred"
 msgstr ""
 
-#: ../syslog_removal.php:325
+#: ../syslog_removal.php:328
 #, php-format
 msgid "Removal Rule Edit [edit: %s]"
 msgstr ""
 
-#: ../syslog_removal.php:327 ../syslog_removal.php:334
+#: ../syslog_removal.php:330 ../syslog_removal.php:337
 msgid "Removal Rule Edit [new]"
 msgstr ""
 
-#: ../syslog_removal.php:329 ../syslog_removal.php:342
+#: ../syslog_removal.php:332 ../syslog_removal.php:345
 msgid "New Removal Record"
 msgstr ""
 
-#: ../syslog_removal.php:338
+#: ../syslog_removal.php:341
 msgid "New Removal Rule"
 msgstr ""
 
-#: ../syslog_removal.php:348
+#: ../syslog_removal.php:351
 msgid "Removal Rule Details"
 msgstr ""
 
-#: ../syslog_removal.php:352
+#: ../syslog_removal.php:355
 msgid "Removal Rule Name"
 msgstr ""
 
-#: ../syslog_removal.php:353
+#: ../syslog_removal.php:356
 msgid "Please describe this Removal Rule."
 msgstr ""
 
-#: ../syslog_removal.php:360 ../syslog_reports.php:325
+#: ../syslog_removal.php:363 ../syslog_reports.php:328
 msgid "Enabled?"
 msgstr ""
 
-#: ../syslog_removal.php:361
+#: ../syslog_removal.php:364
 msgid "Is this Removal Rule Enabled?"
 msgstr ""
 
-#: ../syslog_removal.php:363 ../syslog_removal.php:461
-#: ../syslog_removal.php:608 ../syslog_reports.php:328
-#: ../syslog_reports.php:448 ../syslog_reports.php:595
-#: ../syslog_alerts.php:418 ../syslog_alerts.php:537 ../syslog_alerts.php:687
+#: ../syslog_removal.php:366 ../syslog_removal.php:463
+#: ../syslog_removal.php:610 ../syslog_reports.php:331
+#: ../syslog_reports.php:449 ../syslog_alerts.php:420 ../syslog_alerts.php:533
+#: ../syslog_alerts.php:683
 msgid "Enabled"
 msgstr ""
 
-#: ../syslog_removal.php:363 ../syslog_reports.php:328
-#: ../syslog_alerts.php:418
+#: ../syslog_removal.php:366 ../syslog_reports.php:331
+#: ../syslog_alerts.php:420
 msgid "Disabled"
 msgstr ""
 
-#: ../syslog_removal.php:368 ../syslog_reports.php:333
-#: ../syslog_alerts.php:395
+#: ../syslog_removal.php:371 ../syslog_reports.php:336
+#: ../syslog_alerts.php:398
 msgid "String Match Type"
 msgstr ""
 
-#: ../syslog_removal.php:369 ../syslog_alerts.php:396
+#: ../syslog_removal.php:372 ../syslog_alerts.php:399
 msgid ""
 "Define how you would like this string matched.  If using the SQL Expression "
-"type you may use any valid SQL expression\n"
-"\t\t\tto generate the alarm.  Available fields include 'message', "
-"'facility', 'priority', and 'host'."
+"type you may use any valid SQL expression to generate the alarm.  Available "
+"fields include 'message', 'facility', 'priority', and 'host'."
 msgstr ""
 
-#: ../syslog_removal.php:377 ../syslog_reports.php:341
-#: ../syslog_reports.php:364 ../syslog_alerts.php:404
+#: ../syslog_removal.php:379 ../syslog_reports.php:344
+#: ../syslog_reports.php:367 ../syslog_alerts.php:406
 msgid "Syslog Message Match String"
 msgstr ""
 
-#: ../syslog_removal.php:378 ../syslog_alerts.php:405
+#: ../syslog_removal.php:380 ../syslog_alerts.php:407
 msgid ""
 "Enter the matching component of the syslog message, the facility or host "
 "name, or the SQL where clause if using the SQL Expression Match Type."
 msgstr ""
 
-#: ../syslog_removal.php:388
+#: ../syslog_removal.php:390
 msgid "Method of Removal"
 msgstr ""
 
-#: ../syslog_removal.php:390 ../syslog_removal.php:625
+#: ../syslog_removal.php:392 ../syslog_removal.php:627
 msgid "Deletion"
 msgstr ""
 
-#: ../syslog_removal.php:390
+#: ../syslog_removal.php:392
 msgid "Transferal"
 msgstr ""
 
-#: ../syslog_removal.php:394
+#: ../syslog_removal.php:396
 msgid "Removal Rule Notes"
 msgstr ""
 
-#: ../syslog_removal.php:397
+#: ../syslog_removal.php:399
 msgid "Space for Notes on the Removal rule"
 msgstr ""
 
-#: ../syslog_removal.php:466 ../syslog_removal.php:622
-#: ../syslog_reports.php:453 ../syslog_reports.php:610
-#: ../syslog_alerts.php:448 ../syslog_alerts.php:542 ../syslog_alerts.php:704
+#: ../syslog_removal.php:468 ../syslog_removal.php:624
+#: ../syslog_reports.php:454 ../syslog_reports.php:611
+#: ../syslog_alerts.php:450 ../syslog_alerts.php:538 ../syslog_alerts.php:700
 msgid "Yes"
 msgstr ""
 
-#: ../syslog_removal.php:467 ../syslog_removal.php:622
-#: ../syslog_reports.php:454 ../syslog_reports.php:610
-#: ../syslog_alerts.php:448 ../syslog_alerts.php:543 ../syslog_alerts.php:704
+#: ../syslog_removal.php:469 ../syslog_removal.php:624
+#: ../syslog_reports.php:455 ../syslog_reports.php:611
+#: ../syslog_alerts.php:450 ../syslog_alerts.php:539 ../syslog_alerts.php:700
 msgid "No"
 msgstr ""
 
-#: ../syslog_removal.php:574
+#: ../syslog_removal.php:473
+msgid "Rules"
+msgstr ""
+
+#: ../syslog_removal.php:576
 msgid "Syslog Removal Rule Filters"
 msgstr ""
 
-#: ../syslog_removal.php:607
+#: ../syslog_removal.php:609
 msgid "Removal Name"
 msgstr ""
 
-#: ../syslog_removal.php:609 ../syslog_reports.php:596
-#: ../syslog_alerts.php:688
+#: ../syslog_removal.php:611 ../syslog_reports.php:597
+#: ../syslog_alerts.php:684
 msgid "Match Type"
 msgstr ""
 
-#: ../syslog_removal.php:610 ../syslog_reports.php:597
-#: ../syslog_alerts.php:689
+#: ../syslog_removal.php:612 ../syslog_reports.php:598
+#: ../syslog_alerts.php:685
 msgid "Search String"
 msgstr ""
 
-#: ../syslog_removal.php:611 ../syslog_alerts.php:685
+#: ../syslog_removal.php:613 ../syslog_alerts.php:681
 msgid "Method"
 msgstr ""
 
-#: ../syslog_removal.php:612 ../syslog_reports.php:601
-#: ../syslog_alerts.php:691
+#: ../syslog_removal.php:614 ../syslog_reports.php:602
+#: ../syslog_alerts.php:687
 msgid "Last Modified"
 msgstr ""
 
-#: ../syslog_removal.php:613 ../syslog_reports.php:602
-#: ../syslog_alerts.php:692
+#: ../syslog_removal.php:615 ../syslog_reports.php:603
+#: ../syslog_alerts.php:688
 msgid "By User"
 msgstr ""
 
-#: ../syslog_removal.php:625
+#: ../syslog_removal.php:627
 msgid "Transfer"
 msgstr ""
 
-#: ../syslog_removal.php:632
+#: ../syslog_removal.php:634
 msgid "No Syslog Removal Rules Defined"
 msgstr ""
 
@@ -610,144 +528,217 @@ msgstr ""
 msgid "Click 'Continue' to Delete the following Syslog Report(s)."
 msgstr ""
 
-#: ../syslog_reports.php:145
-msgid "Delete Syslog Report(s)"
-msgstr ""
-
 #: ../syslog_reports.php:149
 msgid "Click 'Continue' to Disable the following Syslog Report(s)."
-msgstr ""
-
-#: ../syslog_reports.php:155
-msgid "Disable Syslog Report(s)"
 msgstr ""
 
 #: ../syslog_reports.php:159
 msgid "Click 'Continue' to Enable the following Syslog Report(s)."
 msgstr ""
 
-#: ../syslog_reports.php:165
-msgid "Enable Syslog Report(s)"
-msgstr ""
-
 #: ../syslog_reports.php:170
 msgid "You must select at least one Syslog Report."
 msgstr ""
 
-#: ../syslog_reports.php:299
+#: ../syslog_reports.php:302
 #, php-format
 msgid "Report Edit [edit: %s]"
 msgstr ""
 
-#: ../syslog_reports.php:301 ../syslog_reports.php:306
+#: ../syslog_reports.php:304 ../syslog_reports.php:309
 msgid "Report Edit [new]"
 msgstr ""
 
-#: ../syslog_reports.php:303 ../syslog_reports.php:308
+#: ../syslog_reports.php:306 ../syslog_reports.php:311
 msgid "New Report Record"
 msgstr ""
 
-#: ../syslog_reports.php:314
+#: ../syslog_reports.php:317
 msgid "Report Details"
 msgstr ""
 
-#: ../syslog_reports.php:318 ../syslog_reports.php:594
+#: ../syslog_reports.php:321 ../syslog_reports.php:595
 msgid "Report Name"
 msgstr ""
 
-#: ../syslog_reports.php:319
+#: ../syslog_reports.php:322
 msgid "Please describe this Report."
 msgstr ""
 
-#: ../syslog_reports.php:326
+#: ../syslog_reports.php:329
 msgid "Is this Report Enabled?"
 msgstr ""
 
-#: ../syslog_reports.php:334
+#: ../syslog_reports.php:337
 msgid "Define how you would like this string matched."
 msgstr ""
 
-#: ../syslog_reports.php:342 ../syslog_reports.php:365
+#: ../syslog_reports.php:345 ../syslog_reports.php:368
 msgid "The matching component of the syslog message."
 msgstr ""
 
-#: ../syslog_reports.php:349
+#: ../syslog_reports.php:352
 msgid "Report Frequency"
 msgstr ""
 
-#: ../syslog_reports.php:350
+#: ../syslog_reports.php:353
 msgid "How often should this Report be sent to the distribution list?"
 msgstr ""
 
-#: ../syslog_reports.php:357 ../syslog_reports.php:599
+#: ../syslog_reports.php:360 ../syslog_reports.php:600
 msgid "Send Time"
 msgstr ""
 
-#: ../syslog_reports.php:358
+#: ../syslog_reports.php:361
 msgid "What time of day should this report be sent?"
 msgstr ""
 
-#: ../syslog_reports.php:372
+#: ../syslog_reports.php:375
 msgid "Report Body Text"
 msgstr ""
 
-#: ../syslog_reports.php:375
+#: ../syslog_reports.php:378
 msgid "The information that will be contained in the body of the report."
 msgstr ""
 
-#: ../syslog_reports.php:382
+#: ../syslog_reports.php:385
 msgid "Report Email Addresses"
 msgstr ""
 
-#: ../syslog_reports.php:385
+#: ../syslog_reports.php:388
 msgid "Comma delimited list of Email addresses to send the report to."
 msgstr ""
 
-#: ../syslog_reports.php:392
+#: ../syslog_reports.php:395
 msgid "Report Notes"
 msgstr ""
 
-#: ../syslog_reports.php:395
+#: ../syslog_reports.php:398
 msgid "Space for Notes on the Report"
 msgstr ""
 
-#: ../syslog_reports.php:458 ../syslog_alerts.php:547
+#: ../syslog_reports.php:459 ../syslog_alerts.php:543
 msgid "Rows"
 msgstr ""
 
-#: ../syslog_reports.php:561
+#: ../syslog_reports.php:562
 msgid "Syslog Report Filters"
 msgstr ""
 
-#: ../syslog_reports.php:598
+#: ../syslog_reports.php:586
+msgid "Reports"
+msgstr ""
+
+#: ../syslog_reports.php:599
 msgid "Frequency"
 msgstr ""
 
-#: ../syslog_reports.php:600
+#: ../syslog_reports.php:601
 msgid "Last Sent"
 msgstr ""
 
-#: ../syslog_reports.php:615 ../setup.php:933
+#: ../syslog_reports.php:616 ../setup.php:912
 msgid "Never"
 msgstr ""
 
-#: ../syslog_reports.php:622
+#: ../syslog_reports.php:623
 msgid "No Syslog Reports Defined"
 msgstr ""
 
+#: ../syslog_process.php:325
+msgid "WARNING: A Syslog Plugin Instance Count Alert has Been Triggered"
+msgstr ""
+
+#: ../syslog_process.php:326
+msgid "Name:"
+msgstr ""
+
+#: ../syslog_process.php:327 ../syslog_process.php:361
+msgid "Severity:"
+msgstr ""
+
+#: ../syslog_process.php:328
+msgid "Threshold:"
+msgstr ""
+
+#: ../syslog_process.php:329
+msgid "Count:"
+msgstr ""
+
+#: ../syslog_process.php:330
+msgid "Message String:"
+msgstr ""
+
+#: ../syslog_process.php:332
+#, php-format
+msgid "Cacti Syslog Plugin Threshold Alert '%s'"
+msgstr ""
+
+#: ../syslog_process.php:334 ../syslog_alerts.php:384 ../syslog_alerts.php:389
+#: ../syslog_alerts.php:698
+msgid "Threshold"
+msgstr ""
+
 #: ../syslog_process.php:334
+msgid "Match String"
+msgstr ""
+
+#: ../syslog_process.php:341
+#, php-format
+msgid "Cacti Syslog Plugin Alert '%s'"
+msgstr ""
+
+#: ../syslog_process.php:345
 msgid "Hostname"
 msgstr ""
 
-#: ../syslog_process.php:334
+#: ../syslog_process.php:345
 msgid "Level"
 msgstr ""
 
-#: ../syslog_process.php:602
-msgid "Time"
+#: ../syslog_process.php:359
+msgid "Hostname:"
 msgstr ""
 
-#: ../functions.php:59
+#: ../syslog_process.php:360
+msgid "Date:"
+msgstr ""
+
+#: ../syslog_process.php:362
+msgid "Level:"
+msgstr ""
+
+#: ../syslog_process.php:363
+msgid "Message:"
+msgstr ""
+
+#: ../syslog_process.php:390 ../syslog_process.php:421
+msgid "Sev:"
+msgstr ""
+
+#: ../syslog_process.php:390
+msgid ", Host:"
+msgstr ""
+
+#: ../syslog_process.php:390 ../syslog_process.php:421
+msgid ", URL:"
+msgstr ""
+
+#: ../syslog_process.php:392 ../syslog_process.php:441
+#, php-format
+msgid "Event Alert - %s"
+msgstr ""
+
+#: ../syslog_process.php:421
+msgid ", Count:"
+msgstr ""
+
+#: ../syslog_process.php:664
+#, php-format
+msgid "Event Report - %s"
+msgstr ""
+
+#: ../functions.php:58
 msgid "Please use an HTML Email Client"
 msgstr ""
 
@@ -755,215 +746,184 @@ msgstr ""
 msgid "Click 'Continue' to Delete the following Syslog Alert Rule(s)."
 msgstr ""
 
-#: ../syslog_alerts.php:148
-msgid "Delete Syslog Alert Rule(s)"
-msgstr ""
-
 #: ../syslog_alerts.php:152
 msgid "Click 'Continue' to Disable the following Syslog Alert Rule(s)."
-msgstr ""
-
-#: ../syslog_alerts.php:158
-msgid "Disable Syslog Alert Rule(s)"
 msgstr ""
 
 #: ../syslog_alerts.php:162
 msgid "Click 'Continue' to Enable the following Syslog Alert Rule(s)."
 msgstr ""
 
-#: ../syslog_alerts.php:168
-msgid "Enable Syslog Alert Rule(s)"
-msgstr ""
-
 #: ../syslog_alerts.php:173
 msgid "You must select at least one Syslog Alert Rule."
 msgstr ""
 
-#: ../syslog_alerts.php:301
+#: ../syslog_alerts.php:304
 #, php-format
 msgid "Alert Edit [edit: %s]"
 msgstr ""
 
-#: ../syslog_alerts.php:303 ../syslog_alerts.php:308 ../syslog_alerts.php:315
+#: ../syslog_alerts.php:306 ../syslog_alerts.php:311 ../syslog_alerts.php:318
 msgid "Alert Edit [new]"
 msgstr ""
 
-#: ../syslog_alerts.php:313 ../syslog_alerts.php:317
+#: ../syslog_alerts.php:316 ../syslog_alerts.php:320
 msgid "New Alert Rule"
 msgstr ""
 
-#: ../syslog_alerts.php:326
+#: ../syslog_alerts.php:329
 msgid "Not Set"
 msgstr ""
 
-#: ../syslog_alerts.php:327 ../syslog_alerts.php:328 ../syslog_alerts.php:329
-#: ../syslog_alerts.php:330 ../syslog_alerts.php:331 ../syslog_alerts.php:332
-#: ../setup.php:935 ../setup.php:936 ../setup.php:937
-#, php-format
-msgid "%d Minutes"
-msgstr ""
-
-#: ../syslog_alerts.php:333
-#, php-format
-msgid "%d Hour"
-msgstr ""
-
-#: ../syslog_alerts.php:334 ../syslog_alerts.php:335 ../syslog_alerts.php:336
-#: ../syslog_alerts.php:337 ../syslog_alerts.php:338 ../syslog_alerts.php:339
-#, php-format
-msgid "%d Hours"
-msgstr ""
-
-#: ../syslog_alerts.php:340 ../setup.php:896 ../setup.php:915
-#, php-format
-msgid "%d Day"
-msgstr ""
-
-#: ../syslog_alerts.php:341 ../setup.php:897 ../setup.php:898 ../setup.php:899
-#: ../setup.php:900 ../setup.php:901 ../setup.php:916 ../setup.php:917
-#: ../setup.php:918 ../setup.php:919 ../setup.php:920
+#: ../syslog_alerts.php:344 ../setup.php:876 ../setup.php:877 ../setup.php:878
+#: ../setup.php:879 ../setup.php:880 ../setup.php:895 ../setup.php:896
+#: ../setup.php:897 ../setup.php:898 ../setup.php:899
 #, php-format
 msgid "%d Days"
 msgstr ""
 
-#: ../syslog_alerts.php:342 ../setup.php:902 ../setup.php:921
+#: ../syslog_alerts.php:345 ../setup.php:881 ../setup.php:900
 #, php-format
 msgid "%d Week"
 msgstr ""
 
-#: ../syslog_alerts.php:343 ../setup.php:903 ../setup.php:922
+#: ../syslog_alerts.php:346 ../setup.php:882 ../setup.php:901
 #, php-format
 msgid "%d Weeks"
 msgstr ""
 
-#: ../syslog_alerts.php:344
+#: ../syslog_alerts.php:347
 msgid "Month"
 msgstr ""
 
-#: ../syslog_alerts.php:358
+#: ../syslog_alerts.php:361
 msgid "Alert Details"
 msgstr ""
 
-#: ../syslog_alerts.php:363
+#: ../syslog_alerts.php:366
 msgid "Please describe this Alert."
 msgstr ""
 
-#: ../syslog_alerts.php:371
+#: ../syslog_alerts.php:374
 msgid "What is the Severity Level of this Alert?"
 msgstr ""
 
-#: ../syslog_alerts.php:378
+#: ../syslog_alerts.php:381
 msgid "Reporting Method"
 msgstr ""
 
-#: ../syslog_alerts.php:379
+#: ../syslog_alerts.php:382
 msgid "Define how to Alert on the syslog messages."
 msgstr ""
 
-#: ../syslog_alerts.php:381 ../syslog_alerts.php:702
+#: ../syslog_alerts.php:384 ../syslog_alerts.php:698
 msgid "Individual"
 msgstr ""
 
-#: ../syslog_alerts.php:381 ../syslog_alerts.php:386 ../syslog_alerts.php:702
-msgid "Threshold"
-msgstr ""
-
-#: ../syslog_alerts.php:387
+#: ../syslog_alerts.php:390
 msgid ""
 "For the 'Threshold' method, If the number seen is above this value an Alert "
 "will be triggered."
 msgstr ""
 
-#: ../syslog_alerts.php:415
+#: ../syslog_alerts.php:417
 msgid "Alert Enabled"
 msgstr ""
 
-#: ../syslog_alerts.php:416
+#: ../syslog_alerts.php:418
 msgid "Is this Alert Enabled?"
 msgstr ""
 
-#: ../syslog_alerts.php:422
+#: ../syslog_alerts.php:424
 msgid "Re-Alert Cycle"
 msgstr ""
 
-#: ../syslog_alerts.php:426
+#: ../syslog_alerts.php:428
 msgid ""
 "Do not resend this alert again for the same host, until this amount of time "
 "has elapsed. For threshold based alarms, this applies to all hosts."
 msgstr ""
 
-#: ../syslog_alerts.php:430
+#: ../syslog_alerts.php:432
 msgid "Alert Notes"
 msgstr ""
 
-#: ../syslog_alerts.php:433
+#: ../syslog_alerts.php:435
 msgid "Space for Notes on the Alert"
 msgstr ""
 
-#: ../syslog_alerts.php:441
+#: ../syslog_alerts.php:443
 msgid "Alert Actions"
 msgstr ""
 
-#: ../syslog_alerts.php:445
+#: ../syslog_alerts.php:447
 msgid "Open Ticket"
 msgstr ""
 
-#: ../syslog_alerts.php:446
+#: ../syslog_alerts.php:448
 msgid "Should a Help Desk Ticket be opened for this Alert"
 msgstr ""
 
-#: ../syslog_alerts.php:453
+#: ../syslog_alerts.php:455
 msgid "Emails to Notify"
 msgstr ""
 
-#: ../syslog_alerts.php:456
+#: ../syslog_alerts.php:458
 msgid ""
-"Please enter a comma delimited list of Email addresses to inform.  If you\n"
-"\t\t\twish to send out Email to a recipient in SMS format, please prefix "
-"that recipient's Email address\n"
-"\t\t\twith <b>'sms@'</b>.  For example, if the recipients SMS address is "
-"<b>'2485551212@mycarrier.net'</b>, you would\n"
-"\t\t\tenter it as <b>'sms@2485551212@mycarrier.net'</b> and it will be "
-"formatted as an SMS message."
+"Please enter a comma delimited list of Email addresses to inform.  If you "
+"wish to send out Email to a recipient in SMS format, please prefix that "
+"recipient's Email address with <b>'sms@'</b>.  For example, if the "
+"recipients SMS address is <b>'2485551212@mycarrier.net'</b>, you would enter "
+"it as <b>'sms@2485551212@mycarrier.net'</b> and it will be formatted as an "
+"SMS message."
 msgstr ""
 
-#: ../syslog_alerts.php:465
+#: ../syslog_alerts.php:464
 msgid "Alert Command"
 msgstr ""
 
-#: ../syslog_alerts.php:468
+#: ../syslog_alerts.php:467
 msgid ""
 "When an Alert is triggered, run the following command.  The following "
-"replacement variables\n"
-"\t\t\tare available <b>'&lt;HOSTNAME&gt;'</b>, <b>'&lt;ALERTID&gt;'</b>, "
-"<b>'&lt;MESSAGE&gt;'</b>,\n"
-"\t\t\t<b>'&lt;FACILITY&gt;'</b>, <b>'&lt;PRIORITY&gt;'</b>, <b>'&lt;"
-"SEVERITY&gt;'</b>.  Please\n"
-"\t\t\tnote that <b>'&lt;HOSTNAME&gt;'</b> is only available on individual "
-"thresholds."
+"replacement variables are available <b>'&lt;HOSTNAME&gt;'</b>, <b>'&lt;"
+"ALERTID&gt;'</b>, <b>'&lt;MESSAGE&gt;'</b>, <b>'&lt;FACILITY&gt;'</b>, "
+"<b>'&lt;PRIORITY&gt;'</b>, <b>'&lt;SEVERITY&gt;'</b>.  Please note that "
+"<b>'&lt;HOSTNAME&gt;'</b> is only available on individual thresholds."
 msgstr ""
 
-#: ../syslog_alerts.php:650
+#: ../syslog_alerts.php:558
+msgid "Go"
+msgstr ""
+
+#: ../syslog_alerts.php:561
+msgid "Clear"
+msgstr ""
+
+#: ../syslog_alerts.php:646
 msgid "Syslog Alert Filters"
 msgstr ""
 
-#: ../syslog_alerts.php:686
+#: ../syslog_alerts.php:670
+msgid "Alerts"
+msgstr ""
+
+#: ../syslog_alerts.php:682
 msgid "Threshold Count"
 msgstr ""
 
-#: ../syslog_alerts.php:690
+#: ../syslog_alerts.php:686
 msgid "Email Addresses"
 msgstr ""
 
-#: ../syslog_alerts.php:703
+#: ../syslog_alerts.php:699
 msgid "N/A"
 msgstr ""
 
-#: ../syslog_alerts.php:707
+#: ../syslog_alerts.php:703
 msgid "Multiple"
 msgstr ""
 
-#: ../syslog_alerts.php:714
+#: ../syslog_alerts.php:710
 msgid "No Syslog Alerts Defined"
 msgstr ""
 
@@ -973,446 +933,414 @@ msgid ""
 "setup your database before installing."
 msgstr ""
 
-#: ../setup.php:209
+#: ../setup.php:210
 msgid ""
 "Syslog 2.0 Requires an Entire Reinstall.  Please uninstall Syslog and Remove "
 "all Data before Installing.  Migration is possible, but you must plan this "
 "in advance.  No automatic migration is supported."
 msgstr ""
 
-#: ../setup.php:514
+#: ../setup.php:533
 msgid "What upgrade/install type do you wish to use"
 msgstr ""
 
-#: ../setup.php:515
+#: ../setup.php:534
 msgid ""
 "When you have very large tables, performing a Truncate will be much "
-"quicker.  If you are\n"
-"\t\t\tconcerned about archive data, you can choose either Inline, which will "
-"freeze your browser for the period\n"
-"\t\t\tof this upgrade, or background, which will create a background process "
-"to bring your old syslog data\n"
-"\t\t\tfrom a backup table to the new syslog format.  Again this process can "
+"quicker.  If you are concerned about archive data, you can choose either "
+"Inline, which will freeze your browser for the period of this upgrade, or "
+"background, which will create a background process to bring your old syslog "
+"data from a backup table to the new syslog format.  Again this process can "
 "take several hours."
 msgstr ""
 
-#: ../setup.php:520
+#: ../setup.php:536
 msgid "Truncate Syslog Table"
 msgstr ""
 
-#: ../setup.php:520
+#: ../setup.php:536
 msgid "Inline Upgrade"
 msgstr ""
 
-#: ../setup.php:520
+#: ../setup.php:536
 msgid "Background Upgrade"
 msgstr ""
 
-#: ../setup.php:524
+#: ../setup.php:540
 msgid "Database Storage Engine"
 msgstr ""
 
-#: ../setup.php:525
+#: ../setup.php:541
 msgid ""
 "In MySQL 5.1.6 and above, you have the option to make this a partitioned "
-"table by days.  Prior to this\n"
-"\t\t\trelease, you only have the traditional table structure available."
+"table by days.  Prior to this release, you only have the traditional table "
+"structure available."
 msgstr ""
 
-#: ../setup.php:528
+#: ../setup.php:543
 msgid "MyISAM Storage"
 msgstr ""
 
-#: ../setup.php:528
+#: ../setup.php:543
 msgid "InnoDB Storage"
 msgstr ""
 
-#: ../setup.php:532
+#: ../setup.php:547
 msgid "Database Architecture"
 msgstr ""
 
-#: ../setup.php:533
+#: ../setup.php:548
 msgid ""
 "In MySQL 5.1.6 and above, you have the option to make this a partitioned "
-"table by days.\n"
-"\t\t\t\tIn MySQL 5.5 and above, you can create multiple partitions per day.\n"
-"\t\t\t\tPrior to MySQL 5.1.6, you only have the traditional table structure "
-"available."
+"table by days.  In MySQL 5.5 and above, you can create multiple partitions "
+"per day.  Prior to MySQL 5.1.6, you only have the traditional table "
+"structure available."
 msgstr ""
 
-#: ../setup.php:537
+#: ../setup.php:550
 msgid "Traditional Table"
 msgstr ""
 
-#: ../setup.php:537
+#: ../setup.php:550
 msgid "Partitioned Table"
 msgstr ""
 
-#: ../setup.php:541
+#: ../setup.php:554
 msgid "Retention Policy"
 msgstr ""
 
-#: ../setup.php:542
+#: ../setup.php:555
 msgid ""
 "Choose how many days of Syslog values you wish to maintain in the database."
 msgstr ""
 
-#: ../setup.php:563
+#: ../setup.php:576
 msgid "Partitions per Day"
 msgstr ""
 
-#: ../setup.php:564
+#: ../setup.php:577
 msgid "Select the number of partitions per day that you wish to create."
 msgstr ""
 
-#: ../setup.php:567 ../setup.php:568 ../setup.php:569 ../setup.php:570
-#: ../setup.php:571
+#: ../setup.php:580 ../setup.php:581 ../setup.php:582 ../setup.php:583
+#: ../setup.php:584
 #, php-format
 msgid "%d Per Day"
 msgstr ""
 
-#: ../setup.php:577 ../setup.php:675
+#: ../setup.php:590 ../setup.php:674
 msgid "Upgrade"
 msgstr ""
 
-#: ../setup.php:579 ../setup.php:677
+#: ../setup.php:592 ../setup.php:676
 msgid "Install"
 msgstr ""
 
-#: ../setup.php:583
+#: ../setup.php:596
 #, php-format
 msgid "Syslog %s Advisor"
 msgstr ""
 
-#: ../setup.php:586
+#: ../setup.php:599
 msgid "WARNING: Syslog Upgrade is Time Consuming!!!"
 msgstr ""
 
-#: ../setup.php:587
+#: ../setup.php:600
 msgid ""
 "The upgrade of the 'main' syslog table can be a very time consuming "
-"process.  As such, it is recommended\n"
-"\t\t\tthat you either reduce the size of your syslog table prior to "
-"upgrading, or choose the background option</p>\n"
-"\t\t\t<p>If you choose the background option, your legacy syslog table will "
-"be renamed, and a new syslog table will\n"
-"\t\t\tbe created.  Then, an upgrade process will be launched in the "
-"background.  Again, this background process can\n"
-"\t\t\tquite a bit of time to complete.  However, your data will be "
-"preserved</p>\n"
-"\t\t\t<p>Regardless of your choice, all existing removal and alert rules "
-"will be maintained during the upgrade process.</p>\n"
-"\t\t\t<p>Press <b>'Upgrade'</b> to proceed with the upgrade, or <b>'Cancel'</"
-"b> to return to the Plugins menu."
+"process.  As such, it is recommended that you either reduce the size of your "
+"syslog table prior to upgrading, or choose the background option</p> <p>If "
+"you choose the background option, your legacy syslog table will be renamed, "
+"and a new syslog table will be created.  Then, an upgrade process will be "
+"launched in the background.  Again, this background process can quite a bit "
+"of time to complete.  However, your data will be preserved</p> <p>Regardless "
+"of your choice, all existing removal and alert rules will be maintained "
+"during the upgrade process.</p> <p>Press <b>'Upgrade'</b> to proceed with "
+"the upgrade, or <b>'Cancel'</b> to return to the Plugins menu."
 msgstr ""
 
-#: ../setup.php:597
+#: ../setup.php:603
 msgid ""
 "You have several options to choose from when installing Syslog.  The first "
-"is the Database Architecture.\n"
-"\t\t\tStarting with MySQL 5.1.6, you can elect to utilize Table Partitioning "
-"to prevent the size of the tables\n"
-"\t\t\tfrom becoming excessive thus slowing queries."
+"is the Database Architecture.  Starting with MySQL 5.1.6, you can elect to "
+"utilize Table Partitioning to prevent the size of the tables from becoming "
+"excessive thus slowing queries."
 msgstr ""
 
-#: ../setup.php:599
+#: ../setup.php:603
 msgid ""
 "You can also set the MySQL storage engine.  If you have not tuned you system "
-"for InnoDB storage properties,\n"
-"\t\t\tit is strongly recommended that you utilize the MyISAM storage engine."
+"for InnoDB storage properties, it is strongly recommended that you utilize "
+"the MyISAM storage engine."
 msgstr ""
 
-#: ../setup.php:601
+#: ../setup.php:603
 msgid ""
 "You can also select the retention duration.  Please keep in mind that if you "
-"have several hosts logging\n"
-"\t\t\tto syslog, this table can become quite large.  So, if not using "
-"partitioning, you might want to keep the size\n"
-"\t\t\tsmaller."
+"have several hosts logging to syslog, this table can become quite large.  "
+"So, if not using partitioning, you might want to keep the size smaller."
 msgstr ""
 
-#: ../setup.php:608
+#: ../setup.php:607
 #, php-format
 msgid "Syslog %s Settings"
 msgstr ""
 
-#: ../setup.php:635
+#: ../setup.php:634
 msgid "What uninstall method do you want to use?"
 msgstr ""
 
-#: ../setup.php:636
+#: ../setup.php:635
 msgid ""
 "When uninstalling syslog, you can remove everything, or only components, "
 "just in case you plan on re-installing in the future."
 msgstr ""
 
-#: ../setup.php:638
+#: ../setup.php:637
 msgid "Remove Everything (Logs, Tables, Settings)"
 msgstr ""
 
-#: ../setup.php:638
+#: ../setup.php:637
 msgid "Syslog Data Only"
 msgstr ""
 
-#: ../setup.php:658
+#: ../setup.php:657
 msgid "Syslog Uninstall Preferences"
 msgstr ""
 
-#: ../setup.php:680
+#: ../setup.php:679
 msgid "Uninstall"
 msgstr ""
 
-#: ../setup.php:718 ../setup.php:999 ../setup.php:1013
+#: ../setup.php:686
+msgid "Cancel"
+msgstr ""
+
+#: ../setup.php:717 ../setup.php:816 ../setup.php:818 ../setup.php:981
+#: ../setup.php:995
 msgid "Syslog"
 msgstr ""
 
-#: ../setup.php:722
+#: ../setup.php:721
 msgid "General Settings"
 msgstr ""
 
-#: ../setup.php:726
+#: ../setup.php:725
 msgid "Syslog Enabled"
 msgstr ""
 
-#: ../setup.php:727
+#: ../setup.php:726
 msgid ""
 "If this checkbox is set, records will be transferred from the Syslog "
-"Incoming table to the\n"
-"\t\t\t\tmain syslog table and Alerts and Reports will be enabled.  Please "
-"keep in mind that if the system is disabled\n"
-"\t\t\t\tlog entries will still accumulate into the Syslog Incoming table as "
-"this is defined by the rsyslog or syslog-ng process."
+"Incoming table to the main syslog table and Alerts and Reports will be "
+"enabled.  Please keep in mind that if the system is disabled log entries "
+"will still accumulate into the Syslog Incoming table as this is defined by "
+"the rsyslog or syslog-ng process."
 msgstr ""
 
-#: ../setup.php:734
+#: ../setup.php:731
 msgid "HTML Based Email"
 msgstr ""
 
-#: ../setup.php:735
+#: ../setup.php:732
 msgid ""
 "If this checkbox is set, all Emails will be sent in HTML format.  Otherwise, "
 "Emails will be sent in plain text."
 msgstr ""
 
-#: ../setup.php:740
+#: ../setup.php:737
 msgid "Enable Statistics Gathering"
 msgstr ""
 
-#: ../setup.php:741
+#: ../setup.php:738
 msgid ""
 "If this checkbox is set, statistics on where syslog messages are arriving "
-"from will be maintained.\n"
-"\t\t\tThis statistical information can be used to render things such as heat "
-"maps."
+"from will be maintained.  This statistical information can be used to render "
+"things such as heat maps."
 msgstr ""
 
-#: ../setup.php:747
+#: ../setup.php:743
 msgid "Strip Domains"
 msgstr ""
 
-#: ../setup.php:748
+#: ../setup.php:744
 msgid ""
 "A comma delimited list of domains that you wish to remove from the syslog "
 "hostname, Examples would be 'mydomain.com, otherdomain.com'"
 msgstr ""
 
-#: ../setup.php:755
+#: ../setup.php:751
 msgid "Validate Hostnames"
 msgstr ""
 
-#: ../setup.php:756
+#: ../setup.php:752
 msgid ""
 "If this checkbox is set, all hostnames are validated.  If the hostname is "
-"not valid. All records are assigned\n"
-"\t\t\tto a special host called 'invalidhost'.  This setting can impact "
-"syslog processing time on large systems.  Therefore, use of this\n"
-"\t\t\tsetting should only be used when other means are not in place to "
+"not valid. All records are assigned to a special host called 'invalidhost'.  "
+"This setting can impact syslog processing time on large systems.  Therefore, "
+"use of this setting should only be used when other means are not in place to "
 "prevent this from happening."
 msgstr ""
 
-#: ../setup.php:763
+#: ../setup.php:757
 msgid "Refresh Interval"
 msgstr ""
 
-#: ../setup.php:764
+#: ../setup.php:758
 msgid "This is the time in seconds before the page refreshes."
 msgstr ""
 
-#: ../setup.php:770
+#: ../setup.php:764
 msgid "Max Report Records"
 msgstr ""
 
-#: ../setup.php:771
+#: ../setup.php:765
 msgid ""
-"For Threshold based Alerts, what is the maximum number that you wish to\n"
-"\t\t\tshow in the report.  This is used to limit the size of the html log "
-"and Email."
+"For Threshold based Alerts, what is the maximum number that you wish to show "
+"in the report.  This is used to limit the size of the html log and Email."
 msgstr ""
 
-#: ../setup.php:776 ../setup.php:777 ../setup.php:778 ../setup.php:779
-#: ../setup.php:780 ../setup.php:781
+#: ../setup.php:769 ../setup.php:770 ../setup.php:771 ../setup.php:772
+#: ../setup.php:773 ../setup.php:774
 #, php-format
 msgid "%d Records"
 msgstr ""
 
-#: ../setup.php:785
+#: ../setup.php:778
 msgid "Syslog Retention"
 msgstr ""
 
-#: ../setup.php:786
+#: ../setup.php:779
 msgid "This is the number of days to keep events."
 msgstr ""
 
-#: ../setup.php:792
+#: ../setup.php:785
 msgid "Syslog Alert Retention"
 msgstr ""
 
-#: ../setup.php:793
+#: ../setup.php:786
 msgid "This is the number of days to keep alert logs."
 msgstr ""
 
-#: ../setup.php:799
+#: ../setup.php:792
 msgid "Command for Opening Tickets"
 msgstr ""
 
-#: ../setup.php:800
+#: ../setup.php:793
 msgid ""
 "This command will be executed for opening Help Desk Tickets.  The command "
-"will be required to\n"
-"\t\t\tparse multiple input parameters as follows: <b>--alert-name</b>, <b>--"
-"severity</b>, <b>--hostlist</b>, <b>--message</b>.\n"
-"\t\t\tThe hostlist will be a comma delimited list of hosts impacted by the "
-"alert."
+"will be required to parse multiple input parameters as follows: <b>--alert-"
+"name</b>, <b>--severity</b>, <b>--hostlist</b>, <b>--message</b>.  The "
+"hostlist will be a comma delimited list of hosts impacted by the alert."
 msgstr ""
 
-#: ../setup.php:808
-msgid "From Email Address"
-msgstr ""
-
-#: ../setup.php:809
-msgid "This is the email address that syslog alerts will appear from."
-msgstr ""
-
-#: ../setup.php:814
-msgid "From Display Name"
-msgstr ""
-
-#: ../setup.php:815
-msgid "This is the display name that syslog alerts will appear from."
-msgstr ""
-
-#: ../setup.php:895 ../setup.php:914
+#: ../setup.php:874 ../setup.php:893
 msgid "Indefinite"
 msgstr ""
 
-#: ../setup.php:904 ../setup.php:923
+#: ../setup.php:883 ../setup.php:902
 #, php-format
 msgid "%d Month"
 msgstr ""
 
-#: ../setup.php:905 ../setup.php:906 ../setup.php:907 ../setup.php:908
-#: ../setup.php:909 ../setup.php:924 ../setup.php:925 ../setup.php:926
-#: ../setup.php:927 ../setup.php:928
+#: ../setup.php:884 ../setup.php:885 ../setup.php:886 ../setup.php:887
+#: ../setup.php:888 ../setup.php:903 ../setup.php:904 ../setup.php:905
+#: ../setup.php:906 ../setup.php:907
 #, php-format
 msgid "%d Months"
 msgstr ""
 
-#: ../setup.php:910 ../setup.php:929
+#: ../setup.php:889 ../setup.php:908
 #, php-format
 msgid "%d Year"
 msgstr ""
 
-#: ../setup.php:934
-#, php-format
-msgid "%d Minute"
-msgstr ""
-
-#: ../setup.php:947
+#: ../setup.php:926
 msgid "Begins with"
 msgstr ""
 
-#: ../setup.php:948
+#: ../setup.php:927
 msgid "Contains"
 msgstr ""
 
-#: ../setup.php:949
+#: ../setup.php:928
 msgid "Ends with"
 msgstr ""
 
-#: ../setup.php:950
+#: ../setup.php:929
 msgid "Hostname is"
 msgstr ""
 
-#: ../setup.php:951
+#: ../setup.php:930
 msgid "Facility is"
 msgstr ""
 
-#: ../setup.php:952
+#: ../setup.php:931
 msgid "SQL Expression"
 msgstr ""
 
-#: ../setup.php:955
-msgid "Last Day"
+#: ../setup.php:935
+msgid "Daily"
 msgstr ""
 
-#: ../setup.php:956
-msgid "Last Week"
+#: ../setup.php:936
+msgid "Weekly"
 msgstr ""
 
-#: ../setup.php:979
+#: ../setup.php:959
 msgid "Import/Export"
 msgstr ""
 
-#: ../setup.php:980 ../setup.php:981 ../setup.php:982
+#: ../setup.php:960 ../setup.php:961 ../setup.php:962 ../setup.php:967
 msgid "Syslog Settings"
 msgstr ""
 
-#: ../setup.php:980
+#: ../setup.php:960
 msgid "Alert Rules"
 msgstr ""
 
-#: ../setup.php:981
+#: ../setup.php:961
 msgid "Removal Rules"
 msgstr ""
 
-#: ../setup.php:982
+#: ../setup.php:962
 msgid "Report Rules"
 msgstr ""
 
-#: ../setup.php:1000
+#: ../setup.php:982
 msgid "Syslog Removals"
 msgstr ""
 
-#: ../setup.php:1001 ../setup.php:1002 ../setup.php:1006 ../setup.php:1007
-#: ../setup.php:1011
+#: ../setup.php:983 ../setup.php:984 ../setup.php:988 ../setup.php:989
+#: ../setup.php:993
 msgid "(Edit)"
 msgstr ""
 
-#: ../setup.php:1003 ../setup.php:1008 ../setup.php:1012
+#: ../setup.php:985 ../setup.php:990 ../setup.php:994
 msgid "(Actions)"
 msgstr ""
 
-#: ../setup.php:1005
+#: ../setup.php:987
 msgid "Syslog Alerts"
 msgstr ""
 
-#: ../setup.php:1010
+#: ../setup.php:992
 msgid "Syslog Reports"
 msgstr ""
 
-#: ../setup.php:1062
+#: ../setup.php:1047
 msgid "Display Syslog in Range"
 msgstr ""
 
-#: ../setup.php:1113
+#: ../setup.php:1084
 msgid "Syslog Utilities"
 msgstr ""
 
-#: ../setup.php:1117
+#: ../setup.php:1088
 msgid "Purge Syslog Devices"
 msgstr ""
 
-#: ../setup.php:1120
+#: ../setup.php:1091
 msgid ""
 "This menu pick provides a means to remove Devices that are no longer "
 "reporting into Cacti's syslog server."

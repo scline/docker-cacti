@@ -26,8 +26,17 @@ Bug and feature enhancements for the webseer plugin are handled in GitHub. If yo
 
 ## Changelog
 
+--- 2.2 ---
+* issue#23: Notify admins on a system reboot detection
+* issue#31: Tree rendering not functioning as expected
+* issue: Properly handle text domain for internationalization
+* feature: Update Spanish Translation
+
 --- 2.1 ---
 * feature: Convert Monitor to use CSS for skin developers
+* issue#26: Monitor is not showing triggered colors
+* issue#27: Time in State not reported correctly in some instances
+* issue: Correct several smaller visual issues with monitor
 
 --- 2.0 ---
 * feature: Support for Cacti 1.0

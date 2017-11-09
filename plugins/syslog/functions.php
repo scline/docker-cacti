@@ -40,12 +40,12 @@ function syslog_sendemail($to, $from, $subject, $message, $smsmessage = '') {
 			foreach($emails as $email) {
 				if (substr_count($email, 'sms@')) {
 					$sms .= (strlen($sms) ? ', ':'') . str_replace('sms@', '', trim($email));
-				}else{
+				} else {
 					$nonsms .= (strlen($nonsms) ? ', ':'') . trim($email);
 				}
 			}
 		}
-	}else{
+	} else {
 		$nonsms = $to;
 	}
 
@@ -55,8 +55,8 @@ function syslog_sendemail($to, $from, $subject, $message, $smsmessage = '') {
 
 	if (strlen($nonsms)) {
 		if (read_config_option('syslog_html') == 'on') {
-			mailer($from, $nonsms, '', '', '', $subject, $message, __('Please use an HTML Email Client'));
-		}else{
+			mailer($from, $nonsms, '', '', '', $subject, $message, __('Please use an HTML Email Client', 'syslog'));
+		} else {
 			$message = strip_tags(str_replace('<br>', "\n", $message));
 			mailer($from, $nonsms, '', '', '', $subject, '', $message);
 		}
@@ -70,7 +70,7 @@ function syslog_is_partitioned() {
 	$syntax = syslog_db_fetch_row("SHOW CREATE TABLE `" . $syslogdb_default . "`.`syslog`");
 	if (substr_count($syntax['Create Table'], 'PARTITION')) {
 		return true;
-	}else{
+	} else {
 		return false;
 	}
 }
@@ -189,7 +189,7 @@ function syslog_partition_check($table) {
 
 	if ($cformat > $lformat) {
 		return true;
-	}else{
+	} else {
 		return false;
 	}
 }
@@ -209,7 +209,7 @@ function syslog_remove_items($table, $uniqueID) {
 
 	if ($table == 'syslog') {
 		$rows = syslog_db_fetch_assoc("SELECT * FROM `" . $syslogdb_default . "`.`syslog_remove` WHERE enabled='on' AND id=$uniqueID");
-	}else{
+	} else {
 		$rows = syslog_db_fetch_assoc("SELECT * FROM `" . $syslogdb_default . "`.`syslog_remove` WHERE enabled='on'");
 	}
 
@@ -220,7 +220,7 @@ function syslog_remove_items($table, $uniqueID) {
 
 	if ($table == 'syslog_incoming') {
 		$total = syslog_db_fetch_cell("SELECT count(*) FROM `" . $syslogdb_default . "`.`syslog_incoming` WHERE status=$uniqueID");
-	}else{
+	} else {
 		$total = 0;
 	}
 
@@ -251,7 +251,7 @@ function syslog_remove_items($table, $uniqueID) {
 				$sql = "DELETE
 					FROM `" . $syslogdb_default . "`.`syslog_incoming`
 					WHERE " . $syslog_incoming_config['facilityField'] . "='" . $remove['message'] . "' AND status='" . $uniqueID . "'";
-			}else{
+			} else {
 				$facility_id = syslog_db_fetch_cell("SELECT facility_id FROM `" . $syslogdb_default . "`.`syslog_facilities` WHERE facility='" . $remove['message'] . "'");
 
 				if (!empty($facility_id)) {
@@ -267,7 +267,7 @@ function syslog_remove_items($table, $uniqueID) {
 						WHERE facility_id=$facility_id";
 				}
 			}
-		}else if ($remove['type'] == 'host') {
+		}elseif ($remove['type'] == 'host') {
 			if ($table == 'syslog_incoming') {
 				if ($remove['method'] != 'del') {
 					$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -290,7 +290,7 @@ function syslog_remove_items($table, $uniqueID) {
 				$sql = "DELETE
 					FROM `" . $syslogdb_default . "`.`syslog_incoming`
 					WHERE host='" . $remove['message'] . "' AND status='" . $uniqueID . "'";
-			}else{
+			} else {
 				$host_id = syslog_db_fetch_cell("SELECT host_id FROM `" . $syslogdb_default . "`.`syslog_hosts` WHERE host='" . $remove['message'] . "'");
 
 				if (!empty($host_id)) {
@@ -306,7 +306,7 @@ function syslog_remove_items($table, $uniqueID) {
 						WHERE host_id=$host_id";
 				}
 			}
-		} else if ($remove['type'] == 'messageb') {
+		} elseif ($remove['type'] == 'messageb') {
 			if ($table == 'syslog_incoming') {
 				if ($remove['method'] != 'del') {
 					$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -329,7 +329,7 @@ function syslog_remove_items($table, $uniqueID) {
 				$sql = "DELETE
 					FROM `" . $syslogdb_default . "`.`syslog_incoming`
 					WHERE message LIKE '" . $remove['message'] . "%' AND status='" . $uniqueID . "'";
-			}else{
+			} else {
 				if ($remove['message'] != '') {
 					if ($remove['method'] != 'del') {
 						$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -343,7 +343,7 @@ function syslog_remove_items($table, $uniqueID) {
 						WHERE message LIKE '" . $remove['message'] . "%'";
 				}
 			}
-		} else if ($remove['type'] == 'messagec') {
+		} elseif ($remove['type'] == 'messagec') {
 			if ($table == 'syslog_incoming') {
 				if ($remove['method'] != 'del') {
 					$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -366,7 +366,7 @@ function syslog_remove_items($table, $uniqueID) {
 				$sql = "DELETE
 					FROM `" . $syslogdb_default . "`.`syslog_incoming`
 					WHERE message LIKE '%" . $remove['message'] . "%' AND status='" . $uniqueID . "'";
-			}else{
+			} else {
 				if ($remove['message'] != '') {
 					if ($remove['method'] != 'del') {
 						$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -380,7 +380,7 @@ function syslog_remove_items($table, $uniqueID) {
 						WHERE message LIKE '%" . $remove['message'] . "%'";
 				}
 			}
-		} else if ($remove['type'] == 'messagee') {
+		} elseif ($remove['type'] == 'messagee') {
 			if ($table == 'syslog_incoming') {
 				if ($remove['method'] != 'del') {
 					$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -403,7 +403,7 @@ function syslog_remove_items($table, $uniqueID) {
 				$sql = "DELETE
 					FROM `" . $syslogdb_default . "`.`syslog_incoming`
 					WHERE message LIKE '%" . $remove['message'] . "' AND status='" . $uniqueID . "'";
-			}else{
+			} else {
 				if ($remove['message'] != '') {
 					if ($remove['method'] != 'del') {
 						$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -417,7 +417,7 @@ function syslog_remove_items($table, $uniqueID) {
 						WHERE message LIKE '%" . $remove['message'] . "'";
 				}
 			}
-		}else if ($remove['type'] == 'sql') {
+		}elseif ($remove['type'] == 'sql') {
 			if ($table == 'syslog_incoming') {
 				if ($remove['method'] != 'del') {
 					$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -434,13 +434,14 @@ function syslog_remove_items($table, $uniqueID) {
 							ON spg.program=si.program
 							INNER JOIN `" . $syslogdb_default . "`.`syslog_hosts` AS sh
 							ON sh.host=si.host
-							WHERE (" . $remove['message'] . ") AND status=" . $uniqueID . ") AS merge";
+							WHERE status=" . $uniqueID . ") AS merge
+						WHERE (" . $remove['message'] . ")";
 				}
 
 				$sql = "DELETE
 					FROM `" . $syslogdb_default . "`.`syslog_incoming`
 					WHERE (" . $remove['message'] . ") AND status='" . $uniqueID . "'";
-			}else{
+			} else {
 				if ($remove['message'] != '') {
 					if ($remove['method'] != 'del') {
 						$sql1 = "INSERT INTO `" . $syslogdb_default . "`.`syslog_removed`
@@ -568,46 +569,49 @@ function syslog_export($tab) {
 		header('Content-type: application/excel');
 		header('Content-Disposition: attachment; filename=syslog_view-' . date('Y-m-d',time()) . '.csv');
 
-		$sql_where = '';
-		$syslog_messages = get_syslog_messages($sql_where, '10000', $tab);
+		$sql_where  = '';
+		$messages   = get_syslog_messages($sql_where, 100000, $tab);
 
 		$hosts      = array_rekey(syslog_db_fetch_assoc('SELECT host_id, host FROM `' . $syslogdb_default . '`.`syslog_hosts`'), 'host_id', 'host');
 		$facilities = array_rekey(syslog_db_fetch_assoc('SELECT facility_id, facility FROM `' . $syslogdb_default . '`.`syslog_facilities`'), 'facility_id', 'facility');
 		$priorities = array_rekey(syslog_db_fetch_assoc('SELECT priority_id, priority FROM `' . $syslogdb_default . '`.`syslog_priorities`'), 'priority_id', 'priority');
+		$programs = array_rekey(syslog_db_fetch_assoc('SELECT program_id, program FROM `' . $syslogdb_default . '`.`syslog_programs`'), 'program_id', 'program');
 
-		if (sizeof($syslog_messages) > 0) {
-			print 'host, facility, priority, date, message' . "\r\n";
+		print 'host, facility, priority, program, date, message' . "\r\n";
 
-			foreach ($syslog_messages as $syslog_message) {
+		if (sizeof($messages)) {
+			foreach ($messages as $message) {
 				print
-					'"' . $hosts[$syslog_message['host_id']]              . '","' .
-					ucfirst($facilities[$syslog_message['facility_id']])  . '","' .
-					ucfirst($priorities[$syslog_message['priority_id']])  . '","' .
-					$syslog_message['logtime']                            . '","' .
-					$syslog_message[$syslog_incoming_config['textField']] . '"' . "\r\n";
+					'"' .
+					$hosts[$message['host_id']]                    . '","' .
+					ucfirst($facilities[$message['facility_id']])  . '","' .
+					ucfirst($priorities[$message['priority_id']])  . '","' .
+					ucfirst($programs[$message['program_id']])     . '","' .
+					$message['logtime']                            . '","' .
+					$message[$syslog_incoming_config['textField']] . '"'   . "\r\n";
 			}
 		}
-	}else{
+	} else {
 		header('Content-type: application/excel');
 		header('Content-Disposition: attachment; filename=alert_log_view-' . date('Y-m-d',time()) . '.csv');
 
-		$sql_where = '';
-		$syslog_messages = get_syslog_messages($sql_where, '10000');
+		$sql_where  = '';
+		$messages   = get_syslog_messages($sql_where, 100000, $tab);
 
-		if (sizeof($syslog_messages) > 0) {
-			print 'name, severity, date, message, host, facility, priority, count' . "\r\n";
+		print 'name, severity, date, message, host, facility, priority, count' . "\r\n";
 
-			foreach ($syslog_messages as $log) {
+		if (sizeof($messages)) {
+			foreach ($messages as $message) {
 				print
 					'"' .
-					$log['name']                  . '","' .
-					$severities[$log['severity']] . '","' .
-					$log['logtime']               . '","' .
-					$log['logmsg']                . '","' .
-					$log['host']                  . '","' .
-					ucfirst($log['facility'])     . '","' .
-					ucfirst($log['priority'])     . '","' .
-					$log['count']                 . '"' . "\r\n";
+					$message['name']                  . '","' .
+					$severities[$message['severity']] . '","' .
+					$message['logtime']               . '","' .
+					$message['logmsg']                . '","' .
+					$message['host']                  . '","' .
+					ucfirst($message['facility'])     . '","' .
+					ucfirst($message['priority'])     . '","' .
+					$message['count']                 . '"'   . "\r\n";
 			}
 		}
 	}
@@ -617,7 +621,7 @@ function syslog_debug($message) {
 	global $syslog_debug;
 
 	if ($syslog_debug) {
-		echo 'SYSLOG: ' . $message . "\n";
+		echo 'SYSLOG: ' . trim($message) . "\n";
 	}
 }
 
@@ -644,7 +648,7 @@ function syslog_log_alert($alert_id, $alert_name, $severity, $msg, $count = 1, $
 		cacti_log("WARNING: The Syslog Alert '$alert_name' with Severity '" . $severities[$severity] . "', has been Triggered on Host '" . $msg['host'] . "', and Sequence '$id'", false, 'SYSLOG');
 
 		return $id;
-	}else{
+	} else {
 		$save['seq']         = '';
 		$save['alert_id']    = $alert_id;
 		$save['logseq']      = 0;
@@ -693,13 +697,13 @@ function syslog_manage_items($from_table, $to_table) {
 							(SELECT distinct facility_id from `". $syslogdb_default . "`syslog_facilities
 							WHERE facility ='". $remove['message']."')";
 				} else {
-					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table 
+					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table
 						WHERE facility_id IN
 							(SELECT distinct facility_id from `". $syslogdb_default . "`syslog_facilities
 							WHERE facility ='". $remove['message']."')";
 				}
 
-			} else if ($remove['type'] == 'host') {
+			} elseif ($remove['type'] == 'host') {
 				if ($remove['method'] != 'del') {
 					$sql_sel = "SELECT seq
 						FROM `" . $syslogdb_default . "`. $from_table
@@ -707,45 +711,45 @@ function syslog_manage_items($from_table, $to_table) {
 							(SELECT distinct host_id from `". $syslogdb_default . "`syslog_hosts
 							WHERE host ='". $remove['message']."')";
 				} else {
-					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table 
+					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table
 						WHERE host_id in
 							(SELECT distinct host_id from `". $syslogdb_default . "`syslog_hosts
 							WHERE host ='". $remove['message']."')";
 				}
-			} else if ($remove['type'] == 'messageb') {
+			} elseif ($remove['type'] == 'messageb') {
 				if ($remove['method'] != 'del') {
 					$sql_sel = "SELECT seq FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message LIKE '" . $remove['message'] . "%' ";
 				} else {
-					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table 
+					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message LIKE '" . $remove['message'] . "%' ";
 				}
 
-			} else if ($remove['type'] == 'messagec') {
+			} elseif ($remove['type'] == 'messagec') {
 				if ($remove['method'] != 'del') {
 					$sql_sel = "SELECT seq FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message LIKE '%" . $remove['message'] . "%' ";
 				} else {
-					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table 
+					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message LIKE '%" . $remove['message'] . "%' ";
 				}
-			} else if ($remove['type'] == 'messagee') {
+			} elseif ($remove['type'] == 'messagee') {
 				if ($remove['method'] != 'del') {
 					$sql_sel = "SELECT seq FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message LIKE '%" . $remove['message'] . "' ";
 				} else {
-					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table 
+					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message LIKE '%" . $remove['message'] . "' ";
 				}
-			} else if ($remove['type'] == 'sql') {
+			} elseif ($remove['type'] == 'sql') {
 				if ($remove['method'] != 'del') {
 					$sql_sel = "SELECT seq FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message (" . $remove['message'] . ") ";
 				} else {
-					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table 
+					$sql_dlt = "DELETE FROM `" . $syslogdb_default . "`. $from_table
 						WHERE message (" . $remove['message'] . ") ";
 				}
-			} 
+			}
 
 			if ($sql_sel != '' || $sql_dlt != '') {
 				$debugm = '';
@@ -764,22 +768,22 @@ function syslog_manage_items($from_table, $to_table) {
 						}
 
 						$all_seq = preg_replace('/^,/i', '', $all_seq);
-						syslog_db_execute("INSERT INTO `". $syslogdb_default . "`.`". $to_table ."` 
+						syslog_db_execute("INSERT INTO `". $syslogdb_default . "`.`". $to_table ."`
 							(facility_id, priority_id, host_id, logtime, message)
-							(SELECT facility_id, priority_id, host_id, logtime, message 
+							(SELECT facility_id, priority_id, host_id, logtime, message
 							FROM `". $syslogdb_default . "`.". $from_table ."
 							WHERE seq in (" . $all_seq ."))");
 
 						$messages_moved = db_affected_rows($syslog_cnn);
 
 						if ($messages_moved > 0) {
-							syslog_db_execute("DELETE FROM `". $syslogdb_default . "`.`" . $from_table ."` 
-								WHERE seq in (" . $all_seq .")" ); 
+							syslog_db_execute("DELETE FROM `". $syslogdb_default . "`.`" . $from_table ."`
+								WHERE seq in (" . $all_seq .")" );
 						}
 
 						$xferred += $messages_moved;
 						$move_count = $messages_moved;
-					} 
+					}
 					$debugm   = "Moved   " . $move_count . " Message(s)";
 				}
 
@@ -789,7 +793,7 @@ function syslog_manage_items($from_table, $to_table) {
 					$removed += db_affected_rows($syslog_cnn);
 					$debugm   = "Deleted " . $removed . " Message(s)";
 				}
-					
+
 				syslog_debug($debugm);
 			}
 		}

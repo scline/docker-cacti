@@ -1,0 +1,14 @@
+[Unit]
+Description=Cacti Thold Daemon.
+After=mysql.service
+Requires=mysql.service
+AssertPathExists=<CACTIDIR>/plugins/thold/
+
+[Service]
+User=cacti
+Group=cacti
+Type=simple
+ExecStart=/usr/bin/php <CACTIDIR>/plugins/thold/thold_daemon.php -f
+
+[Install]
+WantedBy=multi-user.target

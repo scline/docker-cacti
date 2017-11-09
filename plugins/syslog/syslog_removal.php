@@ -28,10 +28,10 @@ include_once('plugins/syslog/functions.php');
 
 /* redefine the syslog actions for removal rules */
 $syslog_actions = array(
-	1 => __('Delete'),
-	2 => __('Disable'),
-	3 => __('Enable'),
-	4 => __('Reprocess')
+	1 => __('Delete', 'syslog'),
+	2 => __('Disable', 'syslog'),
+	3 => __('Enable', 'syslog'),
+	4 => __('Reprocess', 'syslog')
 );
 
 /* set default action */
@@ -69,8 +69,8 @@ switch (get_request_var('action')) {
 
 function form_save() {
 	if ((isset_request_var('save_component_removal')) && (isempty_request_var('add_dq_y'))) {
-		$removalid = api_syslog_removal_save(get_filter_request_var('id'), get_nfilter_request_var('name'), 
-			get_nfilter_request_var('type'), get_nfilter_request_var('message'), 
+		$removalid = api_syslog_removal_save(get_filter_request_var('id'), get_nfilter_request_var('name'),
+			get_nfilter_request_var('type'), get_nfilter_request_var('message'),
 			get_nfilter_request_var('rmethod'), get_nfilter_request_var('notes'), get_nfilter_request_var('enabled'));
 
 		if ((is_error_message()) || (get_filter_request_var('id') != get_filter_request_var('_id'))) {
@@ -148,49 +148,49 @@ function form_actions() {
 		if (get_request_var('drp_action') == '1') { /* delete */
 			print "<tr>
 				<td class='textArea'>
-					<p>" . __('Click \'Continue\' to Delete the following Syslog Removal Rule(s).') . "</p>
+					<p>" . __('Click \'Continue\' to Delete the following Syslog Removal Rule(s).', 'syslog') . "</p>
 					<ul>$removal_list</ul>";
 					print "</td></tr>
 				</td>
 			</tr>\n";
 
-			$title = __('Delete Syslog Removal Rule(s)');
+			$title = __esc('Delete Syslog Removal Rule(s)', 'syslog');
 		}else if (get_request_var('drp_action') == '2') { /* disable */
 			print "<tr>
 				<td class='textArea'>
-					<p>" . __('Click \'Continue\' to Disable the following Syslog Removal Rule(s).') . "</p>
+					<p>" . __('Click \'Continue\' to Disable the following Syslog Removal Rule(s).', 'syslog') . "</p>
 					<ul>$removal_list</ul>";
 					print "</td></tr>
 				</td>
 			</tr>\n";
 
-			$title = __('Disable Syslog Removal Rule(s)');
+			$title = __esc('Disable Syslog Removal Rule(s)', 'syslog');
 		}else if (get_request_var('drp_action') == '3') { /* enable */
 			print "<tr>
 				<td class='textArea'>
-					<p>" . __('Click \'Continue\' to Enable the following Syslog Removal Rule(s).') . "</p>
+					<p>" . __('Click \'Continue\' to Enable the following Syslog Removal Rule(s).', 'syslog') . "</p>
 					<ul>$removal_list</ul>";
 					print "</td></tr>
 				</td>
 			</tr>\n";
 
-			$title = __('Enable Syslog Removal Rule(s)');
+			$title = __esc('Enable Syslog Removal Rule(s)', 'syslog');
 		}else if (get_request_var('drp_action') == '4') { /* reprocess */
 			print "<tr>
 				<td class='textArea'>
-					<p>" . __('Click \'Continue\' to Re-process the following Syslog Removal Rule(s).') . "</p>
+					<p>" . __('Click \'Continue\' to Re-process the following Syslog Removal Rule(s).', 'syslog') . "</p>
 					<ul>$removal_list</ul>";
 					print "</td></tr>
 				</td>
 			</tr>\n";
 
-			$title = __('Retroactively Process Syslog Removal Rule(s)');
+			$title = __esc('Retroactively Process Syslog Removal Rule(s)', 'syslog');
 		}
 
-		$save_html = "<input type='button' value='" . __('Cancel') . "' onClick='cactiReturnTo()'>&nbsp;<input type='submit' value='" . __('Continue') . "' title='$title'";
+		$save_html = "<input type='button' value='" . __esc('Cancel', 'syslog') . "' onClick='cactiReturnTo()'>&nbsp;<input type='submit' value='" . __esc('Continue', 'syslog') . "' title='$title'";
 	}else{
-		print "<tr><td class='even'><span class='textError'>" . __('You must select at least one Syslog Removal Rule.') . "</span></td></tr>\n";
-		$save_html = "<input type='button' value='" . __('Return') . "' onClick='cactiReturnTo()'>";
+		print "<tr><td class='even'><span class='textError'>" . __('You must select at least one Syslog Removal Rule.', 'syslog') . "</span></td></tr>\n";
+		$save_html = "<input type='button' value='" . __esc('Return', 'syslog') . "' onClick='cactiReturnTo()'>";
 	}
 
 	print "	<tr>
@@ -267,7 +267,7 @@ function api_syslog_removal_reprocess($id) {
 	$syslog_removed = $syslog_items['removed'];
 	$syslog_xferred = $syslog_items['xferred'];
 
-	$_SESSION['syslog_info'] = __('There were %s messages removed, and %s messages transferred', $syslog_removed, $syslog_xferred);
+	$_SESSION['syslog_info'] = __('There were %s messages removed, and %s messages transferred', $syslog_removed, $syslog_xferred, 'syslog');
 
 	raise_message('syslog_info');
 }
@@ -325,60 +325,59 @@ function syslog_action_edit() {
 			WHERE id=' . get_request_var('id'));
 
 		if (sizeof($removal)) {
-			$header_label = __('Removal Rule Edit [edit: %s]', $removal['name']);
+			$header_label = __('Removal Rule Edit [edit: %s]', $removal['name'], 'syslog');
 		}else{
-			$header_label = __('Removal Rule Edit [new]');
+			$header_label = __('Removal Rule Edit [new]', 'syslog');
 
-			$removal['name'] = __('New Removal Record');
+			$removal['name'] = __('New Removal Record', 'syslog');
 		}
 	}else if (isset_request_var('id') && get_nfilter_request_var('action') == 'newedit') {
 		$syslog_rec = syslog_db_fetch_row('SELECT * FROM `' . $syslogdb_default . '`.`syslog` WHERE seq=' . get_request_var('id') . (isset_request_var('date') ? " AND logtime='" . get_request_var('date') . "'":""));
 
-		$header_label = __('Removal Rule Edit [new]');
+		$header_label = __('Removal Rule Edit [new]', 'syslog');
 		if (sizeof($syslog_rec)) {
 			$removal['message'] = $syslog_rec['message'];
 		}
-		$removal['name'] = __('New Removal Rule');
+		$removal['name'] = __('New Removal Rule', 'syslog');
 	}else{
 		$header_label = '[new]';
 
-		$removal['name'] = __('New Removal Record');
+		$removal['name'] = __('New Removal Record', 'syslog');
 	}
 
 	$fields_syslog_removal_edit = array(
 		'spacer0' => array(
 			'method' => 'spacer',
-			'friendly_name' => __('Removal Rule Details')
+			'friendly_name' => __('Removal Rule Details', 'syslog')
 		),
 		'name' => array(
 			'method' => 'textbox',
-			'friendly_name' => __('Removal Rule Name'),
-			'description' => __('Please describe this Removal Rule.'),
+			'friendly_name' => __('Removal Rule Name', 'syslog'),
+			'description' => __('Please describe this Removal Rule.', 'syslog'),
 			'value' => '|arg1:name|',
 			'max_length' => '250',
 			'size' => 80
 		),
 		'enabled' => array(
 			'method' => 'drop_array',
-			'friendly_name' => __('Enabled?'),
-			'description' => __('Is this Removal Rule Enabled?'),
+			'friendly_name' => __('Enabled?', 'syslog'),
+			'description' => __('Is this Removal Rule Enabled?', 'syslog'),
 			'value' => '|arg1:enabled|',
-			'array' => array('on' => __('Enabled'), '' => __('Disabled')),
+			'array' => array('on' => __('Enabled', 'syslog'), '' => __('Disabled', 'syslog')),
 			'default' => 'on'
 		),
 		'type' => array(
 			'method' => 'drop_array',
-			'friendly_name' => __('String Match Type'),
-			'description' => __('Define how you would like this string matched.  If using the SQL Expression type you may use any valid SQL expression
-			to generate the alarm.  Available fields include \'message\', \'facility\', \'priority\', and \'host\'.'),
+			'friendly_name' => __('String Match Type', 'syslog'),
+			'description' => __('Define how you would like this string matched.  If using the SQL Expression type you may use any valid SQL expression to generate the alarm.  Available fields include \'message\', \'facility\', \'priority\', and \'host\'.', 'syslog'),
 			'value' => '|arg1:type|',
 			'array' => $message_types,
 			'on_change' => 'changeTypes()',
 			'default' => 'matchesc'
 		),
 		'message' => array(
-			'friendly_name' => __('Syslog Message Match String'),
-			'description' => __('Enter the matching component of the syslog message, the facility or host name, or the SQL where clause if using the SQL Expression Match Type.'),
+			'friendly_name' => __('Syslog Message Match String', 'syslog'),
+			'description' => __('Enter the matching component of the syslog message, the facility or host name, or the SQL where clause if using the SQL Expression Match Type.', 'syslog'),
 			'method' => 'textarea',
 			'textarea_rows' => '2',
 			'textarea_cols' => '70',
@@ -388,16 +387,16 @@ function syslog_action_edit() {
 		),
 		'rmethod' => array(
 			'method' => 'drop_array',
-			'friendly_name' => __('Method of Removal'),
+			'friendly_name' => __('Method of Removal', 'syslog'),
 			'value' => '|arg1:method|',
-			'array' => array('del' => __('Deletion'), 'trans' => __('Transferal')),
+			'array' => array('del' => __('Deletion', 'syslog'), 'trans' => __('Transferal', 'syslog')),
 			'default' => 'del'
 		),
 		'notes' => array(
-			'friendly_name' => __('Removal Rule Notes'),
+			'friendly_name' => __('Removal Rule Notes', 'syslog'),
 			'textarea_rows' => '5',
 			'textarea_cols' => '70',
-			'description' => __('Space for Notes on the Removal rule'),
+			'description' => __('Space for Notes on the Removal rule', 'syslog'),
 			'method' => 'textarea',
 			'class' => 'textAreaNotes',
 			'value' => '|arg1:notes|',
@@ -455,27 +454,27 @@ function syslog_filter() {
 			<table class='filterTable'>
 				<tr>
 					<td>
-						<?php print __('Search');?>
+						<?php print __('Search', 'syslog');?>
 					</td>
 					<td>
 						<input type='text' id='filter' size='30' value='<?php print get_request_var('filter');?>'>
 					</td>
 					<td>
-						<?php print __('Enabled');?>
+						<?php print __('Enabled', 'syslog');?>
 					</td>
 					<td>
 						<select id='enabled' onChange='applyFilter()'>
-							<option value='-1'<?php if (get_request_var('enabled') == '-1') {?> selected<?php }?>><?php print __('All');?></option>
-							<option value='1'<?php if (get_request_var('enabled') == '1') {?> selected<?php }?>><?php print __('Yes');?></option>
-							<option value='0'<?php if (get_request_var('enabled') == '0') {?> selected<?php }?>><?php print __('No');?></option>
+							<option value='-1'<?php if (get_request_var('enabled') == '-1') {?> selected<?php }?>><?php print __('All', 'syslog');?></option>
+							<option value='1'<?php if (get_request_var('enabled') == '1') {?> selected<?php }?>><?php print __('Yes', 'syslog');?></option>
+							<option value='0'<?php if (get_request_var('enabled') == '0') {?> selected<?php }?>><?php print __('No', 'syslog');?></option>
 						</select>
 					</td>
 					<td>
-						Rules
+						<?php print __('Rules', 'syslog');?>
 					</td>
 					<td>
 						<select id='rows' onChange='applyFilter()'>
-							<option value='-1'<?php if (get_request_var('rows') == '-1') {?> selected<?php }?>><?php print __('Default');?></option>
+							<option value='-1'<?php if (get_request_var('rows') == '-1') {?> selected<?php }?>><?php print __('Default', 'syslog');?></option>
 							<?php
 								if (sizeof($item_rows)) {
 								foreach ($item_rows as $key => $value) {
@@ -486,10 +485,10 @@ function syslog_filter() {
 						</select>
 					</td>
 					<td>
-						<input id='refresh' type='button' value='<?php print __('Go');?>'>
+						<input id='refresh' type='button' value='<?php print __esc('Go', 'syslog');?>'>
 					</td>
 					<td>
-						<input id='clear' type='button' value='<?php print __('Clear');?>'>
+						<input id='clear' type='button' value='<?php print __esc('Clear', 'syslog');?>'>
 					</td>
 				</tr>
 			</table>
@@ -574,7 +573,7 @@ function syslog_removal() {
     validate_store_request_vars($filters, 'sess_syslogr');
     /* ================= input validation ================= */
 
-	html_start_box(__('Syslog Removal Rule Filters'), '100%', '', '3', 'center', 'syslog_removal.php?action=edit&type=1');
+	html_start_box(__('Syslog Removal Rule Filters', 'syslog'), '100%', '', '3', 'center', 'syslog_removal.php?action=edit&type=1');
 
 	syslog_filter();
 
@@ -607,13 +606,13 @@ function syslog_removal() {
 	html_start_box('', '100%', '', '3', 'center', '');
 
 	$display_text = array(
-		'name'    => array(__('Removal Name'), 'ASC'),
-		'enabled' => array(__('Enabled'), 'ASC'),
-		'type'    => array(__('Match Type'), 'ASC'),
-		'message' => array(__('Search String'), 'ASC'),
-		'method'  => array(__('Method'), 'DESC'),
-		'date'    => array(__('Last Modified'), 'ASC'),
-		'user'    => array(__('By User'), 'DESC')
+		'name'    => array(__('Removal Name', 'syslog'), 'ASC'),
+		'enabled' => array(__('Enabled', 'syslog'), 'ASC'),
+		'type'    => array(__('Match Type', 'syslog'), 'ASC'),
+		'message' => array(__('Search String', 'syslog'), 'ASC'),
+		'method'  => array(__('Method', 'syslog'), 'DESC'),
+		'date'    => array(__('Last Modified', 'syslog'), 'ASC'),
+		'user'    => array(__('By User', 'syslog'), 'DESC')
 	);
 
 	html_header_sort_checkbox($display_text, get_request_var('sort_column'), get_request_var('sort_direction'));
@@ -622,17 +621,17 @@ function syslog_removal() {
 		foreach ($removals as $removal) {
 			form_alternate_row('line' . $removal['id'], true);
 			form_selectable_cell(filter_value(title_trim($removal['name'], read_config_option('max_title_length')), get_request_var('filter'), $config['url_path'] . 'plugins/syslog/syslog_removal.php?action=edit&id=' . $removal['id']), $removal['id']);
-			form_selectable_cell((($removal['enabled'] == 'on') ? __('Yes'):__('No')), $removal['id']);
+			form_selectable_cell((($removal['enabled'] == 'on') ? __('Yes', 'syslog'):__('No', 'syslog')), $removal['id']);
 			form_selectable_cell($message_types[$removal['type']], $removal['id']);
 			form_selectable_cell($removal['message'], $removal['id']);
-			form_selectable_cell((($removal['method'] == 'del') ? __('Deletion'): __('Transfer')), $removal['id']);
+			form_selectable_cell((($removal['method'] == 'del') ? __('Deletion', 'syslog'): __('Transfer', 'syslog')), $removal['id']);
 			form_selectable_cell(date('Y-m-d H:i:s', $removal['date']), $removal['id']);
 			form_selectable_cell($removal['user'], $removal['id']);
 			form_checkbox_cell($removal['name'], $removal['id']);
 			form_end_row();
 		}
 	}else{
-		print "<tr><td colspan='4'><em>" . __('No Syslog Removal Rules Defined'). "</em></td></tr>";
+		print "<tr><td colspan='4'><em>" . __('No Syslog Removal Rules Defined', 'syslog'). "</em></td></tr>";
 	}
 
 	html_end_box(false);

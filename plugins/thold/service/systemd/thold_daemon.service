@@ -1,0 +1,11 @@
+[Unit]
+Description=Cacti Threshold Daemon Service
+
+[Service]
+Type=oneshot
+ExecStart=/var/www/html/cacti/plugins/thold/service/systemd/thold_daemon
+ExecStop=/var/www/html/cacti/plugins/thold/service/systemd/thold_daemon
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
