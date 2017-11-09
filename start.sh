@@ -24,48 +24,71 @@ ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
 
 # verify if initial install steps are required, if lock file does not exist run the following   
 if [ ! -f /cacti/install.lock ]; then
-       echo "$(date +%F_%R) [New Install] Lock file does not exist - new install."
-       # wait for database to initialize - http://stackoverflow.com/questions/4922943/test-from-shell-script-if-remote-tcp-port-is-open
-       while ! timeout 1 bash -c 'cat < /dev/null > /dev/tcp/${DB_HOST}/${DB_PORT}'; do sleep 3; done
-       echo "$(date +%F_%R) [New Install] Database is up! - configuring DB located at ${DB_HOST}:${DB_PORT} (this can take a few minutes)."
+    echo "$(date +%F_%R) [New Install] Lock file does not exist - new install."
+    # wait for database to initialize - http://stackoverflow.com/questions/4922943/test-from-shell-script-if-remote-tcp-port-is-open
+    while ! timeout 1 bash -c 'cat < /dev/null > /dev/tcp/${DB_HOST}/${DB_PORT}'; do sleep 3; done
+    echo "$(date +%F_%R) [New Install] Database is up! - configuring DB located at ${DB_HOST}:${DB_PORT} (this can take a few minutes)."
 
-       # if docker was told to setup the database then perform the following
-       if [ ${INITIALIZE_DB} = 1 ]; then
-              echo "$(date +%F_%R) [New Install] Container has been instructed to create new Database on remote system."
-              # initial database and user setup
-              echo "$(date +%F_%R) [New Install] CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
-              mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
-              # allow cacti user access to new database
-              echo "$(date +%F_%R) [New Install] GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '*******';"
-              mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
-              # allow required access to mysql timezone table
-              echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
-              mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"   
-       fi
+    # if docker was told to setup the database then perform the following
+    if [ ${INITIALIZE_DB} = 1 ]; then
+        echo "$(date +%F_%R) [New Install] Container has been instructed to create new Database on remote system."
+        # initial database and user setup
+        echo "$(date +%F_%R) [New Install] CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+        # allow cacti user access to new database
+        echo "$(date +%F_%R) [New Install] GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '*******';"
+        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
+        # allow required access to mysql timezone table
+        echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
+        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"   
+    fi
 
-       # fresh install db merge
-       echo "$(date +%F_%R) [New Install] Merging vanilla cacti.sql file to database."
-       mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < /cacti/cacti.sql
+    # THIS WAS IN DOCKER-FILE
+    # CACTI BASE INSTALL
+    tar -xf /tmp/cacti-1*.tar.gz -C /tmp
+    mv /tmp/cacti-1*/ /cacti/
 
-       echo "$(date +%F_%R) [New Install] Installing supporting template files."
-       cp -r /templates/resource /cacti
-       cp -r /templates/scripts /cacti
+    # SPINE BASE INSTALL
+    tar -xf /tmp/cacti-spine-*.tar.gz -C /tmp
+    cd /tmp/cacti-spine-*
+    ./configure --prefix=/spine && make && make install
+    chown root:root /spine/bin/spine
+    chmod +s /spine/bin/spine
 
-       # install additional settings
-       for filename in /settings/*.sql; do
-              echo "$(date +%F_%R) [New Install] Importing settings file $filename"
-              mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
-       done
+    # CLEANUP
+    rm -rf /tmp/*
 
-       # install additional templates
-       for filename in /templates/*.xml; do
-              echo "$(date +%F_%R) [New Install] Installing template file $filename"
-              php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
-       done
+    # BASE CONFIGS
+    cp template_configs/spine.conf /spine/etc
+    cp template_configs/cacti.conf /etc/httpd/conf.d
+    cp template_configs/config.php /cacti/include
 
-       # create lock file so this is not re-ran on restart
-       touch /cacti/install.lock
-       echo "$(date +%F_%R) [New Install] Creating lock file, db setup complete."
+    # CRON 
+    cp template_configs/crontab /etc/crontab
+
+    # fresh install db merge
+    echo "$(date +%F_%R) [New Install] Merging vanilla cacti.sql file to database."
+    mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < /cacti/cacti.sql
+
+    echo "$(date +%F_%R) [New Install] Installing supporting template files."
+    cp -r /templates/resource /cacti
+    cp -r /templates/scripts /cacti
+
+    # install additional settings
+    for filename in /settings/*.sql; do
+        echo "$(date +%F_%R) [New Install] Importing settings file $filename"
+        mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
+    done
+
+    # install additional templates
+    for filename in /templates/*.xml; do
+        echo "$(date +%F_%R) [New Install] Installing template file $filename"
+        php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
+    done
+
+    # create lock file so this is not re-ran on restart
+    touch /cacti/install.lock
+    echo "$(date +%F_%R) [New Install] Creating lock file, db setup complete."
 fi
 
 # correcting file permissions
@@ -78,18 +101,16 @@ chown -R apache.apache /cacti/rra/
 
 # remote poller tasks
 if [ ${REMOTE_POLLER} = 1 ]; then
-       echo "$(date +%F_%R) [Remote Poller] This is slated to be a remote poller, updating cacti configs for these settings."
-       sed -i -e "s/#$rdatabase/$rdatabase/" \
-                 /cacti/include/config.php
-       echo "$(date +%F_%R) [Remote Poller] Updating permissions in cacti directory for remote poller template."
-       chown -R apache.apache /cacti
+    echo "$(date +%F_%R) [Remote Poller] This is slated to be a remote poller, updating cacti configs for these settings."
+    sed -i -e "s/#$rdatabase/$rdatabase/" \
+                /cacti/include/config.php
+    echo "$(date +%F_%R) [Remote Poller] Updating permissions in cacti directory for remote poller template."
+    chown -R apache.apache /cacti
 fi
 
 # backup cron tasks
 if [ ${BACKUP_TIME} -gt 0 ]; then
-       
-       sed -i -e "s/%DB_HOST%/${DB_HOST}/" /var/spool/cron/apache
-
+    sed -i -e "s/%DB_HOST%/${DB_HOST}/" /var/spool/cron/apache
 fi
 
 # start cron service
