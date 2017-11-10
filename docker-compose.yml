@@ -16,6 +16,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - /Users/scline/docker/cacti:/cacti
+      - /Users/scline/docker/spine:/spine
       - /Users/scline/docker/cacti-backups:/backups
     links:
       - db

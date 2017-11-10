@@ -2,7 +2,7 @@ FROM centos:7
 MAINTAINER Sean Cline <smcline06@gmail.com>
 
 ## --- SUPPORTING FILES ---
-COPY cacti /tmp
+COPY cacti /cacti_install
 
 ## --- CACTI ---
 RUN \
@@ -32,7 +32,7 @@ RUN sed -i '/session required pam_loginuid.so/d' /etc/pam.d/crond
 COPY configs /template_configs
 
 ## --- SETTINGS/EXTRAS ---
-COPY plugins /cacti/plugins
+COPY plugins /cacti_install/plugins
 COPY templates /templates
 COPY settings /settings
 

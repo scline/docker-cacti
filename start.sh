@@ -1,21 +1,5 @@
 #!/bin/bash
 
-# setup database credential settings
-sed -i -e "s/%DB_HOST%/${DB_HOST}/" \
-       -e "s/%DB_PORT%/${DB_PORT}/" \
-       -e "s/%DB_NAME%/${DB_NAME}/" \
-       -e "s/%DB_USER%/${DB_USER}/" \
-       -e "s/%DB_PASS%/${DB_PASS}/" \
-       -e "s/%DB_PORT%/${DB_PORT}/" \
-       -e "s/%RDB_HOST%/${RDB_HOST}/" \
-       -e "s/%RDB_PORT%/${RDB_PORT}/" \
-       -e "s/%RDB_NAME%/${RDB_NAME}/" \
-       -e "s/%RDB_USER%/${RDB_USER}/" \
-       -e "s/%RDB_PASS%/${RDB_PASS}/" \
-       /cacti/include/config.php \
-       /settings/*.sql \
-       /spine/etc/spine.conf
-
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
 echo "date.timezone = ${TZ}" >> /etc/php.ini
@@ -25,7 +9,46 @@ ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
 # verify if initial install steps are required, if lock file does not exist run the following   
 if [ ! -f /cacti/install.lock ]; then
     echo "$(date +%F_%R) [New Install] Lock file does not exist - new install."
+
+    # THIS WAS IN DOCKER-FILE
+    # CACTI BASE INSTALL
+    echo "$(date +%F_%R) [New Install] Extracting and installing Cacti files to /cacti."
+    tar -xf /cacti_install/cacti-1*.tar.gz -C /tmp
+    mv /tmp/cacti-1*/* /cacti/
+
+    # SPINE BASE INSTALL
+    echo "$(date +%F_%R) [New Install] Extracting and installing Spine files to /spine."
+    tar -xf /cacti_install/cacti-spine-*.tar.gz -C /tmp
+    cd /tmp/cacti-spine-* && \
+       ./configure --prefix=/spine && make && make install && \
+       chown root:root /spine/bin/spine && \
+       chmod +s /spine/bin/spine
+
+    # BASE CONFIGS
+    echo "$(date +%F_%R) [New Install] Copying templated configurations to Spine, Apache, and Cacti."
+    cp /template_configs/spine.conf /spine/etc
+    cp /template_configs/cacti.conf /etc/httpd/conf.d
+    cp /template_configs/config.php /cacti/include
+
+    # setup database credential settings
+    echo "$(date +%F_%R) [New Install] Applying enviromental variables to configurations."
+    sed -i -e "s/%DB_HOST%/${DB_HOST}/" \
+           -e "s/%DB_PORT%/${DB_PORT}/" \
+           -e "s/%DB_NAME%/${DB_NAME}/" \
+           -e "s/%DB_USER%/${DB_USER}/" \
+           -e "s/%DB_PASS%/${DB_PASS}/" \
+           -e "s/%DB_PORT%/${DB_PORT}/" \
+           -e "s/%RDB_HOST%/${RDB_HOST}/" \
+           -e "s/%RDB_PORT%/${RDB_PORT}/" \
+           -e "s/%RDB_NAME%/${RDB_NAME}/" \
+           -e "s/%RDB_USER%/${RDB_USER}/" \
+           -e "s/%RDB_PASS%/${RDB_PASS}/" \
+        /cacti/include/config.php \
+        /settings/*.sql \
+        /spine/etc/spine.conf
+
     # wait for database to initialize - http://stackoverflow.com/questions/4922943/test-from-shell-script-if-remote-tcp-port-is-open
+    echo "$(date +%F_%R) [New Install] Waiting for database to respond, if this hangs please check MySQL connections are allowed and functional."
     while ! timeout 1 bash -c 'cat < /dev/null > /dev/tcp/${DB_HOST}/${DB_PORT}'; do sleep 3; done
     echo "$(date +%F_%R) [New Install] Database is up! - configuring DB located at ${DB_HOST}:${DB_PORT} (this can take a few minutes)."
 
@@ -43,36 +66,19 @@ if [ ! -f /cacti/install.lock ]; then
         mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"   
     fi
 
-    # THIS WAS IN DOCKER-FILE
-    # CACTI BASE INSTALL
-    tar -xf /tmp/cacti-1*.tar.gz -C /tmp
-    mv /tmp/cacti-1*/ /cacti/
-
-    # SPINE BASE INSTALL
-    tar -xf /tmp/cacti-spine-*.tar.gz -C /tmp
-    cd /tmp/cacti-spine-*
-    ./configure --prefix=/spine && make && make install
-    chown root:root /spine/bin/spine
-    chmod +s /spine/bin/spine
-
-    # CLEANUP
-    rm -rf /tmp/*
-
-    # BASE CONFIGS
-    cp template_configs/spine.conf /spine/etc
-    cp template_configs/cacti.conf /etc/httpd/conf.d
-    cp template_configs/config.php /cacti/include
-
     # CRON 
-    cp template_configs/crontab /etc/crontab
+    cp /template_configs/crontab /etc/crontab
 
     # fresh install db merge
     echo "$(date +%F_%R) [New Install] Merging vanilla cacti.sql file to database."
     mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < /cacti/cacti.sql
 
     echo "$(date +%F_%R) [New Install] Installing supporting template files."
-    cp -r /templates/resource /cacti
-    cp -r /templates/scripts /cacti
+    cp -r /templates/resource/* /cacti/resource 
+    cp -r /templates/scripts/* /cacti/scripts
+
+    echo "$(date +%F_%R) [New Install] Installing plugins."
+    cp -r /cacti_install/plugins/* /cacti/plugins
 
     # install additional settings
     for filename in /settings/*.sql; do
@@ -85,6 +91,10 @@ if [ ! -f /cacti/install.lock ]; then
         echo "$(date +%F_%R) [New Install] Installing template file $filename"
         php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
     done
+
+    # CLEANUP
+    echo "$(date +%F_%R) [New Install] Removing temp Cacti and Spine installation files."
+    rm -rf /tmp/*
 
     # create lock file so this is not re-ran on restart
     touch /cacti/install.lock
