@@ -1,7 +1,7 @@
 version: '2'
 services:
   cacti:
-    image: "smcline06/cacti"
+    build: .
     ports:
       - "80:80"
       - "443:443"
@@ -15,12 +15,13 @@ services:
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
     volumes:
-      - /docker/cacti:/cacti
-      - /docker/backups:/backups
+      - /Users/scline/docker/cacti:/cacti
+      - /Users/scline/docker/spine:/spine
+      - /Users/scline/docker/cacti-backups:/backup
     links:
       - db
   db:
-    image: "percona:5.7.14"
+    image: "percona:5.7.20"
     ports:
       - "3306:3306"
     command:
