@@ -7,9 +7,7 @@ COPY cacti /cacti_install
 ## --- CACTI ---
 RUN \
     rpm --rebuilddb && yum clean all && \
-
     yum update -y && \
-
     yum install -y \
         rrdtool net-snmp net-snmp-utils cronie php-ldap php-devel mysql php \
         ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl \
@@ -20,7 +18,6 @@ RUN \
     yum install -y \ 
         autoconf automake gcc gzip help2man libtool make net-snmp-devel \
         m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget mariadb-devel \
-    
 ## --- CLEANUP ---
     yum clean all
 
@@ -55,16 +52,13 @@ ENV \
     DB_PASS=cactipassword \
     DB_HOST=localhost \
     DB_PORT=3306 \
-
     RDB_NAME=cacti \
     RDB_USER=cactiuser \
     RDB_PASS=cactipassword \
     RDB_HOST=localhost \
     RDB_PORT=3306 \
-
     BACKUP_RETENTION=7 \
     BACKUP_TIME=0 \
-
     SNMP_COMMUNITY=public \
     REMOTE_POLLER=0 \
     INITIALIZE_DB=0 \

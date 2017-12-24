@@ -17,11 +17,11 @@ services:
     volumes:
       - /Users/scline/docker/cacti:/cacti
       - /Users/scline/docker/spine:/spine
-      - /Users/scline/docker/cacti-backups:/backups
+      - /Users/scline/docker/cacti-backups:/backup
     links:
       - db
   db:
-    image: "percona:5.7.14"
+    image: "percona:5.7.20"
     ports:
       - "3306:3306"
     command:
