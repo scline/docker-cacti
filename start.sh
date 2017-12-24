@@ -61,6 +61,9 @@ if [ ! -f /cacti/install.lock ]; then
         # allow cacti user access to new database
         echo "$(date +%F_%R) [New Install] GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '*******';"
         mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
+        # allow cacti user super access to new database (required to merge cacti.sql table)
+        echo "$(date +%F_%R) [New Install] GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
+        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
         # allow required access to mysql timezone table
         echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
         mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"   

@@ -14,10 +14,6 @@ services:
       - DB_ROOT_PASS=rootpassword
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
-    volumes:
-      - /Users/scline/docker/cacti:/cacti
-      - /Users/scline/docker/spine:/spine
-      - /Users/scline/docker/cacti-backups:/backup
     links:
       - db
   db:
