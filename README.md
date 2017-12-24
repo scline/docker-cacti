@@ -1,6 +1,6 @@
 ﻿# Cacti v1+ Docker Container
 [![](https://images.microbadger.com/badges/image/smcline06/cacti.svg)](https://microbadger.com/images/smcline06/cacti "Get your own image badge on microbadger.com")
- 
+
 ##### Github Repo: https://github.com/scline/docker-cacti
 ##### Dockerhub Repo: https://hub.docker.com/r/smcline06/cacti/
 
@@ -192,6 +192,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.1.28 - 11/21/2017
+ * Update Cacti and Spine from 1.1.27 to 1.1.28
+   * [changelog 1.1.27 -> 1.1.28][CL1.1.28]
+
 #### 1.1.27 - 11/07/2017
  * Update Cacti and Spine from 1.1.24 to 1.1.27
    * [changelog 1.1.26 -> 1.1.27][CL1.1.27]
@@ -278,6 +282,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.28]: http://www.cacti.net/release_notes.php?version=1.1.28
 [CL1.1.27]: http://www.cacti.net/release_notes.php?version=1.1.27
 [CL1.1.26]: http://www.cacti.net/release_notes.php?version=1.1.26
 [CL1.1.25]: http://www.cacti.net/release_notes.php?version=1.1.25
