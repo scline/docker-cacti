@@ -44,6 +44,8 @@ COPY backup.sh /backup.sh
 RUN chmod +x /backup.sh
 
 RUN mkdir /backup
+RUN mkdir /cacti
+RUN mkdir /spine
 
 ## --- ENV ---
 ENV \
