@@ -187,6 +187,11 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.1.30 - 01/03/2018
+ * Update Cacti and Spine from 1.1.28 to 1.1.30
+   * [changelog 1.1.29 -> 1.1.30][CL1.1.30]
+   * [changelog 1.1.28 -> 1.1.29][CL1.1.29]
+
 #### 1.1.28u1 - 12/23/2017
  * Removed pre-installed plugins (expecting users to add there own)
  * Refactored the way Cacti is installed. This is now removed from Dockerfile and moved to start.sh
@@ -282,6 +287,8 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.30]: http://www.cacti.net/release_notes.php?version=1.1.30
+[CL1.1.29]: http://www.cacti.net/release_notes.php?version=1.1.29
 [CL1.1.28]: http://www.cacti.net/release_notes.php?version=1.1.28
 [CL1.1.27]: http://www.cacti.net/release_notes.php?version=1.1.27
 [CL1.1.26]: http://www.cacti.net/release_notes.php?version=1.1.26
