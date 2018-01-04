@@ -187,7 +187,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
-#### 1.1.28 - 11/21/2017
+#### 1.1.28 - 01/03/2018
  * Update Cacti and Spine from 1.1.28 to 1.1.30
    * [changelog 1.1.29 -> 1.1.30][CL1.1.30]
    * [changelog 1.1.28 -> 1.1.29][CL1.1.29]
