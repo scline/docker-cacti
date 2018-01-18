@@ -187,6 +187,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.1.31 - 01/18/2018
+ * Update Cacti and Spine from 1.1.30 to 1.1.31
+   * [changelog 1.1.30 -> 1.1.31][CL1.1.31]
+
 #### 1.1.30 - 01/03/2018
  * Update Cacti and Spine from 1.1.28 to 1.1.30
    * [changelog 1.1.29 -> 1.1.30][CL1.1.30]
@@ -287,6 +291,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.31]: http://www.cacti.net/release_notes.php?version=1.1.31
 [CL1.1.30]: http://www.cacti.net/release_notes.php?version=1.1.30
 [CL1.1.29]: http://www.cacti.net/release_notes.php?version=1.1.29
 [CL1.1.28]: http://www.cacti.net/release_notes.php?version=1.1.28
