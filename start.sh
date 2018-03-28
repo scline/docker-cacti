@@ -57,16 +57,16 @@ if [ ! -f /cacti/install.lock ]; then
         echo "$(date +%F_%R) [New Install] Container has been instructed to create new Database on remote system."
         # initial database and user setup
         echo "$(date +%F_%R) [New Install] CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
-        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
         # allow cacti user access to new database
         echo "$(date +%F_%R) [New Install] GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '*******';"
-        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
+        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
         # allow cacti user super access to new database (required to merge cacti.sql table)
         echo "$(date +%F_%R) [New Install] GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
-        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
+        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
         # allow required access to mysql timezone table
         echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
-        mysql -h ${DB_HOST} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"   
+        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
     fi
 
     # CRON 
@@ -74,7 +74,7 @@ if [ ! -f /cacti/install.lock ]; then
 
     # fresh install db merge
     echo "$(date +%F_%R) [New Install] Merging vanilla cacti.sql file to database."
-    mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < /cacti/cacti.sql
+    mysql -h ${DB_HOST} --port=${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < /cacti/cacti.sql
 
     echo "$(date +%F_%R) [New Install] Installing supporting template files."
     cp -r /templates/resource/* /cacti/resource 
@@ -86,7 +86,7 @@ if [ ! -f /cacti/install.lock ]; then
     # install additional settings
     for filename in /settings/*.sql; do
         echo "$(date +%F_%R) [New Install] Importing settings file $filename"
-        mysql -h ${DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
+        mysql -h ${DB_HOST} --port=${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
     done
 
     # install additional templates
