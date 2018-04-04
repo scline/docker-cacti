@@ -190,7 +190,9 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
    * [changelog 1.1.35 -> 1.1.36][CL1.1.36]
    * [changelog 1.1.34 -> 1.1.35][CL1.1.35]
  * Close Issue [#36](https://github.com/scline/docker-cacti/issues/36) - Initialize DB fails if mysql running on non-standard port
+ * Close Issue [#38](https://github.com/scline/docker-cacti/issues/38) - "httpd: Could not reliably determine the server's fully qualified domain name" httpd errors
  * Close Issue [#40](https://github.com/scline/docker-cacti/issues/40) - Remove documentation about automated backups since this is not implemented. 
+
 
 #### 1.1.34 - 02/8/2018
  * Update Cacti and Spine from 1.1.31 to 1.1.34
@@ -294,11 +296,9 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
  * Initial push
 
 # Known Issues/Fixes
-* Automatic data backups using the variable `BACKUP_TIME` does not work. I am not able to get the cronjob to properly run backup.sh :(
 * HTTPS is not setup to work, it may work just understand no testing has been done.
 
 # ToDo
-* Enable container SNMP for monitoring, import/create local container template for use.
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
