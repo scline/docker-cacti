@@ -107,9 +107,6 @@ docker exec <docker image ID or name> ./backup.sh
 
 This will store compressed backups in a tar.gz format within the cacti docker container under /backups directory. Its recommended to map this directory using volumes so data is persistent. By default it only stores 7 most recent backups and will automatically delete older ones, to change this value update `BACKUP_RETENTION` environmental variable with the number of backups you wish to store.
 
-##### Automatic backups - !!!Not Working!!!
-The environment variable `BACKUP_TIME` can be altered to have the container automatically backup cacti. The value is in days and will kick off at midnight by default. By default this is disabled with a value of 0, if you want to further customize backup times edit `configs/crontab.apache` in this repo and rebuild the docker image.
-
 ### Restore Backup
 To restore from an existing backup, run the following docker exec command with the backup file location as an argument.
 ```
@@ -192,7 +189,8 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
    * [changelog 1.1.36 -> 1.1.37][CL1.1.37]
    * [changelog 1.1.35 -> 1.1.36][CL1.1.36]
    * [changelog 1.1.34 -> 1.1.35][CL1.1.35]
- * Fix Issue [#36](https://github.com/scline/docker-cacti/issues/36) - Initialize DB fails if mysql running on non-standard port
+ * Close Issue [#36](https://github.com/scline/docker-cacti/issues/36) - Initialize DB fails if mysql running on non-standard port
+ * Close Issue [#40](https://github.com/scline/docker-cacti/issues/40) - Remove documentation about automated backups since this is not implemented. 
 
 #### 1.1.34 - 02/8/2018
  * Update Cacti and Spine from 1.1.31 to 1.1.34
