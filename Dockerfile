@@ -47,6 +47,9 @@ RUN mkdir /backup
 RUN mkdir /cacti
 RUN mkdir /spine
 
+## -- MISC SETUP --
+RUN echo "ServerName localhost" > /etc/httpd/conf.d/fqdn.conf
+
 ## --- ENV ---
 ENV \
     DB_NAME=cacti \
