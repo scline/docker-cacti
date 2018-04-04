@@ -187,6 +187,13 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.1.37 - 02/8/2018
+ * Update Cacti and Spine from 1.1.34 to 1.1.37
+   * [changelog 1.1.36 -> 1.1.37][CL1.1.37]
+   * [changelog 1.1.35 -> 1.1.36][CL1.1.36]
+   * [changelog 1.1.34 -> 1.1.35][CL1.1.35]
+ * Fix Issue [#36](https://github.com/scline/docker-cacti/issues/36) - Initialize DB fails if mysql running on non-standard port
+
 #### 1.1.34 - 02/8/2018
  * Update Cacti and Spine from 1.1.31 to 1.1.34
    * [changelog 1.1.33 -> 1.1.34][CL1.1.34]
@@ -297,6 +304,9 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.37]: http://www.cacti.net/release_notes.php?version=1.1.37
+[CL1.1.36]: http://www.cacti.net/release_notes.php?version=1.1.36
+[CL1.1.35]: http://www.cacti.net/release_notes.php?version=1.1.35
 [CL1.1.34]: http://www.cacti.net/release_notes.php?version=1.1.34
 [CL1.1.33]: http://www.cacti.net/release_notes.php?version=1.1.33
 [CL1.1.32]: http://www.cacti.net/release_notes.php?version=1.1.32
