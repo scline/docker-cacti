@@ -184,7 +184,12 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
-#### 1.1.37 - 02/8/2018
+#### 1.1.38 - 05/12/2018
+ * Update Cacti and Spine from 1.1.37 to 1.1.38
+   * [changelog 1.1.37 -> 1.1.38][CL1.1.38]
+ * Merge yum run commands in dockerfile to reduce stored space.
+
+#### 1.1.37 - 04/4/2018
  * Update Cacti and Spine from 1.1.34 to 1.1.37
    * [changelog 1.1.36 -> 1.1.37][CL1.1.37]
    * [changelog 1.1.35 -> 1.1.36][CL1.1.36]
@@ -302,6 +307,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.1.38]: http://www.cacti.net/release_notes.php?version=1.1.38
 [CL1.1.37]: http://www.cacti.net/release_notes.php?version=1.1.37
 [CL1.1.36]: http://www.cacti.net/release_notes.php?version=1.1.36
 [CL1.1.35]: http://www.cacti.net/release_notes.php?version=1.1.35
