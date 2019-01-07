@@ -97,6 +97,8 @@ The folks at Cacti.net recommend the following settings for its MySQL based data
 | innodb_flush_log_at_timeout | >= 3 |  As of MySQL 5.7.14-8, the you can control how often MySQL flushes transactions to disk. The default is 1 second, but in high I/O systems setting to a value greater than 1 can allow disk I/O to be more sequential |
 | innodb_read_io_threads | >= 32 | With modern SSD type storage, having multiple read io threads is advantageous for applications with high io characteristics. |
 | innodb_write_io_threads | >= 16 | With modern SSD type storage, having multiple write io threads is advantageous for applications with high io characteristics. |
+| memory_limit | >= 800M | A minimum of 800 MB memory limit |
+| max_execution_time | >= 60 | A minimum of 1 m execution time |
 
 ### Data Backups
 Included is a backup script that will backup cacti (including settings/plugins), rrd files, and spine. This is accomplished by taking a complete copy of the root spine and cacti directory and performing a MySQL dump of the cacti database which stores all the settings and device information. To manually perform a backup, run the following exec commands: 
