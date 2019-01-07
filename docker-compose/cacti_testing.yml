@@ -1,0 +1,42 @@
+version: '2'
+services:
+  cacti:
+    image: .
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DB_NAME=cacti_master
+      - DB_USER=cactiuser
+      - DB_PASS=cactipassword
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_ROOT_PASS=rootpassword
+      - INITIALIZE_DB=1
+      - TZ=America/Los_Angeles
+    volumes:
+      - /docker/cacti:/cacti
+      - /docker/backups:/backups
+    links:
+      - db
+  db:
+    image: "percona:5.7.14"
+    ports:
+      - "3306:3306"
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=200
+      - --max_heap_table_size=128M
+      - --max_allowed_packet=32M
+      - --tmp_table_size=128M
+      - --join_buffer_size=128M
+      - --innodb_buffer_pool_size=1G
+      - --innodb_doublewrite=OFF
+      - --innodb_flush_log_at_timeout=3
+      - --innodb_read_io_threads=32
+      - --innodb_write_io_threads=16
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - TZ=America/Los_Angeles
