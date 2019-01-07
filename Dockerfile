@@ -13,7 +13,8 @@ RUN \
         ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo \
         autoconf automake gcc gzip help2man libtool make net-snmp-devel \
-        m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget mariadb-devel && \
+        m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget \
+        sendmail mariadb-devel && \
 
 ## --- CLEANUP ---
     yum clean all

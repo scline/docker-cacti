@@ -97,6 +97,8 @@ The folks at Cacti.net recommend the following settings for its MySQL based data
 | innodb_flush_log_at_timeout | >= 3 |  As of MySQL 5.7.14-8, the you can control how often MySQL flushes transactions to disk. The default is 1 second, but in high I/O systems setting to a value greater than 1 can allow disk I/O to be more sequential |
 | innodb_read_io_threads | >= 32 | With modern SSD type storage, having multiple read io threads is advantageous for applications with high io characteristics. |
 | innodb_write_io_threads | >= 16 | With modern SSD type storage, having multiple write io threads is advantageous for applications with high io characteristics. |
+| memory_limit | >= 800M | A minimum of 800 MB memory limit |
+| max_execution_time | >= 60 | A minimum of 1 m execution time |
 
 ### Data Backups
 Included is a backup script that will backup cacti (including settings/plugins), rrd files, and spine. This is accomplished by taking a complete copy of the root spine and cacti directory and performing a MySQL dump of the cacti database which stores all the settings and device information. To manually perform a backup, run the following exec commands: 
@@ -184,6 +186,13 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.2.0 - 01/06/2019
+ * Update Cacti and Spine from 1.1.38 to 1.2.0
+   * [changelog 1.1.38 -> 1.2.0][CL1.2.0]
+ * Add sendmail to dockerfile via yum due to cacti 1.2.0 requirements
+ * Created separate changlog file for future documentation cleanup
+ * Update Mysql variable readme to include `max_execution_time` and `memory_limit` changes for 1.2.0
+
 #### 1.1.38 - 05/12/2018
  * Update Cacti and Spine from 1.1.37 to 1.1.38
    * [changelog 1.1.37 -> 1.1.38][CL1.1.38]
@@ -307,6 +316,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.2.0]: http://www.cacti.net/release_notes.php?version=1.2.0
 [CL1.1.38]: http://www.cacti.net/release_notes.php?version=1.1.38
 [CL1.1.37]: http://www.cacti.net/release_notes.php?version=1.1.37
 [CL1.1.36]: http://www.cacti.net/release_notes.php?version=1.1.36
