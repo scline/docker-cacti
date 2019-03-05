@@ -112,12 +112,12 @@ This will store compressed backups in a tar.gz format within the cacti docker co
 ### Restore Backup
 To restore from an existing backup, run the following docker exec command with the backup file location as an argument.
 ```
-docker exec <docker image ID or name> ./restore.sh /backup/<filename>
+docker exec <docker image ID or name> ./restore.sh /backups/<filename>
 ```
 
 To get a list of backups, the following command should display them:
 ```
-docker exec <docker image ID or name> ls /backup
+docker exec <docker image ID or name> ls /backups
 ```
 
 ### Updating Cacti
