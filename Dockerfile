@@ -41,7 +41,7 @@ RUN chmod +x /restore.sh
 COPY backup.sh /backup.sh
 RUN chmod +x /backup.sh
 
-RUN mkdir /backup
+RUN mkdir /backups
 RUN mkdir /cacti
 RUN mkdir /spine
 
