@@ -5,9 +5,12 @@ echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
 echo "date.timezone = ${TZ}" >> /etc/php.ini
 
 # set custom php.ini enviorments to follow Cacti Recommendations requirment
-sed -i "s/^\(memory_limit=\).*/\1 ${PHP_MEMORY_LIMIT}/" /etc/php.ini
-sed -i "s/^\(max_execution_time=\).*/\1 ${PHP_MAX_EXECUTION_TIME}/" /etc/php.ini
-
+if [ ! -z ${PHP_MEMORY_LIMIT} ]; then
+    sed -i "s/^\(memory_limit=\).*/\1 ${PHP_MEMORY_LIMIT}/" /etc/php.ini
+fi
+if [ ! -z ${PHP_MAX_EXECUTION_TIME} ]; then
+    sed -i "s/^\(max_execution_time=\).*/\1 ${PHP_MAX_EXECUTION_TIME}/" /etc/php.ini
+fi
 
 rm /etc/localtime
 ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
