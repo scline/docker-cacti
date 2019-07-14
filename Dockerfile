@@ -66,7 +66,9 @@ ENV \
     REMOTE_POLLER=0 \
     INITIALIZE_DB=0 \
     INITIALIZE_INFLUX=0 \
-    TZ=UTC
+    TZ=UTC \
+    PHP_MEMORY_LIMIT=128M \
+    PHP_MAX_EXECUTION_TIME=30
 
 ## --- Start ---
 COPY start.sh /start.sh
