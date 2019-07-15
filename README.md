@@ -193,8 +193,9 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
    * [changelog 1.1.38 -> 1.2.0][CL1.2.0]
  * Add sendmail to dockerfile via yum due to cacti 1.2.0 requirements
  * Created separate changlog file for future documentation cleanup
- * Update Mysql variable readme to include `max_execution_time` and `memory_limit` changes for 1.2.0
-
+ * Update PHP variable readme to include `max_execution_time` and `memory_limit` changes for 1.2.0
+ * Add and Hotfix the PHP variable `max_execution_time` for PHP_MAX_EXECUTION_TIME and `memory_limit` for PHP_MEMORY_LIMIT
+ 
 #### 1.1.38 - 05/12/2018
  * Update Cacti and Spine from 1.1.37 to 1.1.38
    * [changelog 1.1.37 -> 1.1.38][CL1.1.38]
