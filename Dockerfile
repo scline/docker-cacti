@@ -34,13 +34,10 @@ COPY settings /settings
 ## --- SCRIPTS ---
 COPY upgrade.sh /upgrade.sh
 RUN chmod +x /upgrade.sh
-
 COPY restore.sh /restore.sh
 RUN chmod +x /restore.sh
-
 COPY backup.sh /backup.sh
 RUN chmod +x /backup.sh
-
 RUN mkdir /backups
 RUN mkdir /cacti
 RUN mkdir /spine
