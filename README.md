@@ -190,12 +190,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 # Change Log
 #### 1.2.6 - 09/06/2019
  * Update Cacti and Spine from 1.2.0 to 1.2.6
-   * [changelog 1.2.5 -> 1.2.6][CL1.2.6]
-   * [changelog 1.2.4 -> 1.2.5][CL1.2.5]
-   * [changelog 1.2.3 -> 1.2.4][CL1.2.4]
-   * [changelog 1.2.2 -> 1.2.3][CL1.2.3]
-   * [changelog 1.2.1 -> 1.2.2][CL1.2.2]
-   * [changelog 1.2.0 -> 1.2.1][CL1.2.1]
+   * [changelog][cacti_changelog]
  * Removed 1.1.X changelog notes from README.md, this can be located in [CHANGELOG.md](https://github.com/scline/docker-cacti/blob/master/changelog.md)
  * Close Issue [#49](https://github.com/scline/docker-cacti/issues/49) - New version of Spine don't have configure file
  * Close Issue [#45](https://github.com/scline/docker-cacti/issues/45) - Directories backup and backups mixed up; thank you [shortbloke](https://github.com/shortbloke) for [PR #46](https://github.com/scline/docker-cacti/pull/46)
@@ -203,7 +198,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 
 #### 1.2.0 - 01/06/2019
  * Update Cacti and Spine from 1.1.38 to 1.2.0
-   * [changelog 1.1.38 -> 1.2.0][CL1.2.0]
+    * [changelog][cacti_changelog]
  * Add sendmail to dockerfile via yum due to cacti 1.2.0 requirements
  * Created separate changlog file for future documentation cleanup
  * Update PHP variable readme to include `max_execution_time` and `memory_limit` changes for 1.2.0
@@ -223,6 +218,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 [CL1.2.2]: http://www.cacti.net/release_notes.php?version=1.2.2
 [CL1.2.1]: http://www.cacti.net/release_notes.php?version=1.2.1
 [CL1.2.0]: http://www.cacti.net/release_notes.php?version=1.2.0
+[cacti_changelog]: https://www.cacti.net/changelog.php
 [cacti_download]: http://www.cacti.net/downloads
 [spine_download]: http://www.cacti.net/downloads/spine
 [arch]: https://github.com/scline/docker-cacti/tree/master/docker-compose

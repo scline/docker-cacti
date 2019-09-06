@@ -1,9 +1,4 @@
 # Change Log
-#### 1.2.0 - 01/06/2019
- * Update Cacti and Spine from 1.1.38 to 1.2.0
-   * [changelog 1.1.38 -> 1.2.0][CL1.2.0]
- * Add sendmail to dockerfile via yum due to cacti 1.2.0 requirements
-
 #### 1.1.38 - 05/12/2018
  * Update Cacti and Spine from 1.1.37 to 1.1.38
    * [changelog 1.1.37 -> 1.1.38][CL1.1.38]
@@ -120,49 +115,49 @@
 #### 1.1.0 - 03/25/2017
  * Initial push
 
-[CL1.2.6]: http://www.cacti.net/release_notes.php?version=1.2.6
-[CL1.2.5]: http://www.cacti.net/release_notes.php?version=1.2.5
-[CL1.2.4]: http://www.cacti.net/release_notes.php?version=1.2.4
-[CL1.2.3]: http://www.cacti.net/release_notes.php?version=1.2.3
-[CL1.2.2]: http://www.cacti.net/release_notes.php?version=1.2.2
-[CL1.2.1]: http://www.cacti.net/release_notes.php?version=1.2.1
-[CL1.2.0]: http://www.cacti.net/release_notes.php?version=1.2.0
-[CL1.2.0]: http://www.cacti.net/release_notes.php?version=1.2.0
-[CL1.1.38]: http://www.cacti.net/release_notes.php?version=1.1.38
-[CL1.1.37]: http://www.cacti.net/release_notes.php?version=1.1.37
-[CL1.1.36]: http://www.cacti.net/release_notes.php?version=1.1.36
-[CL1.1.35]: http://www.cacti.net/release_notes.php?version=1.1.35
-[CL1.1.34]: http://www.cacti.net/release_notes.php?version=1.1.34
-[CL1.1.33]: http://www.cacti.net/release_notes.php?version=1.1.33
-[CL1.1.32]: http://www.cacti.net/release_notes.php?version=1.1.32
-[CL1.1.31]: http://www.cacti.net/release_notes.php?version=1.1.31
-[CL1.1.30]: http://www.cacti.net/release_notes.php?version=1.1.30
-[CL1.1.29]: http://www.cacti.net/release_notes.php?version=1.1.29
-[CL1.1.28]: http://www.cacti.net/release_notes.php?version=1.1.28
-[CL1.1.27]: http://www.cacti.net/release_notes.php?version=1.1.27
-[CL1.1.26]: http://www.cacti.net/release_notes.php?version=1.1.26
-[CL1.1.25]: http://www.cacti.net/release_notes.php?version=1.1.25
-[CL1.1.24]: http://www.cacti.net/release_notes.php?version=1.1.24
-[CL1.1.23]: http://www.cacti.net/release_notes.php?version=1.1.23
-[CL1.1.22]: http://www.cacti.net/release_notes.php?version=1.1.22
-[CL1.1.21]: http://www.cacti.net/release_notes.php?version=1.1.21
-[CL1.1.20]: http://www.cacti.net/release_notes.php?version=1.1.20
-[CL1.1.19]: http://www.cacti.net/release_notes.php?version=1.1.19
-[CL1.1.18]: http://www.cacti.net/release_notes.php?version=1.1.18
-[CL1.1.17]: http://www.cacti.net/release_notes.php?version=1.1.17
-[CL1.1.16]: http://www.cacti.net/release_notes.php?version=1.1.16
-[CL1.1.15]: http://www.cacti.net/release_notes.php?version=1.1.15
-[CL1.1.14]: http://www.cacti.net/release_notes.php?version=1.1.14
-[CL1.1.13]: http://www.cacti.net/release_notes.php?version=1.1.13
-[CL1.1.12]: http://www.cacti.net/release_notes.php?version=1.1.12
-[CL1.1.11]: http://www.cacti.net/release_notes.php?version=1.1.11
-[CL1.1.10]: http://www.cacti.net/release_notes.php?version=1.1.10
-[CL1.1.9]: http://www.cacti.net/release_notes.php?version=1.1.9
-[CL1.1.8]: http://www.cacti.net/release_notes.php?version=1.1.8
-[CL1.1.7]: http://www.cacti.net/release_notes.php?version=1.1.7
-[CL1.1.6]: http://www.cacti.net/release_notes.php?version=1.1.6
-[CL1.1.5]: http://www.cacti.net/release_notes.php?version=1.1.5
-[CL1.1.4]: http://www.cacti.net/release_notes.php?version=1.1.4
-[CL1.1.3]: http://www.cacti.net/release_notes_1_1_3.php
-[CL1.1.2]: http://www.cacti.net/release_notes_1_1_2.php
-[CL1.1.1]: http://www.cacti.net/release_notes_1_1_1.php
+[CL1.2.6]: https://www.cacti.net/changelog.php
+[CL1.2.5]: https://www.cacti.net/changelog.php
+[CL1.2.4]: https://www.cacti.net/changelog.php
+[CL1.2.3]: https://www.cacti.net/changelog.php
+[CL1.2.2]: https://www.cacti.net/changelog.php
+[CL1.2.1]: https://www.cacti.net/changelog.php
+[CL1.2.0]: https://www.cacti.net/changelog.php
+[CL1.2.0]: https://www.cacti.net/changelog.php
+[CL1.1.38]: https://www.cacti.net/changelog.php
+[CL1.1.37]: https://www.cacti.net/changelog.php
+[CL1.1.36]: https://www.cacti.net/changelog.php
+[CL1.1.35]: https://www.cacti.net/changelog.php
+[CL1.1.34]: https://www.cacti.net/changelog.php
+[CL1.1.33]: https://www.cacti.net/changelog.php
+[CL1.1.32]: https://www.cacti.net/changelog.php
+[CL1.1.31]: https://www.cacti.net/changelog.php
+[CL1.1.30]: https://www.cacti.net/changelog.php
+[CL1.1.29]: https://www.cacti.net/changelog.php
+[CL1.1.28]: https://www.cacti.net/changelog.php
+[CL1.1.27]: https://www.cacti.net/changelog.php
+[CL1.1.26]: https://www.cacti.net/changelog.php
+[CL1.1.25]: https://www.cacti.net/changelog.php
+[CL1.1.24]: https://www.cacti.net/changelog.php
+[CL1.1.23]: https://www.cacti.net/changelog.php
+[CL1.1.22]: https://www.cacti.net/changelog.php
+[CL1.1.21]: https://www.cacti.net/changelog.php
+[CL1.1.20]: https://www.cacti.net/changelog.php
+[CL1.1.19]: https://www.cacti.net/changelog.php
+[CL1.1.18]: https://www.cacti.net/changelog.php
+[CL1.1.17]: https://www.cacti.net/changelog.php
+[CL1.1.16]: https://www.cacti.net/changelog.php
+[CL1.1.15]: https://www.cacti.net/changelog.php
+[CL1.1.14]: https://www.cacti.net/changelog.php
+[CL1.1.13]: https://www.cacti.net/changelog.php
+[CL1.1.12]: https://www.cacti.net/changelog.php
+[CL1.1.11]: https://www.cacti.net/changelog.php
+[CL1.1.10]: https://www.cacti.net/changelog.php
+[CL1.1.9]: https://www.cacti.net/changelog.php
+[CL1.1.8]: https://www.cacti.net/changelog.php
+[CL1.1.7]: https://www.cacti.net/changelog.php
+[CL1.1.6]: https://www.cacti.net/changelog.php
+[CL1.1.5]: https://www.cacti.net/changelog.php
+[CL1.1.4]: https://www.cacti.net/changelog.php
+[CL1.1.3]: https://www.cacti.net/changelog.php
+[CL1.1.2]: https://www.cacti.net/changelog.php
+[CL1.1.1]: https://www.cacti.net/changelog.php
