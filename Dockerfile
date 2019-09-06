@@ -14,9 +14,7 @@ RUN \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo \
         autoconf automake gcc gzip help2man libtool make net-snmp-devel \
         m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget \
-        sendmail mariadb-devel && \
-
-## --- CLEANUP ---
+        sendmail mariadb-devel which && \
     yum clean all
 
 ## --- CRON ---

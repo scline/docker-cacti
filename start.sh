@@ -25,6 +25,7 @@ if [ ! -f /cacti/install.lock ]; then
     echo "$(date +%F_%R) [New Install] Extracting and installing Spine files to /spine."
     tar -xf /cacti_install/cacti-spine-*.tar.gz -C /tmp
     cd /tmp/cacti-spine-* && \
+        ./bootstrap && \
        ./configure --prefix=/spine && make && make install && \
        chown root:root /spine/bin/spine && \
        chmod +s /spine/bin/spine
