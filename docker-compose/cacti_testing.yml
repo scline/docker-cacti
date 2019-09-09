@@ -1,7 +1,9 @@
 version: '2'
 services:
   cacti:
-    image: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "80:80"
       - "443:443"
@@ -15,8 +17,8 @@ services:
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
     volumes:
-      - /docker/cacti:/cacti
-      - /docker/backups:/backups
+      - ~/docker/cacti:/cacti
+      - ~/docker/backups:/backups
     links:
       - db
   db:

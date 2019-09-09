@@ -14,9 +14,7 @@ RUN \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo \
         autoconf automake gcc gzip help2man libtool make net-snmp-devel \
         m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget \
-        sendmail mariadb-devel && \
-
-## --- CLEANUP ---
+        sendmail mariadb-devel which && \
     yum clean all
 
 ## --- CRON ---
@@ -34,13 +32,10 @@ COPY settings /settings
 ## --- SCRIPTS ---
 COPY upgrade.sh /upgrade.sh
 RUN chmod +x /upgrade.sh
-
 COPY restore.sh /restore.sh
 RUN chmod +x /restore.sh
-
 COPY backup.sh /backup.sh
 RUN chmod +x /backup.sh
-
 RUN mkdir /backups
 RUN mkdir /cacti
 RUN mkdir /spine
@@ -67,8 +62,8 @@ ENV \
     INITIALIZE_DB=0 \
     INITIALIZE_INFLUX=0 \
     TZ=UTC \
-    PHP_MEMORY_LIMIT=128M \
-    PHP_MAX_EXECUTION_TIME=30
+    PHP_MEMORY_LIMIT=800M \
+    PHP_MAX_EXECUTION_TIME=60
 
 ## --- Start ---
 COPY start.sh /start.sh

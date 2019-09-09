@@ -17,7 +17,7 @@ wget -qO- $cacti_download_url | tar xzC /tmp/update/cacti
 
 # download and uncompress spine
 echo "$(date +%F_%R) [Upgrade] Downloading Spine from $spine_download_url"
-wget -qO- /tmp/update $spine_download_url | tar xzC /tmp/update/spine
+wget -qO- /tmp/update $spine_download_url | tar xzC /tmp/update/spine/
 
 # cacti install
 echo "$(date +%F_%R) [Upgrade] Installing new version of Cacti."
@@ -31,9 +31,10 @@ chown -R apache.apache /cacti/log/
 chown -R apache.apache /cacti/scripts/
 chown -R apache.apache /cacti/rra/
 
-# compile new version of spine
+# bootstrap, compile, and install spine
 echo "$(date +%F_%R) [Upgrade] Compile + Installing new version of Spine."
 cd /tmp/update/spine/* && \
+       ./bootstrap && \
        ./configure --prefix=/spine && make && make install && \
        chown root:root /spine/bin/spine && \
        chmod +s /spine/bin/spine
