@@ -15,8 +15,8 @@ services:
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
     volumes:
-      - /docker/cacti:/cacti
-      - /docker/backups:/backups
+      - cacti-data:/cacti
+      - cacti-backups:/backups
     links:
       - db
   db:
@@ -40,3 +40,9 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
+    volumes:
+      - cacti-db/var/lib/mysql
+volumes:
+  cacti-db:
+  cacti-data:
+  cacti-backups:

@@ -110,6 +110,15 @@ if [ ! -f /cacti/install.lock ]; then
     echo "$(date +%F_%R) [New Install] Creating lock file, db setup complete."
 fi
 
+# copy configuration files in the event /cacti is being shared as a volume
+echo "$(date +%F_%R) [Apache] Validating httpd cacti configuration is present."
+if [ -f "/etc/httpd/conf.d/cacti.conf" ]; then
+    echo "$(date +%F_%R) [Apache] /etc/httpd/conf.d/cacti.conf exist, nothing to do."
+else 
+    echo "$(date +%F_%R) [Apache] /etc/httpd/conf.d/cacti.conf does not exist, copying a new one over."
+    cp /template_configs/cacti.conf /etc/httpd/conf.d/
+fi
+
 # correcting file permissions
 echo "$(date +%F_%R) [Note] Setting cacti file permissions."
 chown -R apache.apache /cacti/resource/
