@@ -14,6 +14,9 @@ services:
       - DB_ROOT_PASS=rootpassword
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
+    volumes:
+      - cacti-master-data:/cacti
+      - cacti-master-backups:/backups
     links:
       - db-master
 
@@ -37,6 +40,9 @@ services:
       - REMOTE_POLLER=1
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
+    volumes:
+      - cacti-poller-data:/cacti
+      - cacti-poller-backups:/backups
     links:
       - db-poller
 
@@ -61,6 +67,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
+    volumes:
+      - cacti-db-master:/var/lib/mysql
 
   db-poller:
     image: "percona:5.7.14"
@@ -81,3 +89,13 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
+    volumes:
+      - cacti-db-poller:/var/lib/mysql
+
+volumes:
+  cacti-db-master:
+  cacti-db-poller:
+  cacti-master-data:
+  cacti-master-backups:
+  cacti-poller-data:
+  cacti-poller-backups:

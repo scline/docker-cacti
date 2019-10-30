@@ -188,6 +188,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.2.6a - 10/30/2019
+ * Update start.sh to persist Apache Cacti configurations on restart. [#52] (https://github.com/scline/docker-cacti/issues/52)
+ * Update docker-compose examples to use different type of volumes so `docker-compose down` will not affect data without the `-v` flag.
+
 #### 1.2.6 - 09/06/2019
  * Update Cacti and Spine from 1.2.0 to 1.2.6
    * [changelog][cacti_changelog]
