@@ -41,7 +41,7 @@ services:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
     volumes:
-      - cacti-db/var/lib/mysql
+      - cacti-db:/var/lib/mysql
 volumes:
   cacti-db:
   cacti-data:
