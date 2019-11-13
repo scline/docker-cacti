@@ -7,14 +7,15 @@ COPY cacti /cacti_install
 ## --- CACTI ---
 RUN \
     rpm --rebuilddb && yum clean all && \
-    yum update -y && \
     yum install -y \
         rrdtool net-snmp net-snmp-utils cronie php-ldap php-devel mysql php \
         ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo \
         autoconf automake gcc gzip help2man libtool make net-snmp-devel \
         m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget \
-        sendmail mariadb-devel which php-curl fping && \
+        sendmail mariadb-devel which epel-release && \
+    yum upgrade -y && \
+    yum install -y fping && \
     yum clean all
 
 ## --- CRON ---
