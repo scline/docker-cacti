@@ -14,7 +14,7 @@ RUN \
         php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo \
         autoconf automake gcc gzip help2man libtool make net-snmp-devel \
         m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget \
-        sendmail mariadb-devel which && \
+        sendmail mariadb-devel which php-curl fping && \
     yum clean all
 
 ## --- CRON ---
@@ -36,6 +36,8 @@ COPY restore.sh /restore.sh
 RUN chmod +x /restore.sh
 COPY backup.sh /backup.sh
 RUN chmod +x /backup.sh
+COPY createdevices.sh /createdevices.sh
+RUN chmod +x createdevices.sh
 RUN mkdir /backups
 RUN mkdir /cacti
 RUN mkdir /spine
