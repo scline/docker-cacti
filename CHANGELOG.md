@@ -25,13 +25,6 @@
  * Update PHP variable readme to include `max_execution_time` and `memory_limit` changes for 1.2.0
  * Add and Hotfix the PHP variable `max_execution_time` for PHP_MAX_EXECUTION_TIME and `memory_limit` for PHP_MEMORY_LIMIT
 
-# Known Issues/Fixes
-* HTTPS is not setup to work, it may work just understand no testing has been done.
-
-# ToDo
-* Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
-* Documentation cleanup.
-
 #### 1.1.38 - 05/12/2018
  * Update Cacti and Spine from 1.1.37 to 1.1.38
    * [changelog 1.1.37 -> 1.1.38][CL1.1.38]
@@ -45,7 +38,6 @@
  * Close Issue [#36](https://github.com/scline/docker-cacti/issues/36) - Initialize DB fails if mysql running on non-standard port
  * Close Issue [#38](https://github.com/scline/docker-cacti/issues/38) - "httpd: Could not reliably determine the server's fully qualified domain name" httpd errors
  * Close Issue [#40](https://github.com/scline/docker-cacti/issues/40) - Remove documentation about automated backups since this is not implemented. 
-
 
 #### 1.1.34 - 02/8/2018
  * Update Cacti and Spine from 1.1.31 to 1.1.34
