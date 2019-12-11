@@ -188,6 +188,11 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.2.8 - 12/11/2019
+ * Update Cacti and Spine from 1.2.6 to 1.2.8
+   * [changelog 1.2.7 -> 1.2.8][CL1.2.8]
+   * [changelog 1.2.6 -> 1.2.7][CL1.2.7]
+
 #### 1.2.6a - 10/30/2019
  * Update start.sh to persist Apache Cacti configurations on restart. [#52] (https://github.com/scline/docker-cacti/issues/52)
  * Update docker-compose examples to use different type of volumes so `docker-compose down` will not affect data without the `-v` flag.
@@ -203,6 +208,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 #### 1.2.0 - 01/06/2019
  * Update Cacti and Spine from 1.1.38 to 1.2.0
     * [changelog][cacti_changelog]
+
  * Add sendmail to dockerfile via yum due to cacti 1.2.0 requirements
  * Created separate changlog file for future documentation cleanup
  * Update PHP variable readme to include `max_execution_time` and `memory_limit` changes for 1.2.0
@@ -215,6 +221,8 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.2.8]: http://www.cacti.net/release_notes.php?version=1.2.8
+[CL1.2.7]: http://www.cacti.net/release_notes.php?version=1.2.7
 [CL1.2.6]: http://www.cacti.net/release_notes.php?version=1.2.6
 [CL1.2.5]: http://www.cacti.net/release_notes.php?version=1.2.5
 [CL1.2.4]: http://www.cacti.net/release_notes.php?version=1.2.4
