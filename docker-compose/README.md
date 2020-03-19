@@ -71,7 +71,7 @@ services:
       - DB_NAME=cacti_master
       - DB_USER=cactiuser
       - DB_PASS=cactipassword
-      - DB_HOST=db-master
+      - DB_HOST=db
       - DB_PORT=3306
       - DB_ROOT_PASS=rootpassword
       - INITIALIZE_DB=1
