@@ -151,4 +151,5 @@ snmpd -Lf /var/log/snmpd.log &
 
 # start web service
 echo "$(date +%F_%R) [Note] Starting httpd service."
+rm -rf /run/httpd/httpd.pid
 httpd -DFOREGROUND
