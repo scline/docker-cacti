@@ -149,6 +149,12 @@ echo "$(date +%F_%R) [Note] Starting crond service."
 echo "$(date +%F_%R) [Note] Starting snmpd service."
 snmpd -Lf /var/log/snmpd.log &
 
+# start php-fpm
+echo "$(date +%F_%R) [Note] Starting php-fpm service."
+rm -rf /run/php-fpm &
+mkdir /run/php-fpm &
+php-fpm --allow-to-run-as-root --nodaemonize &
+
 # start web service
 echo "$(date +%F_%R) [Note] Starting httpd service."
 rm -rf /run/httpd/httpd.pid
