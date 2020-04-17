@@ -131,8 +131,8 @@ else
 fi
 
 # update apache document root value to /cacti
-echo "$(date +%F_%R) [Apache] Updating httpd.conf to use /cacti as default page"
-sed -i -e "s/DocumentRoot \"\/var\/www\/html\"/DocumentRoot \"\/cacti\"/g" /etc/httpd/conf/httpd.conf
+#echo "$(date +%F_%R) [Apache] Updating httpd.conf to use /cacti as default page"
+#sed -i -e "s/DocumentRoot \"\/var\/www\/html\"/DocumentRoot \"\/cacti\"/g" /etc/httpd/conf/httpd.conf
 
 # correcting file permissions
 echo "$(date +%F_%R) [Note] Setting cacti file permissions."
