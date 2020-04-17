@@ -1,7 +1,14 @@
-version: '2'
+version: '3.5'
 services:
+
+
   cacti-master:
     image: "smcline06/cacti"
+    container_name: cacti_master
+    domainname: example.com
+    hostname: cactimaster
+    depends_on:
+      - db-master
     ports:
       - "80:80"
       - "443:443"
@@ -21,8 +28,14 @@ services:
     links:
       - db-master
 
+
   cacti-poller:
     image: "smcline06/cacti"
+    container_name: cacti_poller
+    domainname: example.com
+    hostname: cactipoller
+    depends_on:
+      - db-poller
     ports:
       - "8080:80"
       - "8443:443"
@@ -48,8 +61,12 @@ services:
     links:
       - db-poller
 
+
   db-master:
     image: "percona:5.7.14"
+    container_name: cacti_master_db
+    domainname: example.com
+    hostname: db-master
     ports:
       - "3306:3306"
     command:
@@ -62,18 +79,27 @@ services:
       - --tmp_table_size=128M
       - --join_buffer_size=128M
       - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
+      - --innodb_doublewrite=ON
       - --innodb_flush_log_at_timeout=3
       - --innodb_read_io_threads=32
       - --innodb_write_io_threads=16
+      - --innodb_buffer_pool_instances=9
+      - --innodb_file_format=Barracuda
+      - --innodb_large_prefix=1
+      - --innodb_io_capacity=5000
+      - --innodb_io_capacity_max=10000
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
     volumes:
       - cacti-db-master:/var/lib/mysql
 
+ 
   db-poller:
     image: "mariadb:10.3"
+    container_name: cacti_poller+db
+    domainname: example.com
+    hostname: db-poller
     command:
       - mysqld
       - --character-set-server=utf8mb4
@@ -84,15 +110,21 @@ services:
       - --tmp_table_size=128M
       - --join_buffer_size=128M
       - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
+      - --innodb_doublewrite=ON
       - --innodb_flush_log_at_timeout=3
       - --innodb_read_io_threads=32
       - --innodb_write_io_threads=16
+      - --innodb_buffer_pool_instances=9
+      - --innodb_file_format=Barracuda
+      - --innodb_large_prefix=1
+      - --innodb_io_capacity=5000
+      - --innodb_io_capacity_max=10000
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
     volumes:
       - cacti-db-poller:/var/lib/mysql
+
 
 volumes:
   cacti-db-master:
