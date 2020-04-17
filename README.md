@@ -37,6 +37,14 @@ The following ports are important and used by Cacti
 It is recommended to allow at least one of the above ports for access to the monitoring system. This is translated by the -p hook. For example
 `docker run -p 80:80 -p 443:443`
 
+#### HTTPS 
+By default https will work if exposed, though using a self signed certificate. To provide your own certificate replace via mounting the following files:
+
+```
+/etc/ssl/certs/cacti.key
+/etc/ssl/certs/cacti.crt
+```
+
 ## Installation
 
 ### Cacti Master
@@ -56,7 +64,7 @@ The main cacti poller settings, these are required for single cacti and multi ca
 | REMOTE_POLLER | Can be `0` for false (default) or `1` for true. |
 | PHP_MEMORY_LIMIT | PHP memory limit adjust, by defaults its 128M |
 | PHP_MAX_EXECUTION_TIME |  PHP max execution time adjust, by defaults its 30 second |
-| PHP_SNMP | If set to `1`, will install PHP-SNMP for Cacti to use. By default this is `0` for disabled. Required for propper SNMPv3 functionality |
+| PHP_SNMP | If set to `0`, will remove PHP-SNMP, this is sometimes required for some scripts or snmpv3 to work properly. by defualt this php-snmp is enabled |
 
 ### Remote Cacti Pollers
 Remote cacti poller containers require the following, the major differance here is the inclusion of RDB (remote database) variables which should be pointed at the master cacti installation settings. 
@@ -194,6 +202,21 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.2.11 - 04/17/2020
+ * Update Docker container to use Centos8 over Centos7
+ * Close issue [#59](https://github.com/scline/docker-cacti/issues/59) - errors with percona on compose single instance; Thank you [miguelwill](https://github.com/miguelwill)
+   * Update docker-comose examples with Mariadb:10.3 from older Percona version
+ * Close issue [#61](https://github.com/scline/docker-cacti/issues/61) - spine directory and crontab empty after docker-compose down and restoring; Thank you [kevburkett](https://github.com/kevburkett)
+   * Update docker-compose with `spine` volume
+ * Enable HTTPS functionality and self-sign certs when needed
+ * Allow functionality to disable PHP-SNMP usagage via `PHP_SNMP` environment variable
+ se 
+ * Manual patch on provisioning new remote pollers - https://github.com/Cacti/cacti/issues/3459
+ * Update Cacti and Spine from 1.2.8 to 1.2.11
+   * [changelog 1.2.10 -> 1.2.11][CL1.2.11]
+   * [changelog 1.2.9 -> 1.2.10][CL1.2.10]
+   * [changelog 1.2.8 -> 1.2.9][CL1.2.9]
+
 #### 1.2.8 - 12/11/2019
  * Update Cacti and Spine from 1.2.6 to 1.2.8
    * [changelog 1.2.7 -> 1.2.8][CL1.2.8]
@@ -224,6 +247,9 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.2.11]: http://www.cacti.net/release_notes.php?version=1.2.11
+[CL1.2.10]: http://www.cacti.net/release_notes.php?version=1.2.10
+[CL1.2.9]: http://www.cacti.net/release_notes.php?version=1.2.9
 [CL1.2.8]: http://www.cacti.net/release_notes.php?version=1.2.8
 [CL1.2.7]: http://www.cacti.net/release_notes.php?version=1.2.7
 [CL1.2.6]: http://www.cacti.net/release_notes.php?version=1.2.6

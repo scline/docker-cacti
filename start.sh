@@ -130,9 +130,16 @@ else
     cp /template_configs/cacti.conf /etc/httpd/conf.d/
 fi
 
-# update apache document root value to /cacti
-#echo "$(date +%F_%R) [Apache] Updating httpd.conf to use /cacti as default page"
-#sed -i -e "s/DocumentRoot \"\/var\/www\/html\"/DocumentRoot \"\/cacti\"/g" /etc/httpd/conf/httpd.conf
+# only generate certs if none exsist, this way users can provide there own
+if [ ! -f /etc/ssl/certs/cacti.key  ] || [ ! -f /etc/ssl/certs/cacti.crt  ]; then
+    # generate self-signed certs for basic https functionality. 
+    echo "$(date +%F_%R) [Apache] Missing HTTPS certs, generating self-signed one's."
+    openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+        -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" \
+        -keyout /etc/ssl/certs/cacti.key  -out /etc/ssl/certs/cacti.crt
+    else
+    echo "$(date +%F_%R) [Apache] /etc/ssl/certs/cacti.key and /etc/ssl/certs/cacti.crt exist, nothing to do."
+fi
 
 # correcting file permissions
 echo "$(date +%F_%R) [Note] Setting cacti file permissions."
