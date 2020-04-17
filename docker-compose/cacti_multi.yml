@@ -71,7 +71,7 @@ services:
       - cacti-db-master:/var/lib/mysql
 
   db-poller:
-    image: "percona:5.7.14"
+    image: "mariadb:10.3"
     command:
       - mysqld
       - --character-set-server=utf8mb4
