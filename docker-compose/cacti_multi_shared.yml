@@ -16,6 +16,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - cacti-master-data:/cacti
+      - cacti-master-spine:/spine
       - cacti-master-backups:/backups
     links:
       - db
@@ -42,6 +43,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - cacti-poller-data:/cacti
+      - cacti-poller-spine:/spine
       - cacti-poller-backups:/backups
     links:
       - db
@@ -73,6 +75,8 @@ services:
 volumes:
   cacti-db:
   cacti-master-data:
+  cacti-master-spine:
   cacti-master-backups:
   cacti-poller-data:
+  cacti-poller-spine:
   cacti-poller-backups:

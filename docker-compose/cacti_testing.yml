@@ -18,6 +18,7 @@ services:
       - TZ=America/Los_Angeles
     volumes:
       - cacti-data:/cacti
+      - cacti-spine:/spine
       - cacti-backups:/backups
     links:
       - db
@@ -47,4 +48,5 @@ services:
 volumes:
   cacti-db:
   cacti-data:
+  cacti-spine:
   cacti-backups:
