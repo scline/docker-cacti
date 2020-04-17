@@ -88,11 +88,14 @@ if [ ! -f /cacti/install.lock ]; then
         echo "$(date +%F_%R) [New Install] Installing plugins."
         cp -r /cacti_install/plugins/* /cacti/plugins
 
-            # install additional templates
+        # install additional templates
         for filename in /templates/*.xml; do
             echo "$(date +%F_%R) [New Install] Installing template file $filename"
             php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
         done
+
+        # fix remote poller install check from https://github.com/Cacti/cacti/issues/3459
+        sed -i -e "s/print json_encode/return json_encode/g" /cacti/install/functions.php
     fi
 
     # install additional settings
