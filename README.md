@@ -214,9 +214,6 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
  * Update PHP variable readme to include `max_execution_time` and `memory_limit` changes for 1.2.0
  * Add and Hotfix the PHP variable `max_execution_time` for PHP_MAX_EXECUTION_TIME and `memory_limit` for PHP_MEMORY_LIMIT
 
-# Known Issues/Fixes
-* HTTPS is not setup to work, it may work just understand no testing has been done.
-
 # ToDo
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.

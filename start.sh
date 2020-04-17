@@ -75,30 +75,30 @@ if [ ! -f /cacti/install.lock ]; then
         mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
     fi
 
-    # CRON 
-    cp /template_configs/crontab /etc/crontab
-
     # fresh install db merge
     echo "$(date +%F_%R) [New Install] Merging vanilla cacti.sql file to database."
     mysql -h ${DB_HOST} --port=${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < /cacti/cacti.sql
 
-    echo "$(date +%F_%R) [New Install] Installing supporting template files."
-    cp -r /templates/resource/* /cacti/resource 
-    cp -r /templates/scripts/* /cacti/scripts
+    # if this is a remote poller dont do anything with scripts/templates or plugins. This is sourced from the master instance
+    if [ ${REMOTE_POLLER} != 1 ]; then
+        echo "$(date +%F_%R) [New Install] Installing supporting template files."
+        cp -r /templates/resource/* /cacti/resource 
+        cp -r /templates/scripts/* /cacti/scripts
 
-    echo "$(date +%F_%R) [New Install] Installing plugins."
-    cp -r /cacti_install/plugins/* /cacti/plugins
+        echo "$(date +%F_%R) [New Install] Installing plugins."
+        cp -r /cacti_install/plugins/* /cacti/plugins
+
+            # install additional templates
+        for filename in /templates/*.xml; do
+            echo "$(date +%F_%R) [New Install] Installing template file $filename"
+            php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
+        done
+    fi
 
     # install additional settings
     for filename in /settings/*.sql; do
         echo "$(date +%F_%R) [New Install] Importing settings file $filename"
         mysql -h ${DB_HOST} --port=${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
-    done
-
-    # install additional templates
-    for filename in /templates/*.xml; do
-        echo "$(date +%F_%R) [New Install] Installing template file $filename"
-        php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
     done
 
     # CLEANUP
@@ -151,8 +151,8 @@ snmpd -Lf /var/log/snmpd.log &
 
 # start php-fpm
 echo "$(date +%F_%R) [Note] Starting php-fpm service."
-rm -rf /run/php-fpm &
-mkdir /run/php-fpm &
+rm -rf /run/php-fpm
+mkdir /run/php-fpm
 php-fpm --allow-to-run-as-root --nodaemonize &
 
 # start web service

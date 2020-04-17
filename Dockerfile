@@ -30,12 +30,9 @@ RUN \
         openssl-devel mariadb-devel sendmail curl wget help2man && \
     yum clean all
 
-## --- CRON ---
-# Fix cron issues - https://github.com/CentOS/CentOS-Dockerfiles/issues/31
-#RUN sed -i '/session required pam_loginuid.so/d' /etc/pam.d/crond
-
 ## --- SERVICE CONFIGS ---
 COPY configs /template_configs
+COPY configs/crontab /etc/crontab
 
 ## --- SETTINGS/EXTRAS ---
 COPY plugins /cacti_install/plugins
@@ -73,10 +70,8 @@ ENV \
     RDB_PORT=3306 \
     BACKUP_RETENTION=7 \
     BACKUP_TIME=0 \
-    SNMP_COMMUNITY=public \
     REMOTE_POLLER=0 \
     INITIALIZE_DB=0 \
-    INITIALIZE_INFLUX=0 \
     TZ=UTC \
     PHP_MEMORY_LIMIT=800M \
     PHP_MAX_EXECUTION_TIME=60
