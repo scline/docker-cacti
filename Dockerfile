@@ -17,7 +17,7 @@ RUN \
     yum install -y \
         php php-xml php-session php-sockets php-ldap php-gd \
         php-json php-mysqlnd php-gmp php-mbstring php-posix \
-        php-snmp php-intl php-common php-cli php-devel php-pear \
+        php-intl php-common php-cli php-devel php-pear \
         php-pdo && \
     yum clean all
 
@@ -74,7 +74,8 @@ ENV \
     INITIALIZE_DB=0 \
     TZ=UTC \
     PHP_MEMORY_LIMIT=800M \
-    PHP_MAX_EXECUTION_TIME=60
+    PHP_MAX_EXECUTION_TIME=60 \
+    PHP_SNMP=0
 
 ## --- Start ---
 COPY start.sh /start.sh

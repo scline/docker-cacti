@@ -11,7 +11,7 @@ This is likely the most common example to deploy a cacti instance. This is not u
 
 *docker-compose.yml*
 ```
-version: '2'
+version: '3.5'
 services:
 
 

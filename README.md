@@ -56,6 +56,7 @@ The main cacti poller settings, these are required for single cacti and multi ca
 | REMOTE_POLLER | Can be `0` for false (default) or `1` for true. |
 | PHP_MEMORY_LIMIT | PHP memory limit adjust, by defaults its 128M |
 | PHP_MAX_EXECUTION_TIME |  PHP max execution time adjust, by defaults its 30 second |
+| PHP_SNMP | If set to `1`, will install PHP-SNMP for Cacti to use. By default this is `0` for disabled. Required for propper SNMPv3 functionality |
 
 ### Remote Cacti Pollers
 Remote cacti poller containers require the following, the major differance here is the inclusion of RDB (remote database) variables which should be pointed at the master cacti installation settings. 

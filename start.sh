@@ -11,6 +11,17 @@ sed -i "s/^\(max_execution_time =\).*/\1 ${PHP_MAX_EXECUTION_TIME}/" /etc/php.in
 rm /etc/localtime
 ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
 
+# remove php-snmp if asked, required for snmpv3 to function correctly. Disabled by default
+if [ ${PHP_SNMP} = 0 ]; then
+    echo "$(date +%F_%R) [PHP-SNMP] Removing php-snmp since ENV variable 'PHP_SNMP' is set to 0"
+    yum remove -y --noautoremove php-snmp
+    yum clean all
+    else
+    echo "$(date +%F_%R) [PHP-SNMP] Insalling php-snmp since ENV variable 'PHP_SNMP' is set to 1"
+    yum install -y php-snmp
+    yum clean all
+fi
+
 # verify if initial install steps are required, if lock file does not exist run the following   
 if [ ! -f /cacti/install.lock ]; then
     echo "$(date +%F_%R) [New Install] Lock file does not exist - new install."
@@ -93,9 +104,6 @@ if [ ! -f /cacti/install.lock ]; then
             echo "$(date +%F_%R) [New Install] Installing template file $filename"
             php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
         done
-
-        # fix remote poller install check from https://github.com/Cacti/cacti/issues/3459
-        sed -i -e "s/print json_encode/return json_encode/g" /cacti/install/functions.php
     fi
 
     # install additional settings
@@ -122,6 +130,10 @@ else
     cp /template_configs/cacti.conf /etc/httpd/conf.d/
 fi
 
+# update apache document root value to /cacti
+echo "$(date +%F_%R) [Apache] Updating httpd.conf to use /cacti as default page"
+sed -i -e "s/DocumentRoot \"\/var\/www\/html\"/DocumentRoot \"\/cacti\"/g" /etc/httpd/conf/httpd.conf
+
 # correcting file permissions
 echo "$(date +%F_%R) [Note] Setting cacti file permissions."
 chown -R apache.apache /cacti/resource/
@@ -133,10 +145,13 @@ chown -R apache.apache /cacti/rra/
 # remote poller tasks
 if [ ${REMOTE_POLLER} = 1 ]; then
     echo "$(date +%F_%R) [Remote Poller] This is slated to be a remote poller, updating cacti configs for these settings."
-    sed -i -e "s/#$rdatabase/$rdatabase/" \
-                /cacti/include/config.php
+    sed -i -e "s/#\$rdatabase/\$rdatabase/" /cacti/include/config.php
     echo "$(date +%F_%R) [Remote Poller] Updating permissions in cacti directory for remote poller template."
     chown -R apache.apache /cacti
+
+    # fix remote poller install check from https://github.com/Cacti/cacti/issues/3459
+    echo "$(date +%F_%R) [Remote Poller] Manual hack to fix https://github.com/Cacti/cacti/issues/3459"
+    sed -i -e "s/print json_encode/return json_encode/g" /cacti/install/functions.php
 fi
 
 # backup cron tasks
