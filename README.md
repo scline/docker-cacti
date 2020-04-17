@@ -108,9 +108,9 @@ The folks at Cacti.net recommend the following settings for its MySQL based data
 | innodb_flush_log_at_timeout | >= 3 |  	As of MariaDB 10.3.22-1:10.3.22+maria~bionic, the you can control how often MariaDB flushes transactions to disk. The default is 1 second, but in high I/O systems setting to a value greater than 1 can allow disk I/O to be more sequential |
 | innodb_read_io_threads | >= 32 | With modern SSD type storage, having multiple read io threads is advantageous for applications with high io characteristics. |
 | innodb_write_io_threads | >= 16 | With modern SSD type storage, having multiple write io threads is advantageous for applications with high io characteristics. |
-|innodb_buffer_pool_instances| >=	9 | 	MariaDB will divide the innodb_buffer_pool into memory regions to improve performance. The max value is 64. When your innodb_buffer_pool is less than 1GB, you should use the pool size divided by 128MB. Continue to use this equation upto the max of 64.|
-| innodb_io_capacity	| 5000 | If you have SSD disks, use this suggestion. If you have physical hard drives, use 200 * the number of active drives in the array. If using NVMe or PCIe Flash, much larger numbers as high as 100000 can be used.
-| innodb_io_capacity_max | 10000 | 	If you have SSD disks, use this suggestion. If you have physical hard drives, use 2000 * the number of active drives in the array. If using NVMe or PCIe Flash, much larger numbers as high as 200000 can be used. |
+|innodb_buffer_pool_instances| >=	9 | MariaDB will divide the innodb_buffer_pool into memory regions to improve performance. The max value is 64. When your innodb_buffer_pool is less than 1GB, you should use the pool size divided by 128MB. Continue to use this equation upto the max of 64.|
+| innodb_io_capacity	| 5000 | If you have SSD disks, use this suggestion. If you have physical hard drives, use 200 * the number of active drives in the array. If using NVMe or PCIe Flash, much larger numbers as high as 100000 can be used. |
+| innodb_io_capacity_max | 10000 | If you have SSD disks, use this suggestion. If you have physical hard drives, use 2000 * the number of active drives in the array. If using NVMe or PCIe Flash, much larger numbers as high as 200000 can be used. |
 
 
 | memory_limit | >= 800M | A minimum of 800 MB memory limit |
