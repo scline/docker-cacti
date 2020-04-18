@@ -1,11 +1,7 @@
 ﻿# Cacti v1+ Docker Container
-[![](https://images.microbadger.com/badges/image/smcline06/cacti.svg)](https://microbadger.com/images/smcline06/cacti "Get your own image badge on microbadger.com")
 
-##### Github Repo: https://github.com/scline/docker-cacti
-[![GitHub Open Issues](https://img.shields.io/github/issues/scline/docker-cacti.svg)](https://github.com/scline/docker-cacti/issues)[![GitHub Stars](https://img.shields.io/github/stars/scline/docker-cacti.svg)](https://github.com/scline/docker-cacti)[![GitHub Forks](https://img.shields.io/github/forks/scline/docker-cacti.svg)](https://github.com/scline/docker-cacti) 
-
-##### Dockerhub Repo: https://hub.docker.com/r/smcline06/cacti/
-[![Stars on Docker Hub](https://img.shields.io/docker/stars/smcline06/cacti.svg)](https://hub.docker.com/r/smcline06/cacti)[![Pulls on Docker Hub](https://img.shields.io/docker/pulls/smcline06/cacti.svg)](https://hub.docker.com/r/smcline06/cacti)  
+#### Dockerhub [![](https://images.microbadger.com/badges/image/smcline06/cacti.svg)](https://microbadger.com/images/smcline06/cacti "Get your own image badge on microbadger.com")[![Stars on Docker Hub](https://img.shields.io/docker/stars/smcline06/cacti.svg)](https://hub.docker.com/r/smcline06/cacti)[![Pulls on Docker Hub](https://img.shields.io/docker/pulls/smcline06/cacti.svg)](https://hub.docker.com/r/smcline06/cacti)  
+#### Github [![GitHub Open Issues](https://img.shields.io/github/issues/scline/docker-cacti.svg)](https://github.com/scline/docker-cacti/issues)[![GitHub Stars](https://img.shields.io/github/stars/scline/docker-cacti.svg)](https://github.com/scline/docker-cacti)[![GitHub Forks](https://img.shields.io/github/forks/scline/docker-cacti.svg)](https://github.com/scline/docker-cacti) 
 
 ## Cacti System
 Cacti is a complete network graphing solution designed to harness the power of RRDTool's data storage and graphing functionality. Cacti provides following features:
