@@ -178,8 +178,7 @@ snmpd -Lf /var/log/snmpd.log &
 echo "$(date +%F_%R) [Note] Starting php-fpm service."
 # make sure socket and pid files are all cleaned before starting
 mkdir /run/php-fpm
-rm -rf /run/php-fpm/php-fpm.pid
-rm -rf /tmp/www.sock
+rm -rf /run/php-fpm/*
 # change settings in php-fpm file due to https://github.com/scline/docker-cacti/issues/64
 sed -i -e "s/;listen.owner = nobody/listen.owner = apache/g" \
        -e "s/;listen.group = nobody/listen.group = apache/g" \
