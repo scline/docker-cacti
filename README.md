@@ -199,6 +199,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.2.11a - 04/18/2020
+ * Close issue [#64](https://github.com/scline/docker-cacti/issues/64) - FPM initialization failed; Thanks to [kevburkett](https://github.com/kevburkett) for bringing this one up and helping validate the fix
+ * Close issue [#65](https://github.com/scline/docker-cacti/issues/65) - PHP-SNMP yum commands cause rpmdb error
+
 #### 1.2.11 - 04/17/2020
  * Update Docker container to use Centos8 over Centos7
  * Close issue [#59](https://github.com/scline/docker-cacti/issues/59) - errors with percona on compose single instance; Thank you [miguelwill](https://github.com/miguelwill)
