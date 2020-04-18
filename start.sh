@@ -176,9 +176,17 @@ snmpd -Lf /var/log/snmpd.log &
 
 # start php-fpm
 echo "$(date +%F_%R) [Note] Starting php-fpm service."
-rm -rf /run/php-fpm
+# make sure socket and pid files are all cleaned before starting
 mkdir /run/php-fpm
-php-fpm --allow-to-run-as-root --nodaemonize &
+rm -rf /run/php-fpm/php-fpm.pid
+rm -rf /tmp/www.sock
+# change settings in php-fpm file due to https://github.com/scline/docker-cacti/issues/64
+sed -i -e "s/;listen.owner = nobody/listen.owner = apache/g" \
+       -e "s/;listen.group = nobody/listen.group = apache/g" \
+       -e "s/listen.acl_users = apache,nginx/;listen.acl_users = apache,nginx/g" \
+       -e "s/listen = \/run\/php-fpm\/www.sock/listen = \/tmp\/www.sock/g" \
+    /etc/php-fpm.d/www.conf
+php-fpm
 
 # start web service
 echo "$(date +%F_%R) [Note] Starting httpd service."
