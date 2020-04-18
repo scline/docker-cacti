@@ -184,7 +184,6 @@ rm -rf /tmp/www.sock
 sed -i -e "s/;listen.owner = nobody/listen.owner = apache/g" \
        -e "s/;listen.group = nobody/listen.group = apache/g" \
        -e "s/listen.acl_users = apache,nginx/;listen.acl_users = apache,nginx/g" \
-       -e "s/listen = \/run\/php-fpm\/www.sock/listen = \/tmp\/www.sock/g" \
     /etc/php-fpm.d/www.conf
 php-fpm
 
