@@ -1,2 +1,3 @@
 # Mac Files
 .DS_Store
+docker-compose.*

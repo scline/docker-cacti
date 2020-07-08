@@ -11,10 +11,15 @@ This is likely the most common example to deploy a cacti instance. This is not u
 
 *docker-compose.yml*
 ```
-version: '2'
+version: '3.5'
 services:
+
+
   cacti:
     image: "smcline06/cacti"
+    container_name: cacti
+    domainname: example.com
+    hostname: cacti
     ports:
       - "80:80"
       - "443:443"
@@ -27,11 +32,19 @@ services:
       - DB_ROOT_PASS=rootpassword
       - INITIALIZE_DB=1
       - TZ=America/Los_Angeles
+    volumes:
+      - cacti-data:/cacti
+      - cacti-spine:/spine
+      - cacti-backups:/backups
     links:
       - db
 
+
   db:
-    image: "percona:5.7.14"
+    image: "mariadb:10.3"
+    container_name: cacti_db
+    domainname: example.com
+    hostname: db
     ports:
       - "3306:3306"
     command:
@@ -44,13 +57,27 @@ services:
       - --tmp_table_size=128M
       - --join_buffer_size=128M
       - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
+      - --innodb_doublewrite=ON
       - --innodb_flush_log_at_timeout=3
       - --innodb_read_io_threads=32
       - --innodb_write_io_threads=16
+      - --innodb_buffer_pool_instances=9
+      - --innodb_file_format=Barracuda
+      - --innodb_large_prefix=1
+      - --innodb_io_capacity=5000
+      - --innodb_io_capacity_max=10000
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
       - TZ=America/Los_Angeles
+    volumes:
+      - cacti-db:/var/lib/mysql
+
+
+volumes:
+  cacti-db:
+  cacti-data:
+  cacti-spine:
+  cacti-backups:
 ```
 
 ### Single DB, Multi Node - cacti_multi_shared.yml
@@ -60,10 +87,17 @@ This instance would most likely be used if multiple servers are in close (same n
 
 *docker-compose.yml (Server 01)*
 ```
-version: '2'
+version: '3.5'
 services:
+
+
   cacti-master:
     image: "smcline06/cacti"
+    container_name: cacti_master
+    domainname: example.com
+    hostname: cactimaster
+    depends_on:
+      - db
     ports:
       - "80:80"
       - "443:443"
@@ -71,16 +105,24 @@ services:
       - DB_NAME=cacti_master
       - DB_USER=cactiuser
       - DB_PASS=cactipassword
-      - DB_HOST=db-master
+      - DB_HOST=db
       - DB_PORT=3306
       - DB_ROOT_PASS=rootpassword
       - INITIALIZE_DB=1
-      - TZ=UTC
+      - TZ=America/Los_Angeles
+    volumes:
+      - cacti-master-data:/cacti
+      - cacti-master-spine:/spine
+      - cacti-master-backups:/backups
     links:
       - db
 
+
   db:
-    image: "percona:5.7.14"
+    image: "mariadb:10.3"
+    container_name: cacti_db
+    domainname: example.com
+    hostname: db
     ports:
       - "3306:3306"
     command:
@@ -93,38 +135,68 @@ services:
       - --tmp_table_size=128M
       - --join_buffer_size=128M
       - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
+      - --innodb_doublewrite=ON
       - --innodb_flush_log_at_timeout=3
       - --innodb_read_io_threads=32
       - --innodb_write_io_threads=16
+      - --innodb_buffer_pool_instances=9
+      - --innodb_file_format=Barracuda
+      - --innodb_large_prefix=1
+      - --innodb_io_capacity=5000
+      - --innodb_io_capacity_max=10000
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
-      - TZ=UTC
+      - TZ=America/Los_Angeles
+    volumes:
+      - cacti-db:/var/lib/mysql
 
+
+volumes:
+  cacti-db:
+  cacti-master-data:
+  cacti-master-spine:
+  cacti-master-backups:
 ```
 
 *docker-compose.yml (Server 02)*
 ```
+version: '3.5'
+services:
+
+
   cacti-poller:
     image: "smcline06/cacti"
+    container_name: cacti_poller
+    domainname: example.com
+    hostname: cactipoller
     ports:
       - "8080:80"
       - "8443:443"
     environment:
       - DB_NAME=cacti_poller
-      - DB_USER=cactiuser
-      - DB_PASS=cactipassword
-      - DB_HOST=10.1.2.3
+      - DB_USER=cactipolleruser
+      - DB_PASS=cactipollerpassword
+      - DB_HOST=<IP/HOSTNAME>
       - DB_PORT=3306
       - RDB_NAME=cacti_master
       - RDB_USER=cactiuser
       - RDB_PASS=cactipassword
-      - RDB_HOST=10.1.2.3
+      - RDB_HOST=db
       - RDB_PORT=3306
       - DB_ROOT_PASS=rootpassword
       - REMOTE_POLLER=1
       - INITIALIZE_DB=1
-      - TZ=UTC
+      - TZ=America/Los_Angeles
+    volumes:
+      - cacti-poller-data:/cacti
+      - cacti-poller-spine:/spine
+      - cacti-poller-backups:/backups
+
+
+volumes:
+  cacti-poller-data:
+  cacti-poller-spine:
+  cacti-poller-backups:
 ```
 
 ### Multi DB, Multi Node - cacti_multi.yml
@@ -134,10 +206,17 @@ Likely used for large deployments or where multiple locations/datacenters are at
 
 *docker-compose.yml (Server 01)*
 ```
-version: '2'
+version: '3.5'
 services:
+
+
   cacti-master:
     image: "smcline06/cacti"
+    container_name: cacti_master
+    domainname: example.com
+    hostname: cactimaster
+    depends_on:
+      - db-master
     ports:
       - "80:80"
       - "443:443"
@@ -149,12 +228,20 @@ services:
       - DB_PORT=3306
       - DB_ROOT_PASS=rootpassword
       - INITIALIZE_DB=1
-      - TZ=UTC
+      - TZ=America/Los_Angeles
+    volumes:
+      - cacti-master-data:/cacti
+      - cacti-master-spine:/spine
+      - cacti-master-backups:/backups
     links:
       - db-master
 
+
   db-master:
     image: "percona:5.7.14"
+    container_name: cacti_master_db
+    domainname: example.com
+    hostname: db-master
     ports:
       - "3306:3306"
     command:
@@ -167,19 +254,43 @@ services:
       - --tmp_table_size=128M
       - --join_buffer_size=128M
       - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
+      - --innodb_doublewrite=ON
       - --innodb_flush_log_at_timeout=3
       - --innodb_read_io_threads=32
       - --innodb_write_io_threads=16
+      - --innodb_buffer_pool_instances=9
+      - --innodb_file_format=Barracuda
+      - --innodb_large_prefix=1
+      - --innodb_io_capacity=5000
+      - --innodb_io_capacity_max=10000
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
-      - TZ=UTC
+      - TZ=America/Los_Angeles
+    volumes:
+      - cacti-db-master:/var/lib/mysql
+
+
+volumes:
+  cacti-db-master:
+  cacti-master-data:
+  cacti-master-spine:
+  cacti-master-backups:
+
 ```
 
 *docker-compose.yml (Server 02)*
 ```
+version: '3.5'
+services:
+
+
   cacti-poller:
     image: "smcline06/cacti"
+    container_name: cacti_poller
+    domainname: example.com
+    hostname: cactipoller
+    depends_on:
+      - db-poller
     ports:
       - "8080:80"
       - "8443:443"
@@ -192,17 +303,25 @@ services:
       - RDB_NAME=cacti_master
       - RDB_USER=cactiuser
       - RDB_PASS=cactipassword
-      - RDB_HOST=10.1.2.3
+      - RDB_HOST=<IP/HOSTNAME>
       - RDB_PORT=3306
       - DB_ROOT_PASS=rootpassword
       - REMOTE_POLLER=1
       - INITIALIZE_DB=1
-      - TZ=UTC
+      - TZ=America/Los_Angeles
+    volumes:
+      - cacti-poller-data:/cacti
+      - cacti-poller-spine:/spine
+      - cacti-poller-backups:/backups
     links:
       - db-poller
 
+ 
   db-poller:
-    image: "percona:5.7.14"
+    image: "mariadb:10.3"
+    container_name: cacti_poller+db
+    domainname: example.com
+    hostname: db-poller
     command:
       - mysqld
       - --character-set-server=utf8mb4
@@ -213,11 +332,26 @@ services:
       - --tmp_table_size=128M
       - --join_buffer_size=128M
       - --innodb_buffer_pool_size=1G
-      - --innodb_doublewrite=OFF
+      - --innodb_doublewrite=ON
       - --innodb_flush_log_at_timeout=3
       - --innodb_read_io_threads=32
       - --innodb_write_io_threads=16
+      - --innodb_buffer_pool_instances=9
+      - --innodb_file_format=Barracuda
+      - --innodb_large_prefix=1
+      - --innodb_io_capacity=5000
+      - --innodb_io_capacity_max=10000
     environment:
       - MYSQL_ROOT_PASSWORD=rootpassword
-      - TZ=UTC
+      - TZ=America/Los_Angeles
+    volumes:
+      - cacti-db-poller:/var/lib/mysql
+
+
+volumes:
+  cacti-db-poller:
+  cacti-poller-data:
+  cacti-poller-spine:
+  cacti-poller-backups:
+
 ```
