@@ -6,19 +6,7 @@ COPY cacti /cacti_install
 
 ## --- UPDATE OS, INSTALL EPEL ---
 RUN \
-<<<<<<< HEAD
-    rpm --rebuilddb && yum clean all && \
-    yum install -y \
-        rrdtool net-snmp net-snmp-utils cronie php-ldap php-devel mysql php \
-        ntp bison php-cli php-mysql php-common php-mbstring php-snmp curl \
-        php-gd openssl openldap mod_ssl php-pear net-snmp-libs php-pdo \
-        autoconf automake gcc gzip help2man libtool make net-snmp-devel \
-        m4 libmysqlclient-devel libmysqlclient openssl-devel dos2unix wget \
-        sendmail mariadb-devel which epel-release && \
     yum upgrade -y && \
-    yum install -y fping && \
-=======
-    yum update -y && \
     yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
     yum install -y dnf-plugins-core && \
     yum config-manager --set-enabled PowerTools && \
@@ -31,7 +19,6 @@ RUN \
         php-json php-mysqlnd php-gmp php-mbstring php-posix \
         php-snmp php-intl php-common php-cli php-devel php-pear \
         php-pdo && \
->>>>>>> e347c2052517fcba388b580bce1ba5820ef38feb
     yum clean all
 
 ## --- CACTI/SPINE Requirements ---
@@ -40,7 +27,7 @@ RUN \
         rrdtool net-snmp net-snmp-utils cronie mariadb autoconf \
         bison openssl openldap mod_ssl net-snmp-libs automake \
         gcc gzip libtool make net-snmp-devel dos2unix m4 which \
-        openssl-devel mariadb-devel sendmail curl wget help2man && \
+        openssl-devel mariadb-devel sendmail curl wget help2man fping && \
     yum clean all
 
 ## --- SERVICE CONFIGS ---
@@ -56,14 +43,6 @@ COPY settings /settings
 COPY upgrade.sh /upgrade.sh
 COPY restore.sh /restore.sh
 COPY backup.sh /backup.sh
-<<<<<<< HEAD
-RUN chmod +x /backup.sh
-COPY createdevices.sh /createdevices.sh
-RUN chmod +x createdevices.sh
-RUN mkdir /backups
-RUN mkdir /cacti
-RUN mkdir /spine
-=======
 
 RUN  \
     chmod +x /upgrade.sh && \
@@ -72,7 +51,6 @@ RUN  \
     mkdir /backups && \
     mkdir /cacti && \
     mkdir /spine
->>>>>>> e347c2052517fcba388b580bce1ba5820ef38feb
 
 ## -- MISC SETUP --
 RUN echo "ServerName localhost" > /etc/httpd/conf.d/fqdn.conf
