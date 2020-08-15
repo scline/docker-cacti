@@ -64,6 +64,10 @@ if [ ! -f /cacti/install.lock ]; then
         /settings/*.sql \
         /spine/etc/spine.conf
 
+    # update cacti url path config, requested via https://github.com/scline/docker-cacti/issues/73
+    echo "$(date +%F_%R) [New Install] Applying cacti URL enviromental variable to config.php"
+    sed -i -e "s/^\$url_path =.*/\$url_path = \/${CACTI_URL_PATH}\//" /cacti/include/config.php
+
     # wait for database to initialize - http://stackoverflow.com/questions/4922943/test-from-shell-script-if-remote-tcp-port-is-open
     echo "$(date +%F_%R) [New Install] Waiting for database to respond, if this hangs please check MySQL connections are allowed and functional."
     while ! timeout 1 bash -c 'cat < /dev/null > /dev/tcp/${DB_HOST}/${DB_PORT}'; do sleep 3; done
