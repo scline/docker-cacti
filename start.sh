@@ -47,6 +47,12 @@ if [ ! -f /cacti/install.lock ]; then
     cp /template_configs/cacti.conf /etc/httpd/conf.d
     cp /template_configs/config.php /cacti/include
 
+    # update cacti url path config, requested via https://github.com/scline/docker-cacti/issues/73
+    echo "$(date +%F_%R) [New Install] Applying cacti URL enviromental variable to /etc/httpd/conf.d/cacti.conf"
+    sed -i -e "s/Alias.*/   Alias    \/${CACTI_URL_PATH} \/cacti/" \
+           -e "s/RedirectMatch.*/   RedirectMatch    \^\/\$ \/${CACTI_URL_PATH}/" \
+        /etc/httpd/conf.d/cacti.conf
+
     # setup database credential settings
     echo "$(date +%F_%R) [New Install] Applying enviromental variables to configurations."
     sed -i -e "s/%DB_HOST%/${DB_HOST}/" \
@@ -60,6 +66,7 @@ if [ ! -f /cacti/install.lock ]; then
            -e "s/%RDB_NAME%/${RDB_NAME}/" \
            -e "s/%RDB_USER%/${RDB_USER}/" \
            -e "s/%RDB_PASS%/${RDB_PASS}/" \
+           -e "s/%CACTI_URL_PATH%/${CACTI_URL_PATH}/" \
         /cacti/include/config.php \
         /settings/*.sql \
         /spine/etc/spine.conf
@@ -128,6 +135,11 @@ if [ -f "/etc/httpd/conf.d/cacti.conf" ]; then
 else 
     echo "$(date +%F_%R) [Apache] /etc/httpd/conf.d/cacti.conf does not exist, copying a new one over."
     cp /template_configs/cacti.conf /etc/httpd/conf.d/
+    # update cacti url path config, requested via https://github.com/scline/docker-cacti/issues/73
+    echo "$(date +%F_%R) [Apache] Applying cacti URL enviromental variable to /etc/httpd/conf.d/cacti.conf"
+    sed -i -e "s/Alias.*/   Alias    \/${CACTI_URL_PATH} \/cacti/" \
+           -e "s/RedirectMatch.*/   RedirectMatch    \^\/\$ \/${CACTI_URL_PATH}/" \
+        /etc/httpd/conf.d/cacti.conf
 fi
 
 # only generate certs if none exsist, this way users can provide there own
