@@ -200,6 +200,10 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 ```
 
 # Change Log
+#### 1.2.15 - 11/05/2020
+ * Update Cacti and Spine from 1.2.14 to 1.2.15
+   * [changelog][CL1.2.15]
+
 #### 1.2.14 - 08/15/2020
  * Close issue [#73](https://github.com/scline/docker-cacti/issues/73) - Add CACTI_URL_PATH; Thanks for the request [xbolshe](https://github.com/xbolshe) and help on apache configs.
  * Update Cacti and Spine from 1.2.11 to 1.2.14
@@ -254,6 +258,7 @@ REPLACE INTO `%DB_NAME%`.`settings` (`name`, `value`) VALUES('poller_type', '2')
 * Auto import remote pollers, currently you need to navigate to there GUI for a few clicks.
 * Documentation cleanup.
 
+[CL1.2.15]: http://www.cacti.net/release_notes.php?version=1.2.15
 [CL1.2.14]: http://www.cacti.net/release_notes.php?version=1.2.14
 [CL1.2.11]: http://www.cacti.net/release_notes.php?version=1.2.11
 [CL1.2.10]: http://www.cacti.net/release_notes.php?version=1.2.10

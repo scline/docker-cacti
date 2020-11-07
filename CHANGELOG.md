@@ -1,4 +1,32 @@
 # Change Log
+#### 1.2.15 - 11/05/2020
+ * Update Cacti and Spine from 1.2.14 to 1.2.15
+   * [changelog][CL1.2.15]
+
+#### 1.2.14 - 08/15/2020
+ * Close issue [#73](https://github.com/scline/docker-cacti/issues/73) - Add CACTI_URL_PATH; Thanks for the request [xbolshe](https://github.com/xbolshe) and help on apache configs.
+ * Update Cacti and Spine from 1.2.11 to 1.2.14
+   * [changelog][CL1.2.14]
+
+#### 1.2.11a - 04/18/2020
+ * Close issue [#64](https://github.com/scline/docker-cacti/issues/64) - FPM initialization failed; Thanks to [kevburkett](https://github.com/kevburkett) for bringing this one up and helping validate the fix
+ * Close issue [#65](https://github.com/scline/docker-cacti/issues/65) - PHP-SNMP yum commands cause rpmdb error
+
+#### 1.2.11 - 04/17/2020
+ * Update Docker container to use Centos8 over Centos7
+ * Close issue [#59](https://github.com/scline/docker-cacti/issues/59) - errors with percona on compose single instance; Thank you [miguelwill](https://github.com/miguelwill)
+   * Update docker-comose examples with Mariadb:10.3 from older Percona version
+ * Close issue [#61](https://github.com/scline/docker-cacti/issues/61) - spine directory and crontab empty after docker-compose down and restoring; Thank you [kevburkett](https://github.com/kevburkett)
+   * Update docker-compose with `spine` volume
+ * Enable HTTPS functionality and self-sign certs when needed
+ * Allow functionality to disable PHP-SNMP usagage via `PHP_SNMP` environment variable
+ se 
+ * Manual patch on provisioning new remote pollers - https://github.com/Cacti/cacti/issues/3459
+ * Update Cacti and Spine from 1.2.8 to 1.2.11
+   * [changelog 1.2.10 -> 1.2.11][CL1.2.11]
+   * [changelog 1.2.9 -> 1.2.10][CL1.2.10]
+   * [changelog 1.2.8 -> 1.2.9][CL1.2.9]
+
 #### 1.2.8 - 12/11/2019
  * Update Cacti and Spine from 1.2.6 to 1.2.8
    * [changelog 1.2.7 -> 1.2.8][CL1.2.8]
@@ -140,6 +168,11 @@
 #### 1.1.0 - 03/25/2017
  * Initial push
 
+[CL1.2.15]: http://www.cacti.net/release_notes.php?version=1.2.15
+[CL1.2.14]: http://www.cacti.net/release_notes.php?version=1.2.14
+[CL1.2.11]: http://www.cacti.net/release_notes.php?version=1.2.11
+[CL1.2.10]: http://www.cacti.net/release_notes.php?version=1.2.10
+[CL1.2.9]: http://www.cacti.net/release_notes.php?version=1.2.9
 [CL1.2.8]: http://www.cacti.net/release_notes.php?version=1.2.8
 [CL1.2.7]: http://www.cacti.net/release_notes.php?version=1.2.7
 [CL1.2.6]: http://www.cacti.net/release_notes.php?version=1.2.6
