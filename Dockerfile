@@ -9,7 +9,8 @@ RUN \
     yum update -y && \
     yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
     yum install -y dnf-plugins-core && \
-    yum config-manager --set-enabled PowerTools && \
+    yum config-manager --set-enabled powertools && \
+    yum -y --enablerepo=powertools install elinks && \
     yum clean all
 
 ## --- PHP EXTENTIONS ---
