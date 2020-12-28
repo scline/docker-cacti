@@ -1,6 +1,6 @@
 # Change Log
 #### 1.2.16 - 12/27/2020
- * Update Cacti and Spine from 1.2.14 to 1.2.15
+ * Update Cacti and Spine from 1.2.15 to 1.2.16
    * [changelog][CL1.2.16]
  * [zuka1337](https://github.com/zuka1337) added powertools to base dockerfile image via [#82](https://github.com/scline/docker-cacti/pull/82)
 
@@ -173,6 +173,7 @@
 #### 1.1.0 - 03/25/2017
  * Initial push
 
+[CL1.2.16]: http://www.cacti.net/release_notes.php?version=1.2.16
 [CL1.2.15]: http://www.cacti.net/release_notes.php?version=1.2.15
 [CL1.2.14]: http://www.cacti.net/release_notes.php?version=1.2.14
 [CL1.2.11]: http://www.cacti.net/release_notes.php?version=1.2.11
