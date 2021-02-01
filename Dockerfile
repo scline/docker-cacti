@@ -31,6 +31,12 @@ RUN \
         openssl-devel mariadb-devel sendmail curl wget help2man && \
     yum clean all
 
+## --- Other/Requests ---
+RUN \
+    yum install -y \
+        perl-libwww-perl && \
+    yum clean all
+
 ## --- SERVICE CONFIGS ---
 COPY configs /template_configs
 COPY configs/crontab /etc/crontab
