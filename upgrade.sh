@@ -52,7 +52,8 @@ if [ ${REMOTE_POLLER} != 1 ]; then
         -e "s/%RDB_NAME%/${RDB_NAME}/" \
         -e "s/%RDB_USER%/${RDB_USER}/" \
         -e "s/%RDB_PASS%/${RDB_PASS}/" \
-        /cacti/include/config.php
+	-e "s/%CACTI_URL_PATH%/${CACTI_URL_PATH}/" \
+	/cacti/include/config.php
 
     # attempt db upgrade via cli
     echo "$(date +%F_%R) [Upgrade] Attempting to update database via CLI."
