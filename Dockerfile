@@ -1,4 +1,4 @@
-FROM centos:8
+FROM rockylinux:8.5
 MAINTAINER Sean Cline <smcline06@gmail.com>
 
 ## --- SUPPORTING FILES ---
