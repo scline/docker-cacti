@@ -10,7 +10,7 @@ rm -rf /tmp/backup
 mkdir /tmp/backup
 
 # write note in cacti.log that a backup has started
-echo "$(date +%F_%R) [Backup] Cacti Backup Complete!" >> /cacti/log/cacti.log
+echo "$(date +%F_%R) [Backup] Cacti Backup Started!" >> /cacti/log/cacti.log
 
 # copy files for processing
 echo "$(date +%F_%R) [Backup] Cloning /cacti to temporary directory."
