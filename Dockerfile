@@ -1,6 +1,6 @@
-FROM rockylinux:8.5
+FROM rockylinux:9.0
 
-MAINTAINER Sean Cline <smcline06@gmail.com>
+LABEL org.opencontainers.image.authors="Sean Cline <smcline06@gmail.com>"
 
 EXPOSE 80 443
 
@@ -57,10 +57,9 @@ RUN \
     mkdir /cacti && \
     mkdir /spine && \
     yum update -y && \
-    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
+    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
     yum install -y dnf-plugins-core && \
-    yum config-manager --set-enabled powertools && \
-    yum -y --enablerepo=powertools install elinks && \
+    yum config-manager --set-enabled crb && \
     yum install -y \
     php php-xml php-session php-sockets php-ldap php-gd \
     php-json php-mysqlnd php-gmp php-mbstring php-posix \
@@ -73,5 +72,7 @@ RUN \
     openssl-devel mariadb-devel sendmail curl wget help2man perl-libwww-perl && \
     yum clean all && \
     rm -rf /var/cache/yum/* && \
+    sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond && \
+    chmod 0644 /etc/crontab && \
     echo "ServerName localhost" > /etc/httpd/conf.d/fqdn.conf && \
     /usr/libexec/httpd-ssl-gencerts
