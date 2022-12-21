@@ -1,4 +1,4 @@
-FROM rockylinux:8.5
+FROM rockylinux:8
 
 MAINTAINER Sean Cline <smcline06@gmail.com>
 
