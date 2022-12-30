@@ -41,6 +41,12 @@ if [ ! -f /cacti/install.lock ]; then
        chown root:root /spine/bin/spine && \
        chmod +s /spine/bin/spine
 
+    # Patch Cacti if there are patch files available
+    echo "$(date +%F_%R) [New Install] Extracting and installing patch files to /cacti."
+    mkdir /tmp/patches
+    tar -xf /cacti_install/patches/*.tar.gz -C /tmp/patches
+    cp -fR /tmp/patches* /cacti/
+
     # BASE CONFIGS
     echo "$(date +%F_%R) [New Install] Copying templated configurations to Spine, Apache, and Cacti."
     cp /template_configs/spine.conf /spine/etc

@@ -1,4 +1,10 @@
 # Change Log
+#### 1.2.22 - 12/30/2022
+* Update Cacti and Spine from 1.2.16 to 1.2.22
+   * [changelog](https://www.cacti.net/info/changelog/1.2.22)
+* [turban](https://github.com/turban) added ability for patch file to base dockerfile image
+* [turban](https://github.com/turban) added REMI repository and switched to PHP 8.0
+
 #### 1.2.16 - 12/27/2020
  * Update Cacti and Spine from 1.2.15 to 1.2.16
    * [changelog][CL1.2.16]

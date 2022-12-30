@@ -1,8 +1,12 @@
 FROM rockylinux:8
 
-MAINTAINER Sean Cline <smcline06@gmail.com>
+MAINTAINER Thomas Urban <ThomasUrban@urban-software.de>
 
-EXPOSE 80 443
+# If this is a standalone Cacti, uncomment the following line
+# EXPOSE 80 443
+
+# Expose the MySQL Port as well when this is a MASTER Cacti
+EXPOSE 80 443 3306
 
 ## --- ENV ---
 ENV \
@@ -20,11 +24,12 @@ ENV \
     BACKUP_RETENTION=7 \
     BACKUP_TIME=0 \
     REMOTE_POLLER=0 \
+    CACTI_MASTER_IP=127.0.0.1 \
     INITIALIZE_DB=0 \
     TZ=UTC \
     PHP_MEMORY_LIMIT=800M \
     PHP_MAX_EXECUTION_TIME=60 \
-    PHP_SNMP=1
+    PHP_SNMP=0
 
 CMD ["/start.sh"]
 
@@ -56,22 +61,25 @@ RUN \
     mkdir /backups && \
     mkdir /cacti && \
     mkdir /spine && \
-    yum update -y && \
-    yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
-    yum install -y dnf-plugins-core && \
-    yum config-manager --set-enabled powertools && \
-    yum -y --enablerepo=powertools install elinks && \
-    yum install -y \
+    dnf update -y && \
+    dnf install -y epel-release && \
+    dnf install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm && \
+    dnf install -y dnf-plugins-core && \
+    dnf config-manager --set-enabled powertools && \
+    dnf -y --enablerepo=powertools install elinks && \
+    dnf -y module reset php  && \
+    dnf -y module enable php:remi-8.0  && \
+    dnf install -y \
     php php-xml php-session php-sockets php-ldap php-gd \
     php-json php-mysqlnd php-gmp php-mbstring php-posix \
     php-snmp php-intl php-common php-cli php-devel php-pear \
     php-pdo && \
-    yum install -y \
+    dnf install -y \
     rrdtool net-snmp net-snmp-utils cronie mariadb autoconf \
     bison openssl openldap mod_ssl net-snmp-libs automake \
     gcc gzip libtool make net-snmp-devel dos2unix m4 which \
     openssl-devel mariadb-devel sendmail curl wget help2man perl-libwww-perl && \
-    yum clean all && \
+    dnf clean all && \
     rm -rf /var/cache/yum/* && \
     echo "ServerName localhost" > /etc/httpd/conf.d/fqdn.conf && \
     /usr/libexec/httpd-ssl-gencerts
