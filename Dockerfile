@@ -53,6 +53,8 @@ RUN \
     chmod +x /upgrade.sh && \
     chmod +x /restore.sh && \
     chmod +x /backup.sh && \
+    chmod u+s /bin/ping && \
+    chmod g+s /bin/ping && \
     mkdir /backups && \
     mkdir /cacti && \
     mkdir /spine && \
@@ -72,7 +74,6 @@ RUN \
     openssl-devel mariadb-devel sendmail curl wget help2man perl-libwww-perl && \
     yum clean all && \
     rm -rf /var/cache/yum/* && \
-    sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond && \
     chmod 0644 /etc/crontab && \
     echo "ServerName localhost" > /etc/httpd/conf.d/fqdn.conf && \
     /usr/libexec/httpd-ssl-gencerts
