@@ -1,4 +1,8 @@
 # Change Log
+#### 1.2.23 - 01/05/2023
+* Update Cacti and Spine from 1.2.22 to 1.2.23
+   * [changelog](https://www.cacti.net/info/changelog/1.2.23)
+
 #### 1.2.22 - 12/30/2022
 * Update Cacti and Spine from 1.2.16 to 1.2.22
    * [changelog](https://www.cacti.net/info/changelog/1.2.22)
