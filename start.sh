@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export DB_PORT=${DB_PORT:-3306}
+
 # set server timezone
 echo "$(date +%F_%R) [Note] Setting server timezone settings to '${TZ}'"
 echo "date.timezone = ${TZ}" >> /etc/php.ini
