@@ -10,8 +10,12 @@ echo "date.timezone = ${TZ}" >> /etc/php.ini
 sed -i "s/^\(memory_limit =\).*/\1 ${PHP_MEMORY_LIMIT}/" /etc/php.ini
 sed -i "s/^\(max_execution_time =\).*/\1 ${PHP_MAX_EXECUTION_TIME}/" /etc/php.ini
 
-rm /etc/localtime
-ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
+if [ ! -z "${TZ}" ]; then
+  rm /etc/localtime
+  ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
+else
+  echo "Using default timezone sinze TZ is unset."
+fi
 
 # remove php-snmp if asked, required for snmpv3 to function correctly. Disabled by default
 if [ ${PHP_SNMP} = 0 ]; then
