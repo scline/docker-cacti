@@ -160,6 +160,9 @@ chown -R apache.apache /cacti/cache/
 chown -R apache.apache /cacti/log/
 chown -R apache.apache /cacti/scripts/
 chown -R apache.apache /cacti/rra/
+touch /cacti/include/vendor/csrf/csrf-secret.php
+chmod 644 /cacti/include/vendor/csrf/csrf-secret.php
+chown apache.apache /cacti/include/vendor/csrf/csrf-secret.php
 
 # remote poller tasks
 if [ ${REMOTE_POLLER} = 1 ]; then

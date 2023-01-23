@@ -34,6 +34,9 @@ if [ ${REMOTE_POLLER} != 1 ]; then
     chown -R apache.apache /cacti/log/
     chown -R apache.apache /cacti/scripts/
     chown -R apache.apache /cacti/rra/
+    touch /cacti/include/vendor/csrf/csrf-secret.php
+    chmod 644 /cacti/include/vendor/csrf/csrf-secret.php
+    chown apache.apache /cacti/include/vendor/csrf/csrf-secret.php
 
     # copy templated config files, makes sed command easier
     echo "$(date +%F_%R) [Upgrade] Copying config templates for Cacti."
