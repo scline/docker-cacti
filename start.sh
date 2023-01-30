@@ -14,7 +14,7 @@ if [ ! -z "${TZ}" ]; then
   rm /etc/localtime
   ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
 else
-  echo "Using default timezone sinze TZ is unset."
+  echo "Using default timezone since TZ is unset."
 fi
 
 # remove php-snmp if asked, required for snmpv3 to function correctly. Disabled by default
@@ -28,7 +28,7 @@ if [ ${PHP_SNMP} = 0 ]; then
     yum clean all
 fi
 
-# verify if initial install steps are required, if lock file does not exist run the following   
+# verify if initial install steps are required, if lock file does not exist run the following
 if [ ! -f /cacti/install.lock ]; then
     echo "$(date +%F_%R) [New Install] Lock file does not exist - new install."
 
@@ -42,7 +42,7 @@ if [ ! -f /cacti/install.lock ]; then
     echo "$(date +%F_%R) [New Install] Extracting and installing Spine files to /spine."
     tar -xf /cacti_install/cacti-spine-*.tar.gz -C /tmp
     cd /tmp/cacti-spine-* && \
-        ./bootstrap && \
+	./bootstrap && \
        ./configure --prefix=/spine && make && make install && \
        chown root:root /spine/bin/spine && \
        chmod +s /spine/bin/spine
@@ -56,26 +56,26 @@ if [ ! -f /cacti/install.lock ]; then
     # update cacti url path config, requested via https://github.com/scline/docker-cacti/issues/73
     echo "$(date +%F_%R) [New Install] Applying cacti URL enviromental variable to /etc/httpd/conf.d/cacti.conf"
     sed -i -e "s/Alias.*/   Alias    \/${CACTI_URL_PATH} \/cacti/" \
-           -e "s/RedirectMatch.*/   RedirectMatch    \^\/\$ \/${CACTI_URL_PATH}/" \
-        /etc/httpd/conf.d/cacti.conf
+	   -e "s/RedirectMatch.*/   RedirectMatch    \^\/\$ \/${CACTI_URL_PATH}/" \
+	/etc/httpd/conf.d/cacti.conf
 
     # setup database credential settings
     echo "$(date +%F_%R) [New Install] Applying enviromental variables to configurations."
     sed -i -e "s/%DB_HOST%/${DB_HOST}/" \
-           -e "s/%DB_PORT%/${DB_PORT}/" \
-           -e "s/%DB_NAME%/${DB_NAME}/" \
-           -e "s/%DB_USER%/${DB_USER}/" \
-           -e "s/%DB_PASS%/${DB_PASS}/" \
-           -e "s/%DB_PORT%/${DB_PORT}/" \
-           -e "s/%RDB_HOST%/${RDB_HOST}/" \
-           -e "s/%RDB_PORT%/${RDB_PORT}/" \
-           -e "s/%RDB_NAME%/${RDB_NAME}/" \
-           -e "s/%RDB_USER%/${RDB_USER}/" \
-           -e "s/%RDB_PASS%/${RDB_PASS}/" \
-           -e "s/%CACTI_URL_PATH%/${CACTI_URL_PATH}/" \
-        /cacti/include/config.php \
-        /settings/*.sql \
-        /spine/etc/spine.conf
+	   -e "s/%DB_PORT%/${DB_PORT}/" \
+	   -e "s/%DB_NAME%/${DB_NAME}/" \
+	   -e "s/%DB_USER%/${DB_USER}/" \
+	   -e "s/%DB_PASS%/${DB_PASS}/" \
+	   -e "s/%DB_PORT%/${DB_PORT}/" \
+	   -e "s/%RDB_HOST%/${RDB_HOST}/" \
+	   -e "s/%RDB_PORT%/${RDB_PORT}/" \
+	   -e "s/%RDB_NAME%/${RDB_NAME}/" \
+	   -e "s/%RDB_USER%/${RDB_USER}/" \
+	   -e "s/%RDB_PASS%/${RDB_PASS}/" \
+	   -e "s/%CACTI_URL_PATH%/${CACTI_URL_PATH}/" \
+	/cacti/include/config.php \
+	/settings/*.sql \
+	/spine/etc/spine.conf
 
     # wait for database to initialize - http://stackoverflow.com/questions/4922943/test-from-shell-script-if-remote-tcp-port-is-open
     echo "$(date +%F_%R) [New Install] Waiting for database to respond, if this hangs please check MySQL connections are allowed and functional."
@@ -84,19 +84,19 @@ if [ ! -f /cacti/install.lock ]; then
 
     # if docker was told to setup the database then perform the following
     if [ ${INITIALIZE_DB} = 1 ]; then
-        echo "$(date +%F_%R) [New Install] Container has been instructed to create new Database on remote system."
-        # initial database and user setup
-        echo "$(date +%F_%R) [New Install] CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
-        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
-        # allow cacti user access to new database
-        echo "$(date +%F_%R) [New Install] GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '*******';"
-        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
-        # allow cacti user super access to new database (required to merge cacti.sql table)
-        echo "$(date +%F_%R) [New Install] GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
-        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
-        # allow required access to mysql timezone table
-        echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
-        mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
+	echo "$(date +%F_%R) [New Install] Container has been instructed to create new Database on remote system."
+	# initial database and user setup
+	echo "$(date +%F_%R) [New Install] CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+	mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "CREATE DATABASE ${DB_NAME} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+	# allow cacti user access to new database
+	echo "$(date +%F_%R) [New Install] GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '*******';"
+	mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
+	# allow cacti user super access to new database (required to merge cacti.sql table)
+	echo "$(date +%F_%R) [New Install] GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
+	mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT SUPER ON *.* TO '${DB_USER}'@'%';"
+	# allow required access to mysql timezone table
+	echo "$(date +%F_%R) [New Install] GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '*******';"
+	mysql -h ${DB_HOST} --port=${DB_PORT} -uroot -p${DB_ROOT_PASS} -e "GRANT SELECT ON mysql.time_zone_name TO '${DB_USER}' IDENTIFIED BY '${DB_PASS}';"
     fi
 
     # fresh install db merge
@@ -105,24 +105,24 @@ if [ ! -f /cacti/install.lock ]; then
 
     # if this is a remote poller dont do anything with scripts/templates or plugins. This is sourced from the master instance
     if [ ${REMOTE_POLLER} != 1 ]; then
-        echo "$(date +%F_%R) [New Install] Installing supporting template files."
-        cp -r /templates/resource/* /cacti/resource 
-        cp -r /templates/scripts/* /cacti/scripts
+	echo "$(date +%F_%R) [New Install] Installing supporting template files."
+	cp -r /templates/resource/* /cacti/resource
+	cp -r /templates/scripts/* /cacti/scripts
 
-        echo "$(date +%F_%R) [New Install] Installing plugins."
-        cp -r /cacti_install/plugins/* /cacti/plugins
+	echo "$(date +%F_%R) [New Install] Installing plugins."
+	cp -r /cacti_install/plugins/* /cacti/plugins
 
-        # install additional templates
-        for filename in /templates/*.xml; do
-            echo "$(date +%F_%R) [New Install] Installing template file $filename"
-            php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
-        done
+	# install additional templates
+	for filename in /templates/*.xml; do
+	    echo "$(date +%F_%R) [New Install] Installing template file $filename"
+	    php -q /cacti/cli/import_template.php --filename=$filename > /dev/null
+	done
     fi
 
     # install additional settings
     for filename in /settings/*.sql; do
-        echo "$(date +%F_%R) [New Install] Importing settings file $filename"
-        mysql -h ${DB_HOST} --port=${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
+	echo "$(date +%F_%R) [New Install] Importing settings file $filename"
+	mysql -h ${DB_HOST} --port=${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_NAME} < $filename
     done
 
     # CLEANUP
@@ -138,23 +138,23 @@ fi
 echo "$(date +%F_%R) [Apache] Validating httpd cacti configuration is present."
 if [ -f "/etc/httpd/conf.d/cacti.conf" ]; then
     echo "$(date +%F_%R) [Apache] /etc/httpd/conf.d/cacti.conf exist, nothing to do."
-else 
+else
     echo "$(date +%F_%R) [Apache] /etc/httpd/conf.d/cacti.conf does not exist, copying a new one over."
     cp /template_configs/cacti.conf /etc/httpd/conf.d/
     # update cacti url path config, requested via https://github.com/scline/docker-cacti/issues/73
     echo "$(date +%F_%R) [Apache] Applying cacti URL enviromental variable to /etc/httpd/conf.d/cacti.conf"
     sed -i -e "s/Alias.*/   Alias    \/${CACTI_URL_PATH} \/cacti/" \
-           -e "s/RedirectMatch.*/   RedirectMatch    \^\/\$ \/${CACTI_URL_PATH}/" \
-        /etc/httpd/conf.d/cacti.conf
+	   -e "s/RedirectMatch.*/   RedirectMatch    \^\/\$ \/${CACTI_URL_PATH}/" \
+	/etc/httpd/conf.d/cacti.conf
 fi
 
 # only generate certs if none exsist, this way users can provide there own
 if [ ! -f /etc/ssl/certs/cacti.key  ] || [ ! -f /etc/ssl/certs/cacti.crt  ]; then
-    # generate self-signed certs for basic https functionality. 
+    # generate self-signed certs for basic https functionality.
     echo "$(date +%F_%R) [Apache] Missing HTTPS certs, generating self-signed one's."
     openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-        -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" \
-        -keyout /etc/ssl/certs/cacti.key  -out /etc/ssl/certs/cacti.crt
+	-subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" \
+	-keyout /etc/ssl/certs/cacti.key  -out /etc/ssl/certs/cacti.crt
     else
     echo "$(date +%F_%R) [Apache] /etc/ssl/certs/cacti.key and /etc/ssl/certs/cacti.crt exist, nothing to do."
 fi
